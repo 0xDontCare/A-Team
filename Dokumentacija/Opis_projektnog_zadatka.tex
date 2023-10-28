@@ -2,18 +2,86 @@
 		
 		\textbf{\textit{dio 1. revizije}}\\
 		
-		\textit{Na osnovi projektnog zadatka detaljno opisati korisničke zahtjeve. Što jasnije opisati cilj projektnog zadatka, razraditi problematiku zadatka, dodati nove aspekte problema i potencijalnih rješenja. Očekuje se minimalno 3, a poželjno 4-5 stranica opisa.	Teme koje treba dodatno razraditi u ovom poglavlju su:}
+		\textit{Cilj ovog projekta je razviti programsku podršku za stvaranje web aplikacije „Nestali ljubimci“ koja će korisniku omogućiti da pregledava i pretražuje oglašene nestale kućne ljubimce i skloništa za životinje. Osim mogućnosti pregledavanja i pretraživanja oglašenih nestalih kućnih ljubimaca i skloništa za životinje, moguće je sudjelovati u potrazi za ljubimcem davanjem informacija i komunikacijom s vlasnikom te drugim sudionicima u potrazi za nestalim ljubimcem. Naravno, moguće je i stvaranje, izmjena i brisanje oglasa o izgubljenim ljubimcima. Ovom web aplikacijom smanjit će se pojava nepraktičnog oglašavanja nestanaka, opažanja i pronalaska s preciznim podacima kućnih ljubimaca koja se danas jako često mogu pronaći na raznim internetskim platformama poput društvenih mreža, stranica za oglašavanje, foruma itd. Web aplikacija će predstavljati jednostavnu i korisnu aplikaciju koja će vlasnicima kućnih ljubimaca, skloništima za životinje, ali i drugim uključenim ljudima olakšati rješavanje ovih stresnih situacija. Također, web aplikacija će biti prilagođena za male uređaje(bit će responzivna) kako bi korisnici mogli lagano pregledavati sadržaj web aplikacije i kada nemaju pristup većim uređajima poput stolnog računala ili laptopa. Ovakav razvoj web aplikacije će omogućiti dionicima veći pristup i brzinu reagiranja, a to je često ključno za uspješan završetak potrage za nestalim kućnim ljubimcem.}
+		
+		\textit{Prilikom pokretanja sustava korisnici mogu pregledavati i pretraživati oglašene nestale kućne ljubimce i skloništa za životinje.}
+		
+		\textit{Osnovne funkcionalnosti, kao što su pregledavanje i pretraživanje oglašenih nestalih kućnih ljubimaca i skloništa za životinje, imaju sva tri tipa korisnika. Tri tipa korisnika su: neregistrirani korisnik, registrirani korisnik te skloništa za životinje. Neregistrirani korisnik može samo koristiti osnove funkcionalnosti web aplikacije. Pretraživanje oglašenih nestalih kućnih ljubimaca moguće je ostvariti po kategorijama podataka o ljubimcu, a pretraživanje skloništa za životinje moguće je ostvariti po nazivu skloništa. Pretraživanje nestalih kućnih ljubimaca po kategorijama uključuje ove podatke o ljubimcu: vrsta, ime na koje se odaziva, datum i sat nestanka, lokacija nestanka(korištenje vanjske usluge za geolociranje kao što je OpenStreetMap), boja, starost, tekstni opis i slike(do tri slike). Sve ove navedene kategorije o nestalom ljubimcu, korisnik može detaljnije vidjeti ako klikne na određeni oglas. Osim ovih podataka, oglas sadrži i kontakt podatke korisnika koji se automatski povlače iz korisničkih podataka danih pri registraciji(poput e-pošte, telefona te posebno za skloništa - naziv skloništa). Također, odabirom nekih od kućnih ljubimaca otvara se mogućnost detaljnijeg pregleda informacija o njemu kao i pregled komunikacije oko potrage za ljubimcem. Neregistriranom korisniku je omogućeno prijavljivanje u sustav s postojećim računom(potrebno je upisati korisničko ime i lozinku) ili kreiranjem novog računa.  Za kreiranje novog računa potrebni su sljedeći podaci:}
+		
 		\begin{packed_item}
-			\item \textit{potencijalna korist ovog projekta}
-			\item \textit{postojeća slična rješenja (istražiti i ukratko opisati razlike u odnosu na zadani zadatak). Dodajte slike koja predočavaju slična rješenja.}
-			\item \textit{skup korisnika koji bi mogao biti zainteresiran za ostvareno rješenje.}
-			\item \textit{mogućnost prilagodbe rješenja }
-			\item \textit{opseg projektnog zadatka}
-			\item \textit{moguće nadogradnje projektnog zadatka}
+			\item \textit{korisničko ime}
+			\item \textit{lozinka}
+			\item \textit{ime}
+			\item \textit{prezime}
+			\item \textit{broj telefona}
+			\item \textit{e-pošta}
 		\end{packed_item}
 		
-		\textit{Za pomoć pogledati reference navedene u poglavlju „Popis literature“, a po potrebi konzultirati sadržaj na internetu koji nudi dobre smjernice u tom pogledu.}
+		\textit{Registracijom u sustav korisniku se dodjeljuju dodatna prava koja neregistrirani korisnik nije imao te korisnik nakon prijave u sustav postaje registrirani korisnik. Uz sve mogućnosti koje ima neregistrirani korisnik, registrirani korisnik, nakon prijave u sustav, dobiva dodatna prava u sustavu što uključuje:}
+		
+		\begin{enumerate}
+			\item \textit{postavljanje oglasa o nestalom kućnom ljubimcu}
+			\item \textit{sudjelovanje u komunikaciji oko potrage za ljubimcem}
+			\item \textit{uklanjanje oglasa o nestalom kućnom ljubimcu}
+			\item \textit{izmjena oglasa o nestalom kućnom ljubimcu}
+		\end{enumerate}
+		
+		\textit{Ako registrirani korisnik želi postaviti oglas mora unijeti sljedeće kategorije podataka o ljubimcu: vrstu, ime na koje se odaziva, datum i sat nestanka, lokaciju nestanka(pri tome treba koristiti vanjsku uslugu za geolociranje kao što je OpenStreetMap), boju, starost, tekstni opis i slike(do tri slike). Ovdje se može primijetiti da su ovo bile navedene kategorije i po kojima korisnik može pretraživati oglašene nestale kućne ljubimce te su ove informacije važne kako bi korisnici lakše mogli sortirati oglase da bi došli do oglasa koji traže.  Ako registrirani korisnik želi ući u komunikaciji oko potrage za ljubimcem, onda može unijeti poruke koje mogu sadržavati tekst, sliku i geolokaciju(putem vanjske usluge) pri čemu se moraju jasno vidjeti korisnikovi kontakt podaci. Registrirani korisnik može ukloniti oglas koji je napravio. Ako korisnik ukloni svoj oglas, taj oglas i sva njegova komunikacija će nestati iz popisa vidljivih oglasa, no oglas se ne briše iz baze podataka. Izmjena oglasa omogućuje izmjenu svih kategorija podataka, a moguće je izmijeniti i kategoriju oglasa(koja je po izvornim postavkama takva da se za ljubimcem traga), dok su ostale kategorije da je ljubimac sretno pronađen, da nije pronađen, ali se za njim više aktivno ne traga ili da je pronađen uz nesretne okolnosti. Dakle, moguće kategorije oglasa su:}
+		
+		\begin{enumerate}
+			\item \textit{za ljubimcem se traga}
+			\item \textit{ljubimac je sretno pronađen}
+			\item \textit{ljubimac nije pronađen, ali se za njim više aktivno ne traga}
+			\item \textit{ljubimac je pronađen uz nesretne okolnosti}
+		\end{enumerate}
+		
+		\textit{Svaka izmjena kategorije oglasa u onu koja nije da se za ljubimcem aktivno traga(dakle to su kategorije da je ljubimac sretno pronađen, da ljubimac nije pronađen, ali se za njim više aktivno ne traga i da je ljubimac pronađen uz nesretne okolnosti) prebacuje oglas automatski u popis neaktivnih oglasa, koji mogu pretraživati samo registrirani korisnici.}
+		
+		\textit{Osim neregistriranog tipa korisnika i registriranog tipa korisnika postoji i treći tip korisnika koji su skloništa za životinje. Skloništa za životinje su specijalni tip registriranih korisnika koji, osim funkcionalnosti koji imaju ostali registrirani korisnici, imaju dodatnu mogućnost oglašavanja životinja koje su pronašli i koje se nalaze u njihovom prostoru. Takvi oglasi imaju dodatnu kategoriju – u skloništu, pa bi njihove moguće kategorije oglasa bile:}
+		
+		\begin{enumerate}
+			\item \textit{za ljubimcem se traga}
+			\item \textit{ljubimac je sretno pronađen}
+			\item \textit{ljubimac nije pronađen, ali se za njim više aktivno ne traga}
+			\item \textit{ljubimac je pronađen uz nesretne okolnosti}
+			\item \textit{ljubimac je u skloništu}
+		\end{enumerate}
+		
+		\textit{Ova web aplikacija samo podržava tri tipa korisnika te u aplikaciji nema podržane uloge administratora koji bi se trebao brinuti o administraciji podataka(oglasa, registracije i korisničkih podataka). Dakle, po razini ovlasti koje korisnici imaju u web aplikaciji, možemo ova 3 tipa korisnika rangirati od najveće razine ovlasti pa do najmanje razine ovlasti ovako:}
+		
+		\begin{enumerate}
+			\item \textit{skloništa za životinje}
+			\item \textit{registrirani korisnici}
+			\item \textit{neregistrirani korisnici}
+		\end{enumerate}
+		
+		\textit{Svaka registracija korisnika i njihovih korisničkih podataka bilježi se u bazi podataka te nije moguće da postoje dva korisnika istog korisničkog imena ili dva korisnika potpuno istih korisničkih podataka. Ovo se osobito odnosi na e-poštu i broj telefona korisnika koji ne može biti jednak u oba korisnika te ako se radi o skloništima, onda je to isti naziv skloništa koji ne mogu imati dva različita skloništa. Također, ne mogu postojati dva oglasa identičnih svojstava tj. oglasi koji imaju sve identične kategorije oglasa. Ovo je potrebno osigurati kako bi se oglasi mogli sortirati i razlikovati jedni od drugih. Sustav treba podržavati rad više korisnika u stvarnom vremenu.}
+		
+		\textit{Ova web aplikacija, ali i projektni zadatak u cjelini, imat će veliku korist za sve ljude koji imaju ljubimca. Ne samo da će smanjiti vjerojatnost da se izgubljeni ljubimac nađe, nego će povezati i sve druge ljude koji imaju jednak cilj, a to je da se izgubljeni ljubimac pronađe. Svi znamo da je izgubiti najdražeg ljubimca jako teško te se ovim projektom nastoji pronaći rješenje kako bi se smanjile ove stresne situacije i pomoglo ljudima kojima treba pomoć kako bi našli svojeg ljubimca. Svaki pokušaj zlorabljenja web aplikacije bit će kažnjen i potencijalno dodatno sankcioniran ako se utvrdi da je to potrebno.}
+		
+		\textit{Do sada nije postojala jasna i učinkovita web aplikacija za pronalazak nestalih ljubimaca, već samo postoje neka potencijala i neučinkovita rješenja poput foruma, oglasnih stranica ili pak društvenih stranica. Neka od tih rješenja prikazana su u nastavku.}
+	
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.3]{slike/Facebook-nestaliLjubimci.PNG}
+			\caption{Facebook}
+			\label{fig:promjene}
+		\end{figure}
+	
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.3]{slike/Njuskalo-nestaliLjubimci.PNG}
+			\caption{Njuškalo}
+			\label{fig:promjene}
+		\end{figure}
+		
+		\textit{Web aplikacija za pronalazak nestalih ljubimaca će predstavljati puno učinkovitije, brže i bolje rješenje u kojem će se korisnici lako i brzo snalaziti. Također, svaki oglas za nestalog ljubimca i komunikacija će biti zasebna cjelina u kojoj se neće preplitati drugi oglasi i po kojima će se lagano i brzo pretraživati dani oglasi. Ovakvu učinkovitost i brzinu ne nude gore navedene web aplikacije poput Facebook-a ili Njuškala.}
+		
+		\textit{Mogućnost prilagodbe rješenja te moguće nadogradnje projektnog zadatka će svakako biti moguće u budućnosti te će podosta ovisiti o zadovoljstvu korisnika te njihovom mišljenju. Izricanje mogućnosti i potencijalnih rješenja od korisnika se svakako potiče sve s ciljem kako bi web aplikacija predstavljala sve korisnije, učinkovitije i uspješnije rješenje u pomoći i potrazi za korisnikovim nestalim ljubimcem.}
+		
 		\eject
+		
+		
 		
 		\section{Primjeri u \LaTeX u}
 		
