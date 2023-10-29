@@ -2,12 +2,6 @@
 		
 	\section{Funkcionalni zahtjevi}
 			
-			\textbf{\textit{dio 1. revizije}}\\
-			
-			\textit{Navesti \textbf{dionike} koji imaju \textbf{interes u ovom sustavu} ili  \textbf{su nositelji odgovornosti}. To su prije svega korisnici, ali i administratori sustava, naručitelji, razvojni tim.}\\
-				
-			\textit{Navesti \textbf{aktore} koji izravno \textbf{koriste} ili \textbf{komuniciraju sa sustavom}. Oni mogu imati inicijatorsku ulogu, tj. započinju određene procese u sustavu ili samo sudioničku ulogu, tj. obavljaju određeni posao. Za svakog aktora navesti funkcionalne zahtjeve koji se na njega odnose.}\\
-			
 			
 			\noindent \textbf{Dionici:}
 			
@@ -15,7 +9,7 @@
 				
 				\item Vlasnik kućnog ljubimca
 				\item Sklonište za životinje			
-				\item Ostali korisinici aplikacije(klijent?)
+				\item Ostali korisinici aplikacije(klijent)
                 \item Razvojni tim
 				
 			\end{packed_enum}
@@ -28,15 +22,9 @@
 				
 				\begin{packed_enum}
 					
-					\item funkcionalnost 1
-					\item funkcionalnost 2
-					\begin{packed_enum}
-						
-						\item  podfunkcionalnost 1 
-						\item  podfunkcionalnost 2
-				
-					\end{packed_enum}
-					\item  funkcionalnost 3
+					\item pretraživati oglašene nestale kućne ljubimce i skloništa za životinje
+					\item detaljno pregledavati informacije o nestalim kućnim ljubimcima
+					\item  pregledavati komunikaciju oko potrage za ljubimcem
 					
 				\end{packed_enum}
 
@@ -44,26 +32,31 @@
 				
 				\begin{packed_enum}
 					
-					\item funkcionalnost 1
-					\item funkcionalnost 2
+					\item postaviti oglas o nestalom kućnom ljubimcu
+					\item sudjelovati u komunikaciji oko potrage za ljubimcem
+					\item ukloniti oglas o nestalom kućnom ljubimcu
+					\item uzmijeniti oglas o nestalom kućnom ljubimcu
+					\item pretraživati neaktivne oglase o nestalim kućnim ljubimcima
+					\item sve što i registrirani korisnik može
 					
 				\end{packed_enum}
 
-                \item  \underbar{Skloništa za životinje (inicijator) može:}
+                \item  \underbar{Sklonište za životinje (inicijator) može:}
 				
 				\begin{packed_enum}
 					
-					\item funkcionalnost 1
-					\item funkcionalnost 2
+					\item oglašavati životinje koje je pronašlo i koje se nalazi u njegovom prostoru
+					\item postaviti posebnu kategoriju ("u skloništu") kod postave oglasa
+					\item sve što i registrirani korisnik može
 					
 				\end{packed_enum}
 			
-				\item  \underbar{Baza podataka (sudionik) može:}
+				\item  \underbar{Baza podataka (sudionik):}
 				
 				\begin{packed_enum}
 					
-					\item funkcionalnost 1
-					\item funkcionalnost 2
+					\item pohranjuje sve podatke o registriranim korisnicima, njihovim oglasima i komunikacijama oko potrage za ljubimcem
+					\item pohranjuje sve podatke o skloništima za životinje, njihovim oglasima i komunikacijama oko potrage za ljubimcem
 					
 				\end{packed_enum}
 			\end{packed_enum}
