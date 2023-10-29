@@ -62,7 +62,7 @@
 					\noindent \underbar{\textbf{UC1 - Pregled nestalih ljubimaca}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Korisnik, Registrirani korisnik
+						\item \textbf{Glavni sudionik: }Korisnik, Registrirani korisnik, Sklonište
 						\item  \textbf{Cilj:} Pregledavanje oglašenih nestalih kućnih ljubimaca i skloništa za životinje
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} -
@@ -119,7 +119,7 @@
 					\noindent \underbar{\textbf{UC3 - Pretraživanje nestalih ljubimaca}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }Korisnik
+						\item \textbf{Glavni sudionik: }Korisnik, Registrirani korisnik, Sklonište
 						\item  \textbf{Cilj:} Pretraživanje nestalih ljubimaca po svim dostupnim kategorijama podataka
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} -
@@ -309,6 +309,23 @@
 						
 						\item  \textbf{Opis mogućih odstupanja:}
 						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] Korisnik je unio invalidne podatke u određenu kategoriju
+							\item[] \begin{packed_enum}
+								
+								\item Pojavljuje se poruka o pogrešci i zahtjev za ponovnim unosom podataka
+								\item Korisnik unosi ispravne podatke ili odustaje od objave oglasa
+								
+							\end{packed_enum}
+							\item[2.b] Korisnik nije unio potrebne podatke
+							\item[] \begin{packed_enum}
+								
+								\item Pojavljuje se poruka o pogrešci i zahtjev za ponovnim unosom podataka
+								\item Korisnik unosi zahtijevane podatke ili odustaje od objave oglasa
+								
+							\end{packed_enum}
+						\end{packed_item}
 					\end{packed_item}
 					
 				
