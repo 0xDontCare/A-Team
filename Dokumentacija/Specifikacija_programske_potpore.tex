@@ -353,12 +353,50 @@
 				
 			\pagebreak
 			\subsection{Sekvencijski dijagrami}
-				
+
 				\textbf{\textit{dio 1. revizije}}\\
-				
-				\textit{Nacrtati sekvencijske dijagrame koji modeliraju najvažnije dijelove sustava (max. 4 dijagrama). Ukoliko postoji nedoumica oko odabira, razjasniti s asistentom. Uz svaki dijagram napisati detaljni opis dijagrama.}
+
+				\begin{figure}[hp!]
+					\centering
+					\includegraphics[width=\textwidth]{slike/SD1 - Pregled nestalih ljubimaca.png}
+					\caption{Sekvencijski dijagram - Pregled nestalih ljubimaca}
+					\begin{flushleft}
+						\textbf{Detaljnije objašnjenje:}
+						Nakon što korisnik otvori aplikaciju, aplikacija će poslati upit bazi podataka za trenutno aktivne oglase. Odgovor baze se zatim formira u obliku popisa oglasa koji se prikazuju korisniku. Nakon što korisnik odabere oglas, aplikacija šalje upit bazi podataka za detaljnim informacijama o odabranom oglasu. Baza podataka vraća detaljne informacije o odabranom oglasu. Aplikacija zatim prikazuje detaljne informacije o odabranom oglasu i moguće metode komunikacije.
+					\end{flushleft}
+				\end{figure}
+				\pagebreak
+				\begin{figure}[hp!]
+					\centering
+					\includegraphics[width=\textwidth]{slike/SD2 - Registracija.png}
+					\caption{Sekvencijski dijagram - Registracija}
+					\begin{flushleft}
+						\textbf{Detaljnije objašnjenje:}
+						Nakon što korisnik odabere opciju registracije, aplikacija učitava obrazac i prikazuje ga korisniku. Korisnik zatim ispunjava i šalje ispunjen obrazac nad kojim se provodi validacija (provjera jesu li ispravno ispunjena potrebna polja), a zatim upit prema bazi podataka ako korisnik s danim podatcima već postoji. Ako korisnik s danim podatcima ne postoji, aplikacija šalje upit bazi podataka za spremanje novog korisnika. Baza podataka zatim sprema novog korisnika i vraća odgovor aplikaciji. Aplikacija zatim prikazuje poruku o uspješnoj registraciji. U suprotnom, aplikacija prikazuje odgovarajuću poruku (korisnik već postoji ili obrazac nije ispravno popunjen). Proces ispunjavanja obrasca se odvija sve dok korisnik ne odustane od registracije ili ne uspije uspješno provesti registraciju.
+					\end{flushleft}
+				\end{figure}
+				\pagebreak
+				\begin{figure}[hp!]
+					\centering
+					\includegraphics[width=\textwidth]{slike/SD5 - Komuniciranje oko potrage.png}
+					\caption{Sekvencijski dijagram - Komuniciranje oko potrage}
+					\begin{flushleft}
+						\textbf{Detaljnije objašnjenje:}
+						Korisnik odabere oglas i opciju komunikacije. Aplikacija učita chat sučelje i šalje upit bazi podataka za sve prethodne poruke. Baza podataka vraća prethodne poruke koje aplikacija prikazuje korisniku. Korisnik unese poruku i aplikacija je šalje bazi podataka. Baza podataka sprema poruku i vraća odgovor aplikaciji. Aplikacija prikazuje poruku korisniku. U određenim intervalima, aplikacija šalje upit bazi podataka za nove poruke. Baza podataka vraća nove poruke koje aplikacija prikazuje korisniku. Proces se nastavlja dok korisnik ne napusti chat sučelje.
+					\end{flushleft}
+				\end{figure}
+				\pagebreak
+				\begin{figure}[hp!]
+					\centering
+					\includegraphics[width=\textwidth]{slike/SD6_1 - Postavljanje oglasa.png}
+					\caption{Sekvencijski dijagram - Postavljanje oglasa}
+					\begin{flushleft}
+						\textbf{Detaljnije objašnjenje:}
+						Korisnik odabere opciju za novi oglas. Aplikacija učitava obrazac i prikazuje ga korisniku. Korisnik zatim ispunjava i šalje ispunjen obrazac nad kojim se provodi validacija (provjera jesu li ispravno ispunjena potrebna polja). Ako je obrazac ispravno ispunjen, aplikacija šalje upit bazi podataka za spremanje novog oglasa. Baza podataka zatim sprema novi oglas i vraća odgovor aplikaciji. Aplikacija zatim prikazuje poruku o uspješnoj objavi oglasa. U suprotnom, aplikacija prikazuje odgovarajuću poruku (obrazac nije ispravno popunjen). Proces ispunjavanja obrasca se odvija sve dok korisnik ne odustane od objave oglasa ili ne uspije uspješno objaviti oglas. 
+					\end{flushleft}
+				\end{figure}
 				\eject
-	
+
 		\section{Ostali zahtjevi}
 		
 			\textbf{\textit{dio 1. revizije}}\\
