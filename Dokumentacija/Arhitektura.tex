@@ -2,18 +2,50 @@
 		
 		\textbf{\textit{dio 1. revizije}}\\
 
-		\textit{ Potrebno je opisati stil arhitekture te identificirati: podsustave, preslikavanje na radnu platformu, spremišta podataka, mrežne protokole, globalni upravljački tok i sklopovsko-programske zahtjeve. Po točkama razraditi i popratiti odgovarajućim skicama:}
-	\begin{itemize}
-		\item 	\textit{izbor arhitekture temeljem principa oblikovanja pokazanih na predavanjima (objasniti zašto ste baš odabrali takvu arhitekturu)}
-		\item 	\textit{organizaciju sustava s najviše razine apstrakcije (npr. klijent-poslužitelj, baza podataka, datotečni sustav, grafičko sučelje)}
-		\item 	\textit{organizaciju aplikacije (npr. slojevi frontend i backend, MVC arhitektura) }		
-	\end{itemize}
+		Arhitektura koju koristimo se zasniva na MVC (Model-View-Controller) konceptu, varijacije arhitekture zasnovane na događajima.
+        \\
+        \\
+        Cjelokupni sustav se može podijeliti na četiri glavne komponente:
+            \begin{itemize}
+                \item Web preglednik
+                \item Web poslužitelj (server)
+                \item Web aplikaciju
+                \item Bazu podataka
+            \end{itemize}
+    
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=0.5\textwidth]{slike/mvc.png}
+            \caption{MVC model}
+            \label{fig:mesh1}
+        \end{figure}
+        
+        \textbf{Web preglednik} je program (software) koji omogućava korisnicima pregledavanje i prikazivanje web stranica na World Wide Webu (WWW). Predstavlja sučelje između korisnika i internetskog sadržaja. Pomoću njega korisnik sustava komunicira s web aplikacijom, točnije \textit{View} i \textit{Controller} komponentom.
+        
+        \pagebreak
 
-	
-		
+        \textbf{Web aplikaciju} pokreće \textbf{poslužitelj}. To je program čiji je osnovni zadatak odgovarati na HTTP (\textit{Hyper Text Transfer Protocol}) zahtjeve klijenata, primati i slati određene resurse - posluživati samu aplikaciju. 
+        
+        \begingroup 
+        U većini slučajeva klijent će zahtjevati pristup podacima kojima web poslužitelj nema pristup. U tom slučaju će \textit{Controller} komponenta poslati zahtjev \textit{Model} komponenti, zaslužnoj za pohranu korisničkih podataka, koju u našem slučaju predstavlja \textbf{baza podataka}. 
+        \endgroup
+        
+        \begingroup
+        Baza podataka organizirana je zbirka logički povezanih, pretražljivih i međusobno ovisnih podataka. Ključna je komponenta mnogih aplikacija i sustava zbog mogućnosti sigurne pohrane i brzog pretraživanja SQL upitima.
+	  \endgroup
 
-		
+        \begingroup
+        Za našu implementaciju korisničkog sučelja odabrali smo programski jezik \textit{JavaScript} s bibliotekom \textit{React}. Za implementaciju poslužiteljske strane odabrali smo programski jezik \textit{Java} i \textit{Spring} framework, točnije proširenje \textit{Spring Boot}. Kao razvojnu okolinu odabrali smo \textit{Visual Studio Code} i \textit{JetBrains IntelliJ IDEA}. Za implementaciju baze podataka odabrali smo \textit{PostgreSQL}.
+        \endgroup
 
+		\begin{figure}[h]
+            \centering
+            \includegraphics[width=1\textwidth]{slike/client-server-db.png}
+            \caption{Prikaz osnovnog rada sustava}
+            \label{fig:mesh1}
+        \end{figure}
+
+        \pagebreak
 				
 		\section{Baza podataka}
 			
