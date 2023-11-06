@@ -49,9 +49,24 @@
 				
 		\section{Baza podataka}
 			
-			\textbf{\textit{dio 1. revizije}}\\
+		\noindent Za naš sustav koristit ćemo relacijsku bazu podataka, koja je strukturno pogodna za modeliranje stvarnog svijeta. Osnovna komponenta ove baze je relacija, koja se definira svojim imenom i skupom atributa. Glavna svrha ove baze podataka je omogućiti brzo i jednostavno pohranjivanje, mijenjanje i dohvaćanje podataka radi daljnje obrade. Baza podataka za ovu aplikaciju uključuje sljedeće entitete:
+		
+		\begin{packed_item}
 			
-		\textit{Potrebno je opisati koju vrstu i implementaciju baze podataka ste odabrali, glavne komponente od kojih se sastoji i slično.}
+			\item Korisnik
+			\item Registrirani			
+			\item Skloniste
+			\item Oglas
+			\item Ljubimac
+			\item Lokacija
+			\item Mjesto
+			\item Zupanija
+			\item Slika
+			\item Poruka
+			\item Kategorija
+			\item Komunikacija
+			
+		\end{packed_item}
 		
 			\subsection{Opis tablica}
 			
@@ -78,7 +93,12 @@
 				
 			
 			\subsection{Dijagram baze podataka}
-				\textit{ U ovom potpoglavlju potrebno je umetnuti dijagram baze podataka. Primarni i strani ključevi moraju biti označeni, a tablice povezane. Bazu podataka je potrebno normalizirati. Podsjetite se kolegija "Baze podataka".}
+				\begin{figure}[h]
+					\centering
+					\includegraphics[width=1\textwidth]{slike/ERdiagram.png}
+					\caption{E-R dijagram baze podataka}
+					\label{fig:mesh1}
+				\end{figure}
 			
 			\eject
 			
