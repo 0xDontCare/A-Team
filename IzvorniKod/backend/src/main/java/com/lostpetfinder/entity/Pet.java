@@ -10,7 +10,7 @@ public class Pet {
     public Pet() {}
 
     public Pet(String name, String species, int age, String color, String description) {
-        this.id = id;
+        this.petId = petId;
         this.name = name;
         this.species = species;
         this.age = age;
@@ -20,7 +20,7 @@ public class Pet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int petId;
 
     // potentially add @NotNull annotations and update the min attribute from @Size where needed
 
@@ -43,8 +43,8 @@ public class Pet {
     @Size(max = 1000)
     private String description;
 
-    public int getId() {
-        return id;
+    public int getPetId() {
+        return petId;
     }
 
     public String getName() {

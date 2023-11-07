@@ -15,15 +15,15 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int categoryId;
 
     // potentially update the min attribute from @Size where needed
     @Column(nullable = false)
     @Size(max = 1000)
     private String description;
 
-    public int getId() {
-        return id;
+    public int getCategoryId() {
+        return categoryId;
     }
 
     public String getDescription() {

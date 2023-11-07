@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
 
     public User() {}
@@ -36,8 +37,7 @@ public class User {
 
     // why is this needed for a user?
     @ManyToOne
-    @JoinColumn(name = "zipCode")
-    @Column(nullable = false)
+    @JoinColumn(name = "zipCode",nullable = false)
     private Place place;
 
     public String getUsername() {

@@ -20,8 +20,7 @@ public class Location {
     private String coordinates;
 
     @ManyToOne
-    @JoinColumn(name = "zipCode")
-    @Column(nullable = false)
+    @JoinColumn(name = "zipCode",nullable = false)
     private Place place;
 
     public String getCoordinates() {

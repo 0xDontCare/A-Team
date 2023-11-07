@@ -16,15 +16,15 @@ public class County {
     // not sure if counties even have their own assigned value, so I'm just generating it like this for now
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int countyId;
 
     // potentially update the min attribute from @Size
     @Column(nullable = false)
     @Size(max = 100)
     private String name;
 
-    public int getId() {
-        return id;
+    public int getCountyId() {
+        return countyId;
     }
 
     public String getName() {

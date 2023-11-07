@@ -24,8 +24,7 @@ public class Place {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "id")
-    @Column(nullable = false)
+    @JoinColumn(name = "id",nullable = false)
     private County county;
 
     public int getZipCode() {

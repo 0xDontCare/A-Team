@@ -23,13 +23,11 @@ public class Advertisement {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "id")
-    @Column(nullable = false)
+    @JoinColumn(name = "petId",nullable = false)
     private Pet pet;
 
     @ManyToOne
-    @JoinColumn(name = "username")
-    @Column(nullable = false)
+    @JoinColumn(name = "username",nullable = false)
     private User user;
 
     @Column(nullable = false)
@@ -40,8 +38,7 @@ public class Advertisement {
     private Location location;
 
     @ManyToOne
-    @JoinColumn(name = "id")
-    @Column(nullable = false)
+    @JoinColumn(name = "categoryId",nullable = false)
     private Category category;
 
     public int getId() {
@@ -56,7 +53,7 @@ public class Advertisement {
         this.pet = pet;
     }
 
-    public User getUser() {
+        public User getUser() {
         return user;
     }
 
