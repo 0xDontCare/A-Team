@@ -1,0 +1,37 @@
+package com.lostpetfinder.entity;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+
+@Entity
+@Table(name = "counties")
+public class County {
+
+    public County() {}
+
+    public County(String name) {
+        this.name = name;
+    }
+
+    // not sure if counties even have their own assigned value, so I'm just generating it like this for now
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    // potentially update the min attribute from @Size
+    @Column(nullable = false)
+    @Size(max = 100)
+    private String name;
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
