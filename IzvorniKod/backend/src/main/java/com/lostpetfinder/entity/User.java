@@ -8,16 +8,6 @@ import jakarta.validation.constraints.Size;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
 
-    public User() {}
-
-    public User(String username, String password, String email, String phoneNumber, Place place) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.place = place;
-    }
-
     // potentially update the min attribute from @Size where needed
     @Id
     @Size(max = 100)
@@ -39,6 +29,16 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "zipCode",nullable = false)
     private Place place;
+
+    public User() {}
+
+    public User(String username, String password, String email, String phoneNumber, Place place) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.place = place;
+    }
 
     public String getUsername() {
         return username;

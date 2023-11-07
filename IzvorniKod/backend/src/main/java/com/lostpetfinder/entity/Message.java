@@ -16,12 +16,14 @@ public class Message {
     private String messageText;
 
     @ManyToOne
-    @JoinColumn(name = "coordinates",nullable = false)
+    @JoinColumn(name = "coordinates")
     private Location location;
 
     @ManyToOne
-    @JoinColumn(name = "linkToImage",nullable = false)
+    @JoinColumn(name = "linkToImage")
     private Image image;
+
+    public Message() {}
 
     public Message(MessagePK pk, String messageText, Location location, Image image) {
         this.pk = pk;
@@ -29,8 +31,6 @@ public class Message {
         this.location = location;
         this.image = image;
     }
-
-    public Message() {}
 
     public MessagePK getPk() {
         return pk;

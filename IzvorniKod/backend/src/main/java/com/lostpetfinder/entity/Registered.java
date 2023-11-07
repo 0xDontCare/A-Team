@@ -19,6 +19,8 @@ public class Registered extends User {
     @Size(max = 100)
     private String surname;
 
+    public Registered() {}
+
     public Registered(String name, String surname) {
         this.name = name;
         this.surname = surname;
@@ -30,7 +32,6 @@ public class Registered extends User {
         this.surname = surname;
     }
 
-    public Registered() {}
     public String getName() {
         return name;
     }

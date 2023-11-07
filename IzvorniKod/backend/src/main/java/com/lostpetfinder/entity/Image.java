@@ -16,6 +16,13 @@ public class Image {
     @JoinColumn(name = "petId",nullable = false)
     private Pet pet;
 
+    public Image() {}
+
+    public Image(String linkToImage, Pet pet) {
+        this.linkToImage = linkToImage;
+        this.pet = pet;
+    }
+
     public void setLinkToImage(String linkToImage) {
         this.linkToImage = linkToImage;
     }
@@ -32,12 +39,6 @@ public class Image {
         return pet;
     }
 
-    public Image(String linkToImage, Pet pet) {
-        this.linkToImage = linkToImage;
-        this.pet = pet;
-    }
-
-    public Image() {}
 }
 
 

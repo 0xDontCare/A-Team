@@ -14,7 +14,7 @@ public class MessagePK implements Serializable {
 
     // I'm not sure about this at all, it's 2AM and I'm deadly tired :(
     @ManyToOne(optional = false)
-    @JoinColumn(name = "username")
+    @JoinColumn(name = "username", nullable = false)
     private User user;
 
     @Column(nullable = false)

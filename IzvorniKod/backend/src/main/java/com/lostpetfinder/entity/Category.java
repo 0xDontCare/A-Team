@@ -7,12 +7,6 @@ import jakarta.validation.constraints.Size;
 @Table(name = "categories")
 public class Category {
 
-    public Category() {}
-
-    public Category(String description) {
-        this.description = description;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int categoryId;
@@ -21,6 +15,12 @@ public class Category {
     @Column(nullable = false)
     @Size(max = 1000)
     private String description;
+
+    public Category() {}
+
+    public Category(String description) {
+        this.description = description;
+    }
 
     public int getCategoryId() {
         return categoryId;

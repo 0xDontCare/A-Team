@@ -10,9 +10,12 @@ import jakarta.validation.constraints.Size;
 @Table(name = "shelters")
 @PrimaryKeyJoinColumn(name = "username")
 public class Shelter extends User{
+
     @Column(nullable = false)
     @Size(max = 100)
     private String name;
+
+    public Shelter() {}
 
     public Shelter(String name) {
         this.name = name;
@@ -22,7 +25,6 @@ public class Shelter extends User{
         super(username, password, email, phoneNumber, place);
         this.name = name;
     }
-    public Shelter() {}
 
     public String getName() {
         return name;

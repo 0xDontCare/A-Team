@@ -7,17 +7,6 @@ import jakarta.validation.constraints.Size;
 @Table(name = "pets")
 public class Pet {
 
-    public Pet() {}
-
-    public Pet(String name, String species, int age, String color, String description) {
-        this.petId = petId;
-        this.name = name;
-        this.species = species;
-        this.age = age;
-        this.color = color;
-        this.description = description;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int petId;
@@ -42,6 +31,17 @@ public class Pet {
     @Column(nullable = false)
     @Size(max = 1000)
     private String description;
+
+    public Pet() {}
+
+    public Pet(String name, String species, int age, String color, String description) {
+        this.petId = petId;
+        this.name = name;
+        this.species = species;
+        this.age = age;
+        this.color = color;
+        this.description = description;
+    }
 
     public int getPetId() {
         return petId;

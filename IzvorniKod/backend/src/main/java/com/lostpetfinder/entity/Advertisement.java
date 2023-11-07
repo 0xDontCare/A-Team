@@ -8,16 +8,6 @@ import java.time.LocalDateTime;
 @Table(name = "advertisements")
 public class Advertisement {
 
-    public Advertisement() {}
-
-    public Advertisement(Pet pet, User user, LocalDateTime disappearanceDateTime, Location location, Category category) {
-        this.pet = pet;
-        this.user = user;
-        this.disappearanceDateTime = disappearanceDateTime;
-        this.location = location;
-        this.category = category;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -40,6 +30,16 @@ public class Advertisement {
     @ManyToOne
     @JoinColumn(name = "categoryId",nullable = false)
     private Category category;
+
+    public Advertisement() {}
+
+    public Advertisement(Pet pet, User user, LocalDateTime disappearanceDateTime, Location location, Category category) {
+        this.pet = pet;
+        this.user = user;
+        this.disappearanceDateTime = disappearanceDateTime;
+        this.location = location;
+        this.category = category;
+    }
 
     public int getId() {
         return id;

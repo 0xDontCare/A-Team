@@ -7,14 +7,6 @@ import jakarta.validation.constraints.Size;
 @Table(name = "places")
 public class Place {
 
-    public Place() {}
-
-    public Place(int zipCode, String name, County county) {
-        this.zipCode = zipCode;
-        this.name = name;
-        this.county = county;
-    }
-
     @Id
     private int zipCode;
 
@@ -26,6 +18,14 @@ public class Place {
     @ManyToOne
     @JoinColumn(name = "id",nullable = false)
     private County county;
+
+    public Place() {}
+
+    public Place(int zipCode, String name, County county) {
+        this.zipCode = zipCode;
+        this.name = name;
+        this.county = county;
+    }
 
     public int getZipCode() {
         return zipCode;

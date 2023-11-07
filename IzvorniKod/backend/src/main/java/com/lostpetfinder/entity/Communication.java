@@ -18,11 +18,12 @@ public class Communication {
     })
     private Message message;
 
+    public Communication() {}
+
     public Communication(Pet pet, Message message) {
         this.pet = pet;
         this.message = message;
     }
-    public Communication() {}
 
     public Pet getPet() {
         return pet;

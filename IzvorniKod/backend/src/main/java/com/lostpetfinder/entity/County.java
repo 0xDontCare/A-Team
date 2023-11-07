@@ -7,12 +7,6 @@ import jakarta.validation.constraints.Size;
 @Table(name = "counties")
 public class County {
 
-    public County() {}
-
-    public County(String name) {
-        this.name = name;
-    }
-
     // not sure if counties even have their own assigned value, so I'm just generating it like this for now
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +16,12 @@ public class County {
     @Column(nullable = false)
     @Size(max = 100)
     private String name;
+
+    public County() {}
+
+    public County(String name) {
+        this.name = name;
+    }
 
     public int getCountyId() {
         return countyId;

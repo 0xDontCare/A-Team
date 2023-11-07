@@ -7,13 +7,6 @@ import jakarta.validation.constraints.Size;
 @Table(name = "locations")
 public class Location {
 
-    public Location() {}
-
-    public Location(String coordinates, Place place) {
-        this.coordinates = coordinates;
-        this.place = place;
-    }
-
     // potentially update the min attribute from @Size
     @Id
     @Size(max = 100)
@@ -22,6 +15,13 @@ public class Location {
     @ManyToOne
     @JoinColumn(name = "zipCode",nullable = false)
     private Place place;
+
+    public Location() {}
+
+    public Location(String coordinates, Place place) {
+        this.coordinates = coordinates;
+        this.place = place;
+    }
 
     public String getCoordinates() {
         return coordinates;
