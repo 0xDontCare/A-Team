@@ -1,6 +1,6 @@
 package com.lostpetfinder.controller;
 
-import com.lostpetfinder.dto.PetDTO;
+import com.lostpetfinder.dto.PetInfoDTO;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,7 +19,7 @@ public class PetController {
     pet - change the return data type and implement the method
      */
     @PostMapping
-    public void addNewAdvertisement(@RequestBody(required = false) PetDTO dto) {}
+    public void addNewAdvertisement(@RequestBody(required = false) PetInfoDTO dto) {}
 
     /*
     returns info about the selected pet - change the return
