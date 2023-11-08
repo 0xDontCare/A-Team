@@ -64,14 +64,13 @@
 			\item Slika
 			\item Poruka
 			\item Kategorija
-			\item Komunikacija
 			
 		\end{packed_item}
 		
 			\subsection{Opis tablica}
 			
 
-				\textit{Svaku tablicu je potrebno opisati po zadanom predlošku. Lijevo se nalazi točno ime varijable u bazi podataka, u sredini se nalazi tip podataka, a desno se nalazi opis varijable. Svjetlozelenom bojom označite primarni ključ. Svjetlo plavom označite strani ključ}
+				\noindent \textbf{Korisnik} Entitet sadržava sve važne informacije o korisniku web-aplikacije. Atributi su sljedeći: korisnickoIme, lozinka, email, telefon, postBr. Primarni ključ ovog entiteta je atribut korisnickoIme. Entitet je povezan s entitetom Mjesto pomoću atributa postBr kroz vezu \textit{Many-to-One}, a s entitetima Registrirani i Skloniste, kao specijalizacije, pomoću atributa korisnickoIme. Postoji i povezanost vezom \textit{One-to-Many} s identifikacijskim slabim entitetom Poruka pomoću atributa korisnickoIme.
 				
 				
 				\begin{longtblr}[
@@ -82,14 +81,198 @@
 						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-					\hline \SetCell[c=3]{c}{\textbf{korisnik - ime tablice}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-					korisnickoIme	& VARCHAR &   	\\ \hline 
-					email & VARCHAR &   \\ \hline 
-					ime & VARCHAR	&  		\\ \hline 
-					\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
+					\hline \SetCell[c=3]{c}{\textbf{Korisnik }}	 \\ \hline[3pt]
+					\SetCell{LightGreen}korisnickoIme & VARCHAR	&  	jedinstveno korisničko ime  	\\ \hline
+					lozinka	& VARCHAR & hash lozinke  	\\ \hline 
+					email & VARCHAR & e-mail adresa korisnika  \\ \hline 
+					telefon & VARCHAR	& telefonski broj korisnika 		\\ \hline 
+					\SetCell{LightBlue} postBr	& INT & poštanski broj mjesta stanovanja korisnika  	\\ \hline 
 				\end{longtblr}
 				
+				
+				\noindent \textbf{Registrirani} Entitet je specijalizacija entiteta Korisnik i sadrži dodatne podatke o registriranom korisniku. Atributi entiteta su ime, prezime i korisnickoIme. Entitet je kao specijalizacija povezan entitetom Korisnik kroz atribut korisnickoIme.
+				
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{Registrirani }}	 \\ \hline[3pt]
+					ime	& VARCHAR & ime registriranog korisnika  	\\ \hline 
+					prezime & VARCHAR & prezime registriranog korisnika  \\ \hline 
+					\SetCell{LightBlue} korisnickoIme	& VARCHAR & jedinstveno korisničko ime	\\ \hline 
+				\end{longtblr}
+				
+				
+				\noindent \textbf{Skloniste} Entitet je specijalizacija entiteta Korisnik i sadrži dodatne podatke o skloništu za životinje. Atributi entiteta su nazivSklonista i korisnickoIme. Entitet je kao specijalizacija povezan entitetom Korisnik kroz atribut korisnickoIme.
+				
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{Skloniste }}	 \\ \hline[3pt]
+					nazivSklonista & VARCHAR	&  	naziv skloništa za životinje  	\\ \hline
+					\SetCell{LightBlue}korisnickoIme	& VARCHAR & jedinstveno korisničko ime  	\\ \hline
+				\end{longtblr}
+				
+				
+				\noindent \textbf{Ljubimac} Entitet sadržava sve važne podatke o kućnome ljubimcu. Atributi entiteta su: sifLjubimac, ime, vrsta, starost, boja, opis. Primarni ključ ovog entiteta je atribut sifLjubimac. 
+				Entitet je povezan vezom \textit{One-to-Many} kroz atribut sifLjubimac s entitetom Slika. Također, postoji veza \textit{One-to-Many} s entitetom Oglas pomoću atributa sifOglas.
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{Ljubimac }}	 \\ \hline[3pt]
+					\SetCell{LightGreen}sifLjubimac & INT	&  	jedinstvena šifra ljubimca  	\\ \hline
+					ime	& VARCHAR & ime na koje se ljubimac odaziva  	\\ \hline 
+					vrsta & VARCHAR & vrsta ljubimca  \\ \hline 
+					starost & INT	& starost ljubimca 		\\ \hline 
+					boja & VARCHAR & boja ljubimca  \\ \hline 
+					opis & VARCHAR	& dodatan opis ljubimca 		\\ \hline 
+				\end{longtblr}
+				
+				
+				\noindent \textbf{Oglas} Entitet sadržava sve važne informacije o oglasu za kućnog ljubimca. Atributi su sljedeći: sifOglas, datumVrijemeNestanka, koordinate, sifLjubimac, sifKategorija, korisnickoIme. Primarni ključ ovog entiteta je atribut sifOglas. Entitet je u vezi \textit{Many-to-One} s entitetom Lokacija pomoću atributa koordinate, u vezi \textit{Many-to-One} s entitetom Ljubimac pomoću atributa sifLjubimac, u vezi \textit{Many-to-One} s entitetom Kategorija pomoću atributa sifKategorija te u vezi \textit{Many-to-One} s entitetom Korisnik pomoću atributa korisnickoIme.
+				
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[10,l]|X[6, l]|X[16, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{Oglas }}	 \\ \hline[3pt]
+					\SetCell{LightGreen}sifOglas & INT	&  	jedinstveni identifikator oglas  	\\ \hline
+					datumVrijemeNestanka	& TIMESTAMP & datum i vrijeme nestanka ljubimca  	\\ \hline 
+					\SetCell{LightBlue}koordinate & VARCHAR & koordinate lokacije nestanka ljubimca  \\ \hline 
+					\SetCell{LightBlue}sifLjubimac & INT	& jedinstveni identifikator ljubimca 		\\ \hline 
+					\SetCell{LightBlue} sifKategorija	& INT & jedinstveni identifikator kategorije oglasa  	\\ \hline
+					\SetCell{LightBlue}korisnickoIme & VARCHAR & jedinstveno korisničko ime korisnika koji je postavio oglas \\ \hline
+					 
+				\end{longtblr}
+				
+				
+				\noindent \textbf{Lokacija} Entitet sadržava podatke o lokaciji. Atributi entiteta su koordinate i postBr, gdje je primarni ključ atribut koordinate. Postoji veza \textit{Many-to-One} s entitetom Mjesto kroz atribut postBr.
+				
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{Lokacija }}	 \\ \hline[3pt]
+					\SetCell{LightGreen}koordinate & VARCHAR	&  	jedinstvene koordinate lokacije  	\\ \hline
+					\SetCell{LightBlue} postBr	& INT & poštanski broj mjesta	\\ \hline 
+				\end{longtblr}
+				
+				
+				\noindent \textbf{Mjesto} Entitet je sastavljen od podataka vezanih za mjesto pomoću atributa postBr, koji je primarni ključ, nazivMjesto i sifZup. Postoje veze \textit{One-to-Many} pomoću atributa postBr s entitetima Lokacija i Korisnik te veza \textit{Many-to-One} s entitetom Zupanija pomoću atributa sifZup.
+				
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{Mjesto }}	 \\ \hline[3pt]
+					\SetCell{LightGreen}postBr & INT	&  	poštanski broj mjesta	\\ \hline
+					nazivMjesto	& VARCHAR & naziv mjesta  	\\ \hline 
+					\SetCell{LightBlue} sifZup	& INT & jedinstveni identifikator županije	\\ \hline 
+				\end{longtblr}
+				
+				
+				\noindent \textbf{Zupanija} Entitet je sastavljen od podataka vezanih za županiju pomoću atributa sifZup i nazivZup. Primarni ključ je sifZup. Postoji veza \textit{One-to-Many} pomoću atributa sifZup s entitetom Mjesto.
+				
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{Zupanija }}	 \\ \hline[3pt]
+					\SetCell{LightGreen}sifZup & INT	&  	jedinstveni identifikator županije  	\\ \hline
+					nazivZup	& VARCHAR & naziv županije  	\\ \hline 
+				\end{longtblr}
+				
+				
+				\noindent \textbf{Poruka} Entitet sadržava sve važne informacije o poruci te je oblikovan kao identifikacijski slabi entitet. Atributi su sljedeći: tekstPoruke, datumVrijemeSlanja, korisnickoIme, koordinate, vezaNaSliku i sifOglas.  Entitet je povezan s entitetom Korisnik pomoću atributa korisnickoIme kroz vezu \textit{Many-to-One}, s entitetom Lokacija kroz vezu \textit{Many-to-One} pomoću atributa koordinate te s entitetom Oglas kroz vezu \textit{Many-to-One} pomoću atributa sifOglas.
+				
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[9,l]|X[6, l]|X[17, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{Poruka }}	 \\ \hline[3pt]
+					tekstPoruke & VARCHAR & tekst poruke \\ \hline
+					\SetCell{LightBlue}datumVrijemeSlanja & TIMESTAMP	&  	datum i vrijeme slanja poruke  	\\ \hline
+					\SetCell{LightBlue}korisnickoIme	& VARCHAR & jedinstveno korisnicko ime  	\\ \hline 
+					\SetCell{LightBlue}koordinate & VARCHAR & jedinstvene koordinate lokacije  \\ \hline 
+					\SetCell{LightBlue}vezaNaSliku & VARCHAR	& jedinstvena poveznica do slike 		\\ \hline 
+					\SetCell{LightBlue}sifOglas & INT	& jedinstveni identifikator oglasa 		\\ \hline 
+				\end{longtblr}
+				
+				
+				\noindent \textbf{Slika} Entitet sadržava podatke o slici. Atributi su vezaNaSliku, koji je primarni ključ, i sifLjubimac. S entitetom su povezani: Ljubimac s vezom \textit{Many-to-One} pomoću atributa sifLjubimac, Poruka s vezom \textit{One-to-Many} uz pomoć atributa vezaNaSliku.
+				
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{Slika }}	 \\ \hline[3pt]
+					\SetCell{LightGreen}vezaNaSliku & VARCHAR	&  	jedinstvena poveznica do slike  	\\ \hline
+					\SetCell{LightBlue}sifLjubimac	& INT & jedinstveni identifikator ljubimca  	\\ \hline  
+				\end{longtblr}
+				
+				
+				\noindent \textbf{Kategorija} Entitet se sastoji od podataka o kategoriji: sifKategorija (primarni ključ) i opisKategorija. Postoji veza \textit{One-to-Many} između entiteta Kategorija i Oglasa kroz atribut sifKategorija.
+				
+				
+				\begin{longtblr}[
+					label=none,
+					entry=none
+					]{
+						width = \textwidth,
+						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						rowhead = 1,
+					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+					\hline \SetCell[c=3]{c}{\textbf{Kategorija }}	 \\ \hline[3pt]
+					\SetCell{LightGreen}sifKategorija & INT	&  	jedinstveni identifikator kategorije  	\\ \hline
+					opisKategorija	& VARCHAR & opis kategorije  	\\ \hline 
+				\end{longtblr}
 				
 			
 			\subsection{Dijagram baze podataka}
