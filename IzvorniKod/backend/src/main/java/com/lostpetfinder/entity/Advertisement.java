@@ -10,7 +10,7 @@ public class Advertisement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long advertisementId;
 
     @ManyToOne
     @JoinColumn(name = "petId",nullable = false)
@@ -41,8 +41,8 @@ public class Advertisement {
         this.category = category;
     }
 
-    public int getId() {
-        return id;
+    public Long getAdvertisementId() {
+        return advertisementId;
     }
 
     public Pet getPet() {
@@ -53,7 +53,7 @@ public class Advertisement {
         this.pet = pet;
     }
 
-        public User getUser() {
+    public User getUser() {
         return user;
     }
 

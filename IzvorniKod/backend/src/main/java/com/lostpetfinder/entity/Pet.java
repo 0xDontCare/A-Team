@@ -9,7 +9,7 @@ public class Pet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int petId;
+    private Long petId;
 
     // potentially add @NotNull annotations and update the min attribute from @Size where needed
 
@@ -43,7 +43,7 @@ public class Pet {
         this.description = description;
     }
 
-    public int getPetId() {
+    public Long getPetId() {
         return petId;
     }
 

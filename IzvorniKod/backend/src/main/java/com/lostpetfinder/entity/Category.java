@@ -9,7 +9,7 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int categoryId;
+    private Long categoryId;
 
     // potentially update the min attribute from @Size where needed
     @Column(nullable = false)
@@ -22,7 +22,7 @@ public class Category {
         this.description = description;
     }
 
-    public int getCategoryId() {
+    public Long getCategoryId() {
         return categoryId;
     }
 

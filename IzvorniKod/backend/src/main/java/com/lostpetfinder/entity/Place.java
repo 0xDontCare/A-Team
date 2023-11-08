@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 public class Place {
 
     @Id
-    private int zipCode;
+    private Long zipCode;
 
     // potentially update the min attribute from @Size
     @Column(nullable = false)
@@ -21,17 +21,17 @@ public class Place {
 
     public Place() {}
 
-    public Place(int zipCode, String name, County county) {
+    public Place(Long zipCode, String name, County county) {
         this.zipCode = zipCode;
         this.name = name;
         this.county = county;
     }
 
-    public int getZipCode() {
+    public Long getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(int zipCode) {
+    public void setZipCode(Long zipCode) {
         this.zipCode = zipCode;
     }
 
