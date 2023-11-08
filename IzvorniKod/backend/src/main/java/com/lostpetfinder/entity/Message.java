@@ -23,13 +23,26 @@ public class Message {
     @JoinColumn(name = "linkToImage")
     private Image image;
 
+    @ManyToOne
+    @JoinColumn(name = "advertisementId", nullable = false)
+    private Advertisement advertisementId;
+
     public Message() {}
 
-    public Message(MessagePK pk, String messageText, Location location, Image image) {
+    public Message(MessagePK pk, String messageText, Location location, Image image, Advertisement advertisementId) {
         this.pk = pk;
         this.messageText = messageText;
         this.location = location;
         this.image = image;
+        this.advertisementId = advertisementId;
+    }
+
+    public Advertisement getAdvertisementId() {
+        return advertisementId;
+    }
+
+    public void setAdvertisementId(Advertisement advertisementId) {
+        this.advertisementId = advertisementId;
     }
 
     public MessagePK getPk() {

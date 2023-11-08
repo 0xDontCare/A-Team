@@ -11,5 +11,5 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
 
     boolean existsByZipCodeAndNameNot(Long zipCode, String name);
 
-    List<Place> findAllByCountyId(Long countyId);
+    List<Place> findAllByCountyCountyId(Long countyId);
 }

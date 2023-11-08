@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AdvertisementRepository extends JpaRepository<Advertisement, Long> {
-    Optional<Advertisement> findByCategoryId(Long categoryId);
+    Optional<Advertisement> findByCategoryCategoryId(Long categoryId);
 
-    boolean existsByCategoryIdNot(Long categoryId);
+    boolean existsByCategoryCategoryIdNot(Long categoryId);
 
     // multiple advertisements for the same pet??
-    List<Advertisement> findAllByPetId(Long petId);
+    List<Advertisement> findAllByPetPetId(Long petId);
 
     // ...
 

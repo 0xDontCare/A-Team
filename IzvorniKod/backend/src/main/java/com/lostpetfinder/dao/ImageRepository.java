@@ -1,9 +1,6 @@
 package com.lostpetfinder.dao;
 
-import com.lostpetfinder.entity.Communication;
-import com.lostpetfinder.entity.County;
 import com.lostpetfinder.entity.Image;
-import com.lostpetfinder.entity.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -14,5 +11,5 @@ public interface ImageRepository extends JpaRepository<Image, String> {
 
     boolean existsByLinkToImageNot(String linkToImage);
 
-    List<Image> findAllByPetId(Long petId);
+    List<Image> findAllByPetPetId(Long petId);
 }

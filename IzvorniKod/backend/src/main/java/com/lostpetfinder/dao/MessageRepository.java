@@ -9,9 +9,9 @@ import java.util.Optional;
 public interface MessageRepository extends JpaRepository<Message, MessagePK> {
 
     // not sure if this works
-    Optional<Message> findByMessagePK(MessagePK messagePK);
+    Optional<Message> findByPk(MessagePK pk);
 
-    boolean existsByMessagePKNot(MessagePK messagePK);
+    boolean existsByPkNot(MessagePK pk);
 
     // not sure if we need methods to return all messages regarding a specific location or image
 

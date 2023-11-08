@@ -15,5 +15,5 @@ public interface PetRepository extends JpaRepository<Pet, Long> {
 
     List<Pet> findAllByName(String name);
 
-    List<Pet> findAllByColorAnd(String color);
+    List<Pet> findAllByColor(String color);
 }
