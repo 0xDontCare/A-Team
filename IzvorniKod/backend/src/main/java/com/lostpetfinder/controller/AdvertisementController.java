@@ -31,20 +31,20 @@ public class AdvertisementController {
 
     // potentially change the data type of the returned value to Advertisement?
     @GetMapping("/{petID}")
-    public AdvertisementInfoDTO seeAdvertisementInfo(@PathVariable Long petId) {
+    public AdvertisementInfoDTO seeAdvertisementInfo(@PathVariable("petID") long petId) {
         return advertisementService.seeAdvertisementInfo(petId);
     }
 
     // potentially change the data type of the returned value to Advertisement?
-    @PutMapping("/{petID}")
-    public AdvertisementInfoDTO changeAdvertisement(@PathVariable Long petId, @RequestBody AdvertisementInfoDTO dto) {
-        return advertisementService.changeAdvertisement(petId, dto);
+    @PutMapping("/")
+    public AdvertisementInfoDTO changeAdvertisement(@RequestBody AdvertisementInfoDTO dto) {
+        return advertisementService.changeAdvertisement(dto);
     }
 
     // potentially change the data type of the returned value to Advertisement?
     @DeleteMapping("/{petID}")
-    public AdvertisementInfoDTO deleteAdvertisement(@PathVariable Long advertisementid) {
-        return advertisementService.deleteAdvertisement(advertisementid);
+    public AdvertisementInfoDTO deleteAdvertisement(@PathVariable("petID") Long petId) {
+        return advertisementService.deleteAdvertisement(petId);
     }
 
 }

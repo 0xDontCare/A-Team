@@ -9,16 +9,20 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AdvertisementRepository extends JpaRepository<Advertisement, Long> {
-    /*
-    Optional<Advertisement> findByCategoryCategoryId(Long categoryId);
 
-    boolean existsByCategoryCategoryIdNot(Long categoryId);
+    Optional<Advertisement> findByAdvertisementId(Long advertisementId);
+
+    //Optional<Advertisement> findByCategoryCategoryId(Long categoryId);
+
+    //boolean existsByCategoryCategoryIdNot(Long categoryId);
+
+    boolean existsByPetPetIdNot(Long petId);
 
     // multiple advertisements for the same pet??
-    List<Advertisement> findAllByPetPetId(Long petId);
+    Optional<Advertisement> findByPetPetId(Long petId);
 
     // ...
-     */
-    @Query("SELECT a FROM Advertisement a WHERE a.pet.petId = :petId")
-    Advertisement findAdvertisementByPetId(@Param("petId") Long petId);
+
+//    @Query("SELECT a FROM Advertisement a WHERE a.pet.petId = :petId")
+//    Advertisement findAdvertisementByPetId(@Param("petId") Long petId);
 }

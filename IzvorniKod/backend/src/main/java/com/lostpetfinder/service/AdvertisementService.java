@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class AdvertisementService {
@@ -40,45 +41,25 @@ public class AdvertisementService {
     }
 
     public AdvertisementInfoDTO seeAdvertisementInfo(Long petId) {
-        Advertisement advertisement = advertisementRepository.findAdvertisementByPetId(petId);
-
-        if (advertisement != null) {
-            return new AdvertisementInfoDTO(advertisement.getPet().getPetId(), advertisement.getPet().getName());
-        } else {
-            return null;
-        }
+        return new AdvertisementInfoDTO(advertisementRepository.findByPetPetId(petId).orElseThrow()) ;
     }
 
-    public AdvertisementInfoDTO changeAdvertisement(Long petId, AdvertisementInfoDTO dto) {
-        Advertisement advertisement = advertisementRepository.findAdvertisementByPetId(petId);
-
-        if (advertisement != null) {
-            // Update Advertisement entity with information from AdvertisementInfoDTO
-            advertisement.setPetName(dto.getPetName());
-
-            // Save the updated entity back to the database
-            Advertisement updatedAdvertisement = advertisementRepository.save(advertisement);
-
-            // Create and return the updated AdvertisementInfoDTO
-            return new AdvertisementInfoDTO(updatedAdvertisement.getPetId(), updatedAdvertisement.getPetName());
-        } else {
-            System.out.println("Advertisement not found for petId: " + petId);
-            return null;
+    public AdvertisementInfoDTO changeAdvertisement(AdvertisementInfoDTO dto) {
+        Long petId = dto.getPetId();
+        if (!advertisementRepository.existsByPetPetIdNot(petId)) {
+            throw new NoSuchElementException();
         }
+        Advertisement changedAdvertisement = advertisementRepository.findByPetPetId(petId).orElseThrow();
+        changedAdvertisement.getPet().setName(dto.getPetName());
+        advertisementRepository.save(changedAdvertisement);
+
+        return dto;
     }
 
-    public AdvertisementInfoDTO deleteAdvertisement(Long advertisementId) {
-        Advertisement advertisement = advertisementRepository.findById(advertisementId).orElse(null);
 
-        if (advertisement != null) {
-            advertisementRepository.delete(advertisement);
-            System.out.println("Advertisement with id " + advertisementId + " has been deleted.");
-
-            // Create and return AdvertisementInfoDTO with necessary information
-            return new AdvertisementInfoDTO(advertisement.getPetId(), advertisement.getPetName());
-        } else {
-            System.out.println("Advertisement not found for id: " + advertisementId);
-            return null;
-        }
+    public AdvertisementInfoDTO deleteAdvertisement(Long petId) {
+        Advertisement advertisement = advertisementRepository.findByPetPetId(petId).orElseThrow();
+        advertisementRepository.delete(advertisement);
+        return new AdvertisementInfoDTO(advertisement);
     }
 }

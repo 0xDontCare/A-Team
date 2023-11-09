@@ -1,5 +1,6 @@
 package com.lostpetfinder.entity;
 
+import com.lostpetfinder.dto.AdvertisementInfoDTO;
 import com.lostpetfinder.dto.PetInfoDTO;
 import jakarta.persistence.*;
 
@@ -17,16 +18,7 @@ public class Advertisement {
     @JoinColumn(name = "petId",nullable = false)
     private Pet pet;
 
-    private String petName;
-    private Long petId;
 
-    public String getPetName() {
-        return petName;
-    }
-
-    public Long getPetId() {
-        return petId;
-    }
     /*
     @ManyToOne
     @JoinColumn(name = "username",nullable = false)
@@ -109,7 +101,4 @@ public class Advertisement {
         this.category = category;
     }
 
-    public void setPetName(String petName) {
-        this.petName = petName;
-    }
 }
