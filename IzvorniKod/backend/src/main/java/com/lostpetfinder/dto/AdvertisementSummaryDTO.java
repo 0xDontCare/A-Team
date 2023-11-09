@@ -2,18 +2,18 @@ package com.lostpetfinder.dto;
 
 import com.lostpetfinder.entity.Advertisement;
 
-public class AdvertisementInfoDTO {
+public class AdvertisementSummaryDTO {
 
     // not sending the image link for now
     private Long petId;
     private String petName;
 
-    public AdvertisementInfoDTO(Long petId, String petName) {
+    public AdvertisementSummaryDTO(Long petId, String petName) {
         this.petId = petId;
         this.petName = petName;
     }
 
-    public AdvertisementInfoDTO(Advertisement advertisement) {
+    public AdvertisementSummaryDTO(Advertisement advertisement) {
         this.petId = advertisement.getPet().getPetId();
         this.petName = advertisement.getPet().getName();
     }

@@ -2,15 +2,15 @@ package com.lostpetfinder.service;
 
 import com.lostpetfinder.dao.AdvertisementRepository;
 import com.lostpetfinder.dao.PetRepository;
-import com.lostpetfinder.dto.PetInfoDTO;
+import com.lostpetfinder.dto.AdvertisementDetailsDTO;
 import com.lostpetfinder.entity.Advertisement;
 import com.lostpetfinder.entity.Pet;
-import com.lostpetfinder.dto.AdvertisementInfoDTO;
+import com.lostpetfinder.dto.AdvertisementSummaryDTO;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class AdvertisementService {
@@ -24,42 +24,47 @@ public class AdvertisementService {
     }
 
     // adjust later so it only returns active ads
-    public List<AdvertisementInfoDTO> getAllAdvertisements() {
+    public List<AdvertisementSummaryDTO> getAllAdvertisements() {
         return advertisementRepository
                 .findAll()
                 .stream()
                 .map(Advertisement::getPet)
-                .map(pet -> new AdvertisementInfoDTO(pet.getPetId(), pet.getName()))
+                .map(pet -> new AdvertisementSummaryDTO(pet.getPetId(), pet.getName()))
                 .toList();
     }
 
-    // potentially change the data type of the returned value to AdvertisementInfoDTO?
-    public Advertisement addNewAdvertisement(PetInfoDTO dto) {
+    // potentially just return nothing? i don't see any point in returning anything
+    public AdvertisementDetailsDTO addNewAdvertisement(AdvertisementDetailsDTO dto) {
         Pet newPet = petRepository.save(new Pet(dto));
         Advertisement newAdvertisement = new Advertisement(newPet, dto);
-        return advertisementRepository.save(newAdvertisement);
+        return new AdvertisementDetailsDTO(advertisementRepository.save(newAdvertisement));
     }
 
-    public AdvertisementInfoDTO seeAdvertisementInfo(Long petId) {
-        return new AdvertisementInfoDTO(advertisementRepository.findByPetPetId(petId).orElseThrow()) ;
+    // add the exception handling / completely remove it
+    public AdvertisementDetailsDTO seeAdvertisementInfo(Long petId) {
+        Advertisement advertisement = advertisementRepository
+                .findByPetPetId(petId)
+                .orElseThrow();
+        return new AdvertisementDetailsDTO(advertisement);
     }
 
-    public AdvertisementInfoDTO changeAdvertisement(AdvertisementInfoDTO dto) {
-        Long petId = dto.getPetId();
+    // potentially just return nothing? i don't see any point in returning anything
+    // add the exception handling / completely remove it
+    public AdvertisementDetailsDTO changeAdvertisement(long petId, AdvertisementDetailsDTO dto) {
         if (!advertisementRepository.existsByPetPetIdNot(petId)) {
             throw new NoSuchElementException();
         }
         Advertisement changedAdvertisement = advertisementRepository.findByPetPetId(petId).orElseThrow();
-        changedAdvertisement.getPet().setName(dto.getPetName());
-        advertisementRepository.save(changedAdvertisement);
-
-        return dto;
+        changedAdvertisement.updateAdvertisement(dto);
+        return new AdvertisementDetailsDTO(advertisementRepository.save(changedAdvertisement));
     }
 
-
-    public AdvertisementInfoDTO deleteAdvertisement(Long petId) {
+    // adjust later so it only changes the 'deleted' flag in the Advertisement entity
+    // add the exception handling
+    public void deleteAdvertisement(Long petId) {
         Advertisement advertisement = advertisementRepository.findByPetPetId(petId).orElseThrow();
         advertisementRepository.delete(advertisement);
-        return new AdvertisementInfoDTO(advertisement);
+        petRepository.delete(advertisement.getPet());
     }
+
 }

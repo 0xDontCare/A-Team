@@ -1,7 +1,6 @@
 package com.lostpetfinder.entity;
 
-import com.lostpetfinder.dto.AdvertisementInfoDTO;
-import com.lostpetfinder.dto.PetInfoDTO;
+import com.lostpetfinder.dto.AdvertisementDetailsDTO;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -45,12 +44,20 @@ public class Advertisement {
 
     public Advertisement() {}
 
-    public Advertisement(Pet pet, PetInfoDTO dto) {
+    // change when possible
+    public Advertisement(Pet pet, AdvertisementDetailsDTO dto) {
         this.pet = pet;
-        this.user = "Luka"; // change when it's possible to get user info
+        this.user = "Luka";
         this.disappearanceDateTime = dto.getDisappearanceDateTime();
-        this.location = dto.getDisappearanceLocation(); // change when it's possible to create the Location object properly
-        this.category = "Traga se"; // change when the data for the 'categories' table is initialized
+        this.location = dto.getDisappearanceLocation();
+        this.category = "Traga se";
+    }
+
+    public void updateAdvertisement(AdvertisementDetailsDTO dto) {
+        pet.updatePet(dto);
+        this.disappearanceDateTime = dto.getDisappearanceDateTime();
+        this.location = dto.getDisappearanceLocation();
+        // this.category = dto.getCategory;
     }
 
     public Long getAdvertisementId() {

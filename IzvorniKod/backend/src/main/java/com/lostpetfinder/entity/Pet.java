@@ -1,6 +1,6 @@
 package com.lostpetfinder.entity;
 
-import com.lostpetfinder.dto.PetInfoDTO;
+import com.lostpetfinder.dto.AdvertisementDetailsDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
@@ -35,7 +35,17 @@ public class Pet {
 
     public Pet() {}
 
-    public Pet(PetInfoDTO dto) {
+    // possibly change
+    public Pet(AdvertisementDetailsDTO dto) {
+        this.name = dto.getName();
+        this.species = dto.getSpecies();
+        this.age = dto.getAge();
+        this.color = dto.getColor();
+        this.description = dto.getDescription();
+    }
+
+    // possibly change
+    public void updatePet(AdvertisementDetailsDTO dto) {
         this.name = dto.getName();
         this.species = dto.getSpecies();
         this.age = dto.getAge();
