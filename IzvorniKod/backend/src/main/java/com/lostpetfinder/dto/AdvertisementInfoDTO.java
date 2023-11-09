@@ -19,4 +19,7 @@ public class AdvertisementInfoDTO {
         return petName;
     }
 
+    public void setPetName(String petName) {
+        this.petName = petName;
+    }
 }

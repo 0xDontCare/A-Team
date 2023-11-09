@@ -17,6 +17,16 @@ public class Advertisement {
     @JoinColumn(name = "petId",nullable = false)
     private Pet pet;
 
+    private String petName;
+    private Long petId;
+
+    public String getPetName() {
+        return petName;
+    }
+
+    public Long getPetId() {
+        return petId;
+    }
     /*
     @ManyToOne
     @JoinColumn(name = "username",nullable = false)
@@ -97,5 +107,9 @@ public class Advertisement {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public void setPetName(String petName) {
+        this.petName = petName;
     }
 }
