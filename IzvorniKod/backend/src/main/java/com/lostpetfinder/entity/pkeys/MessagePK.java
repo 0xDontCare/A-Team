@@ -1,5 +1,5 @@
 package com.lostpetfinder.entity.pkeys;
-
+/*
 import com.lostpetfinder.entity.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -36,3 +36,4 @@ public class MessagePK implements Serializable {
         this.sendingDateTime = sendingDateTime;
     }
 }
+*/

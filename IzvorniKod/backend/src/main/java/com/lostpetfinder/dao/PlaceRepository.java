@@ -1,5 +1,5 @@
 package com.lostpetfinder.dao;
-
+/*
 import com.lostpetfinder.entity.Place;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,3 +13,4 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
 
     List<Place> findAllByCountyCountyId(Long countyId);
 }
+*/

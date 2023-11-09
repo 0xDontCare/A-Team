@@ -1,5 +1,6 @@
 package com.lostpetfinder.dao;
 
+/*
 import com.lostpetfinder.entity.County;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -10,3 +11,4 @@ public interface CountyRepository extends JpaRepository<County, Long> {
 
     boolean existsByCountyIdAndNameNot(Long countyId, String name);
 }
+*/

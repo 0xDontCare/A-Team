@@ -1,5 +1,6 @@
 package com.lostpetfinder.entity;
 
+import com.lostpetfinder.dto.PetInfoDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
@@ -22,7 +23,7 @@ public class Pet {
     private String species;
 
     @Column(nullable = false)
-    private int age;
+    private Integer age;
 
     @Column(nullable = false)
     @Size(max = 100)
@@ -34,13 +35,12 @@ public class Pet {
 
     public Pet() {}
 
-    public Pet(String name, String species, int age, String color, String description) {
-        this.petId = petId;
-        this.name = name;
-        this.species = species;
-        this.age = age;
-        this.color = color;
-        this.description = description;
+    public Pet(PetInfoDTO dto) {
+        this.name = dto.getName();
+        this.species = dto.getSpecies();
+        this.age = dto.getAge();
+        this.color = dto.getColor();
+        this.description = dto.getDescription();
     }
 
     public Long getPetId() {

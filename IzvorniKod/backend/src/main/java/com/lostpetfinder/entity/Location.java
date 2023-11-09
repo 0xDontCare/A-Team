@@ -2,7 +2,7 @@ package com.lostpetfinder.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-
+/*
 @Entity
 @Table(name = "locations")
 public class Location {
@@ -40,3 +40,4 @@ public class Location {
     }
 
 }
+*/

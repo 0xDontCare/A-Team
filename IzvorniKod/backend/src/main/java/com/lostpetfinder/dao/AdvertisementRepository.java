@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AdvertisementRepository extends JpaRepository<Advertisement, Long> {
+    /*
     Optional<Advertisement> findByCategoryCategoryId(Long categoryId);
 
     boolean existsByCategoryCategoryIdNot(Long categoryId);
@@ -17,6 +18,6 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, Lo
     List<Advertisement> findAllByPetPetId(Long petId);
 
     // ...
-
+     */
 
 }

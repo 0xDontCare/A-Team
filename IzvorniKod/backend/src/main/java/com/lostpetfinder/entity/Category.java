@@ -3,6 +3,7 @@ package com.lostpetfinder.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
+/*
 @Entity
 @Table(name = "categories")
 public class Category {
@@ -34,3 +35,4 @@ public class Category {
         this.description = description;
     }
 }
+*/

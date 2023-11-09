@@ -1,5 +1,5 @@
 package com.lostpetfinder.dao;
-
+/*
 import com.lostpetfinder.entity.Location;
 import com.lostpetfinder.entity.Place;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,3 +15,4 @@ public interface LocationRepository extends JpaRepository<Location, String> {
     // option to get all locations where a pet was last seen?
     List<Location> findAllByPlace(Place place);
 }
+*/

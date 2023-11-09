@@ -2,7 +2,7 @@ package com.lostpetfinder.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-
+/*
 @Entity
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -81,3 +81,4 @@ public class User {
     }
 
 }
+*/

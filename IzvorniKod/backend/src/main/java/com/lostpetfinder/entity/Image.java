@@ -1,8 +1,9 @@
 package com.lostpetfinder.entity;
-
+/*
 import com.lostpetfinder.entity.pkeys.MessagePK;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+
 @Entity
 @Table(name = "images")
 public class Image {
@@ -40,5 +41,5 @@ public class Image {
     }
 
 }
-
+*/
 

@@ -1,5 +1,5 @@
 package com.lostpetfinder.dao;
-
+/*
 import com.lostpetfinder.entity.Message;
 import com.lostpetfinder.entity.pkeys.MessagePK;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,3 +16,4 @@ public interface MessageRepository extends JpaRepository<Message, MessagePK> {
     // not sure if we need methods to return all messages regarding a specific location or image
 
 }
+*/

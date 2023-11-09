@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
-
+/*
 @Entity
 @Table(name = "shelters")
 @PrimaryKeyJoinColumn(name = "username")
@@ -34,3 +34,4 @@ public class Shelter extends User{
         this.name = name;
     }
 }
+*/

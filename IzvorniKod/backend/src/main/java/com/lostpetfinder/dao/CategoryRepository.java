@@ -1,5 +1,5 @@
 package com.lostpetfinder.dao;
-
+/*
 import com.lostpetfinder.entity.Advertisement;
 import com.lostpetfinder.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,3 +13,4 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     boolean existsByCategoryIdNot(Long categoryId);
 
 }
+*/

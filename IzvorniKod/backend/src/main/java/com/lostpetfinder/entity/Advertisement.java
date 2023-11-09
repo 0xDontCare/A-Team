@@ -1,5 +1,6 @@
 package com.lostpetfinder.entity;
 
+import com.lostpetfinder.dto.PetInfoDTO;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -16,33 +17,46 @@ public class Advertisement {
     @JoinColumn(name = "petId",nullable = false)
     private Pet pet;
 
+    /*
     @ManyToOne
     @JoinColumn(name = "username",nullable = false)
-    private User user;
+     */
+    @Column(nullable = false, name = "username")
+    private String user;
 
     @Column(nullable = false)
     private LocalDateTime disappearanceDateTime;
 
+    /*
     @ManyToOne
     @JoinColumn(name = "coordinates")
-    private Location location;
+     */
+    @Column(nullable = false)
+    private String location;
 
+    /*
     @ManyToOne
     @JoinColumn(name = "categoryId",nullable = false)
-    private Category category;
+     */
+    @Column(nullable = false)
+    private String category;
 
     public Advertisement() {}
 
-    public Advertisement(Pet pet, User user, LocalDateTime disappearanceDateTime, Location location, Category category) {
+    public Advertisement(Pet pet, PetInfoDTO dto) {
         this.pet = pet;
-        this.user = user;
-        this.disappearanceDateTime = disappearanceDateTime;
-        this.location = location;
-        this.category = category;
+        this.user = "Luka"; // change when it's possible to get user info
+        this.disappearanceDateTime = dto.getDisappearanceDateTime();
+        this.location = dto.getDisappearanceLocation(); // change when it's possible to create the Location object properly
+        this.category = "Traga se"; // change when the data for the 'categories' table is initialized
     }
 
     public Long getAdvertisementId() {
         return advertisementId;
+    }
+
+    public void setAdvertisementId(Long advertisementId) {
+        this.advertisementId = advertisementId;
     }
 
     public Pet getPet() {
@@ -53,11 +67,11 @@ public class Advertisement {
         this.pet = pet;
     }
 
-    public User getUser() {
+    public String getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(String user) {
         this.user = user;
     }
 
@@ -69,19 +83,19 @@ public class Advertisement {
         this.disappearanceDateTime = disappearanceDateTime;
     }
 
-    public Location getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 }

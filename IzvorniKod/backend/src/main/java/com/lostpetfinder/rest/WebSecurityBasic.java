@@ -29,7 +29,7 @@ public class WebSecurityBasic {
     @Bean
     @Profile("basic-security")
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated());
+        // http.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated());
         http.formLogin(withDefaults() );
         http.httpBasic(withDefaults());
         http.csrf(AbstractHttpConfigurer::disable);

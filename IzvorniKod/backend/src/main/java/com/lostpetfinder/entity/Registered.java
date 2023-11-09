@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
-
+/*
 @Entity
 @Table(name = "registered")
 @PrimaryKeyJoinColumn(name = "username")
@@ -48,3 +48,4 @@ public class Registered extends User {
         this.surname = surname;
     }
 }
+*/

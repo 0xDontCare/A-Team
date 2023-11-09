@@ -1,5 +1,5 @@
 package com.lostpetfinder.entity;
-
+/*
 import com.lostpetfinder.entity.pkeys.MessagePK;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -77,3 +77,4 @@ public class Message {
         this.image = image;
     }
 }
+*/
