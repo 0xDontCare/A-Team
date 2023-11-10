@@ -2,7 +2,8 @@ package com.lostpetfinder.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-/*
+import java.util.Set
+
 @Entity
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -17,7 +18,8 @@ public class User {
     @Size(max = 100)
     private String password;
 
-    @Column(nullable = false)
+    // email should also be unique
+    @Column(nullable = false, unique = true)
     @Size(max = 100)
     private String email;
 
@@ -25,19 +27,23 @@ public class User {
     @Size(max = 20)
     private String phoneNumber;
 
-    // why is this needed for a user?
+    @ManyToMany
+    // @LazyCollection(LazyCollectionOption.FALSE) potentially include
+    private Set<Role> roles;
+
+    /*
     @ManyToOne
     @JoinColumn(name = "zipCode",nullable = false)
     private Place place;
+     */
 
     public User() {}
 
-    public User(String username, String password, String email, String phoneNumber, Place place) {
+    public User(String username, String password, String email, String phoneNumber) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.place = place;
     }
 
     public String getUsername() {
@@ -72,13 +78,11 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public Place getPlace() {
-        return place;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setPlace(Place place) {
-        this.place = place;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
-
 }
-*/
