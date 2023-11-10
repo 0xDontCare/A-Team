@@ -2,7 +2,7 @@ package com.lostpetfinder.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-import java.util.Set
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
