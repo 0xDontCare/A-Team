@@ -60,7 +60,7 @@ public class AuthenticationService {
         user.setPhoneNumber(dto.getPhoneNumber());
 
         Role roles;
-        if (!dto.getShelterName().isBlank()) {
+        if (dto.getShelterName() != null) {
             roles = roleRepository.findByName("ROLE_SHELTER").get();
             // save the user in the 'registered' table using RegisteredRepository
         } else {

@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -48,14 +49,24 @@ public class WebSecurityBasic {
 
     @Bean
     @Profile("basic-security")
-    // this returns forbidden, need to find a way to permit requests to /api/** -> CROZ ppt?
-    public SecurityFilterChain filterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
-        MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
-        http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorize -> authorize.requestMatchers(mvcMatcherBuilder.pattern("/api")).permitAll()
-                .anyRequest().authenticated());
-        http.headers((headers) -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
+
+        MvcRequestMatcher.Builder mvcRequestMatcher = new MvcRequestMatcher.Builder(introspector);
+
+        http.csrf(csrf -> csrf
+                        .ignoringRequestMatchers(PathRequest.toH2Console()).disable())
+
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(PathRequest.toH2Console()).permitAll()
+                        .requestMatchers(mvcRequestMatcher.pattern("/api/**")).permitAll()
+                        .anyRequest().authenticated()
+                );
+
+        http.headers(headers -> headers.frameOptions((frameOptions) -> frameOptions.disable()));
+        http.sessionManagement(session  -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
         return http.build();
+
     }
 
 /*
@@ -89,7 +100,7 @@ public class WebSecurityBasic {
     }
 */
 
-
+/*
     @Bean
     @Profile("basic-security")
     @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -99,4 +110,6 @@ public class WebSecurityBasic {
         http.headers((headers) -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
         return http.build();
     }
+
+*/
 }

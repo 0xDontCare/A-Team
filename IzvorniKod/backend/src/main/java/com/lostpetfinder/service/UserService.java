@@ -34,14 +34,14 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository
-                .findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User with email " + email + " not found"));
+                .findByUsernameOrEmail(username, username)
+                .orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found"));
         Set<GrantedAuthority> authorities = user.getRoles().stream()
                 .map((role) -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toSet());
-        return new org.springframework.security.core.userdetails.User(email,user.getPassword(),authorities);
+        return new org.springframework.security.core.userdetails.User(username,user.getPassword(),authorities);
     }
 
 
