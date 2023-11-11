@@ -2,6 +2,7 @@ package com.lostpetfinder.controller;
 
 import com.lostpetfinder.dto.LoginInfoDTO;
 import com.lostpetfinder.dto.RegistrationInfoDTO;
+import com.lostpetfinder.service.AuthenticationService;
 import com.lostpetfinder.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,19 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserService userService;
+    private final AuthenticationService authenticationService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginInfoDTO dto) {
-        return userService.login(dto);
+        return authenticationService.login(dto);
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegistrationInfoDTO dto) {
-        return userService.register(dto);
+        return authenticationService.register(dto);
     }
 }

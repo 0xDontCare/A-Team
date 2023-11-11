@@ -2,6 +2,9 @@ package com.lostpetfinder.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import java.util.Set;
 
 @Entity
@@ -28,7 +31,7 @@ public class User {
     private String phoneNumber;
 
     @ManyToMany
-    // @LazyCollection(LazyCollectionOption.FALSE) potentially include
+    @LazyCollection(LazyCollectionOption.FALSE) // potentially include
     private Set<Role> roles;
 
     /*
