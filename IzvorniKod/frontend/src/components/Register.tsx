@@ -122,7 +122,7 @@ function Register() {
                     }
 
                     <div className="d-flex align-items-center justify-content-start">
-                        <h2 style={{marginRight: "20px"}}>Odaberite vrstu korisnika:</h2>
+                        <h2 style={{marginRight: "20px"}}>Odaberite vrstu registracije:</h2>
                         <div className="d-flex align-items-center">
                             <div className="form-check form-check-inline">
                                 <input

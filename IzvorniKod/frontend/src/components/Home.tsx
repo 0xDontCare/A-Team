@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -17,17 +18,17 @@ function Home() {
             <Row className="mb-3">
                 <Col className="text-center">
                     <div>
-                        <button className="btn btn-success me-2">Dodaj oglas</button>
-                        <button className="btn btn-warning me-2">Izmijeni oglas</button>
-                        <button className="btn btn-danger">Izbriši oglas</button>
+                        <Link to="/addAd" className="btn btn-success me-2">Dodajte oglas</Link>
+                        <button className="btn btn-warning me-2">Izmijenite oglas</button>
+                        <button className="btn btn-danger">Izbrišite oglas</button>
                     </div>
                 </Col>
             </Row>
-            <hr/>
+            <hr />
             <Row xs={1} md={2} lg={4} className="g-4">
                 {cardData.map((card) => (
                     <Col key={card.id}>
-                        <Oglas id={card.id} title={card.title} content={card.content}/>
+                        <Oglas id={card.id} title={card.title} content={card.content} />
                     </Col>
                 ))}
             </Row>

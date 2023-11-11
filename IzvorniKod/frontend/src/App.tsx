@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Home from './components/Home';
 import NavbarElement from './components/NavbarElement';
 import OglasDetalj from './components/OglasDetalj.tsx';
+import AddAd from './components/AddAd';
 
 function App() {
     const cardData = [
@@ -15,13 +16,14 @@ function App() {
 
     return (
         <div>
-            <NavbarElement/>
+            <NavbarElement />
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Home cardData={cardData}/>}/>
-                    <Route path="/register" element={<Register/>}/>
-                    <Route path="/login" element={<Login/>}/>
-                    <Route path="/:id" element={<OglasDetalj cardData={cardData}/>}/>
+                    <Route path="/" element={<Home cardData={cardData} />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/addAd" element={<AddAd />} /> {/* New route for AddAd */}
+                    <Route path="/:id" element={<OglasDetalj cardData={cardData} />} />
                 </Routes>
             </BrowserRouter>
         </div>
