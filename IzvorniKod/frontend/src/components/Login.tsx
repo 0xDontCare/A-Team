@@ -3,24 +3,25 @@ import {useNavigate} from 'react-router-dom';
 import axios from "axios";
 
 function Login() {
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [lozinka, setLozinka] = useState("");
     const navigate = useNavigate();
 
     async function login(event) {
         event.preventDefault();
         try {
-            const response = await axios.post("http://localhost:8080/api/", {
-                email: email,
-                lozinka: lozinka,
+            const response = await axios.post("/api/login", {
+                username: username,
+                email: "", // implementing it later
+                password: lozinka,
             });
 
-            if (response.data.message === "Email not exists") {
-                alert("E-pošta ne postoji!");
-            } else if (response.data.message === "Login Success") {
-                navigate('/home');
+            if (response.status === 401 ) {
+                alert(response.data.message);
+            } else if (response.status === 200) {
+                navigate("/"); // for now redirecting to "/" ; navigate('/home');
             } else {
-                alert("Kriva e-pošta ili lozinka!");
+                alert("Krivo korisničko ime ili lozinka!");
             }
         } catch (err) {
             console.error(err);
@@ -37,15 +38,15 @@ function Login() {
 
                     <form>
                         <div className="form-group mb-2">
-                            <label>E-pošta</label>
+                            <label>Korisničko ime</label>
                             <input
-                                type="email"
+                                type="text"
                                 className="form-control"
                                 id="email"
-                                placeholder="Upišite e-poštu"
-                                value={email}
+                                placeholder="Upišite korisničko ime"
+                                value={username}
                                 onChange={(event) => {
-                                    setEmail(event.target.value);
+                                    setUsername(event.target.value);
                                 }}
                             />
                         </div>

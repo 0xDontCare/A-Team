@@ -42,13 +42,13 @@ function Register() {
         }
 
         try {
-            await axios.post("http://localhost:8080/api/", {
-                ime: ime,
-                prezime: prezime,
+            await axios.post("/api/register", {
+                name: ime,
+                surname: prezime,
                 email: email,
-                brojTelefona: brojTelefona,
+                phoneNumber: brojTelefona,
                 username: username,
-                lozinka: lozinka
+                password: lozinka
             });
 
             alert("Uspješno ste se registrirali!");
