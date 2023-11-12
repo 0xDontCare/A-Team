@@ -1,31 +1,33 @@
-import {useState} from "react";
+import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import axios from "axios";
+import axios from 'axios';
 
-function Login() {
-    const [username, setUsername] = useState("");
-    const [lozinka, setLozinka] = useState("");
+function Login({setLoginStatus}) {
+    const [username, setUsername] = useState('');
+    const [lozinka, setLozinka] = useState('');
     const navigate = useNavigate();
 
     async function login(event) {
         event.preventDefault();
         try {
-            const response = await axios.post("/api/login", {
+            const response = await axios.post('/api/login', {
                 username: username,
-                email: "", // implementing it later
+                email: '', // implementing it later
                 password: lozinka,
             });
 
-            if (response.status === 401 ) {
+            if (response.status === 200) {
+                // Assuming the server responds with a success status
+                setLoginStatus(true); // Update the login status in the parent component
+                navigate('/');
+            } else if (response.status === 401) {
                 alert(response.data.message);
-            } else if (response.status === 200) {
-                navigate("/"); // for now redirecting to "/" ; navigate('/home');
             } else {
-                alert("Krivo korisničko ime ili lozinka!");
+                alert('Krivo korisničko ime ili lozinka!');
             }
         } catch (err) {
             console.error(err);
-            alert("Pogreška prilikom prijave!");
+            alert('Pogreška prilikom prijave!');
         }
     }
 

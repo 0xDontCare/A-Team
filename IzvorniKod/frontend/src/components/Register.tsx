@@ -64,6 +64,7 @@ function Register() {
             });
 
             alert("Uspješno ste se registrirali!");
+            resetFormFields();
         } catch (err) {
             alert(err);
         }
@@ -98,9 +99,27 @@ function Register() {
             });
 
             alert("Uspješno ste se registrirali kao sklonište!");
+            resetFormFields();
         } catch (err) {
             alert(err);
         }
+    };
+
+    const resetFormFields = () => {
+        setIme("");
+        setPrezime("");
+        setEmail("");
+        setBrojTelefona("");
+        setUsername("");
+        setLozinka("");
+        setError("");
+
+        setImeSklonista("");
+        setEmailSklonista("");
+        setBrojTelefonaSklonista("");
+        setUsernameSklonista("");
+        setLozinkaSklonista("");
+        setErrorSklonista("");
     };
 
     return (
