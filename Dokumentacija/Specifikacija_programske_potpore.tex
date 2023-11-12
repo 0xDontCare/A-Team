@@ -35,7 +35,7 @@
 					\item postaviti oglas o nestalom kućnom ljubimcu
 					\item sudjelovati u komunikaciji oko potrage za ljubimcem
 					\item ukloniti oglas o nestalom kućnom ljubimcu
-					\item uzmijeniti oglas o nestalom kućnom ljubimcu
+					\item izmijeniti oglas o nestalom kućnom ljubimcu
 					\item pretraživati neaktivne oglase o nestalim kućnim ljubimcima
 					\item sve što i registrirani korisnik može
 					
@@ -74,7 +74,7 @@
 					\noindent \underbar{\textbf{UC1 - Pregled nestalih ljubimaca}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Korisnik, Registrirani korisnik, Sklonište
+						\item \textbf{Glavni sudionik: }Korisnik, klijent, sklonište
 						\item  \textbf{Cilj:} Pregledavanje oglašenih nestalih kućnih ljubimaca i skloništa za životinje
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} -
@@ -131,7 +131,7 @@
 					\noindent \underbar{\textbf{UC3 - Pretraživanje nestalih ljubimaca}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }Korisnik, Registrirani korisnik, Sklonište
+						\item \textbf{Glavni sudionik: }Korisnik, klijent, sklonište
 						\item  \textbf{Cilj:} Pretraživanje nestalih ljubimaca po svim dostupnim kategorijama podataka
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} -
@@ -148,7 +148,7 @@
 					\noindent \underbar{\textbf{UC4 - Prijava u sustav}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }Registrirani korisnik, Sklonište
+						\item \textbf{Glavni sudionik: }Klijent, sklonište
 						\item  \textbf{Cilj:} Dobiti pristup korisničkom sučelju
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} Registracija
@@ -186,7 +186,7 @@
 					\noindent \underbar{\textbf{UC5 - Komuniciranje oko potrage}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }Registrirani korisnik, Sklonište
+						\item \textbf{Glavni sudionik: }Klijent, sklonište
 						\item  \textbf{Cilj:} Ostvariti komunikaciju s vlasnikom izgubljenog ljubimca
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} Korisnik je prijavljen
@@ -203,7 +203,7 @@
 					\noindent \underbar{\textbf{UC6.1 - Postavljanje oglasa}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }Registrirani korisnik, Sklonište 
+						\item \textbf{Glavni sudionik: }Klijent, sklonište 
 						\item  \textbf{Cilj:} Postaviti oglas o izgubljenom ljubimcu
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} Korisnik je prijavljen
@@ -240,7 +240,7 @@
 					\noindent \underbar{\textbf{UC6.2 - Uklanjanje oglasa}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }Registrirani korisnik, Sklonište
+						\item \textbf{Glavni sudionik: }Klijent, sklonište
 						\item  \textbf{Cilj:} Ukloniti oglas o izgubljenom ljubimcu
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} Korisnik je prijavljen i objavio je oglas
@@ -248,24 +248,18 @@
 						
 						\item[] \begin{packed_enum}
 							
+							\item Korisnik odabire oglas
 							\item Korisnik odabire opciju za brisanje oglasa
-							\item Korisnik potvrđuje akciju brisanja
 							\item Oglas i sva komunikacija vezana uz njega nestaju iz popisa vidljivih oglasa
 							\item Oglas ostaje pohranjen u bazi podataka
 						\end{packed_enum}
 						
-						\item  \textbf{Opis mogućih odstupanja:}
-						
-						\item[] \begin{packed_item}
-							
-							\item[2.a] Korisnik odustaje od brisanja oglasa
-						\end{packed_item}
 					\end{packed_item}
 					
 					\noindent \underbar{\textbf{UC6.3 - Izmjena oglasa}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }Registrirani korisnik, Sklonište
+						\item \textbf{Glavni sudionik: }Klijent, sklonište
 						\item  \textbf{Cilj:} Izmjena oglasa o izgubljenom ljubimcu
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} Korisnik je prijavljen i objavio je oglas
