@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
-/*
+
 @Entity
 @Table(name = "registered")
 @PrimaryKeyJoinColumn(name = "username")
@@ -25,9 +25,17 @@ public class Registered extends User {
         this.name = name;
         this.surname = surname;
     }
-
+/*
     public Registered(String username, String password, String email, String phoneNumber, Place place, String name, String surname) {
         super(username, password, email, phoneNumber, place);
+        this.name = name;
+        this.surname = surname;
+    }
+*/
+
+    // temp constructor
+    public Registered(User superUser, String name, String surname) {
+        super(superUser.getUsername(), superUser.getPassword(), superUser.getEmail(), superUser.getPhoneNumber());
         this.name = name;
         this.surname = surname;
     }
@@ -48,4 +56,3 @@ public class Registered extends User {
         this.surname = surname;
     }
 }
-*/

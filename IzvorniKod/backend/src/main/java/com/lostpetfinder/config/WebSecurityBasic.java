@@ -60,6 +60,8 @@ public class WebSecurityBasic {
                         .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .requestMatchers(mvcRequestMatcher.pattern("/api/**")).permitAll()
                         .anyRequest().authenticated()
+
+
                 );
 
         http.headers(headers -> headers.frameOptions((frameOptions) -> frameOptions.disable()));
@@ -69,47 +71,4 @@ public class WebSecurityBasic {
 
     }
 
-/*
-    @Bean
-    @Profile("form-security")
-    public SecurityFilterChain spaFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
-                .anyRequest().authenticated());
-        http.formLogin(configurer -> {
-                    configurer.successHandler((request, response, authentication) ->
-                                    response.setStatus(HttpStatus.NO_CONTENT.value())
-                            )
-                            .failureHandler(new SimpleUrlAuthenticationFailureHandler());
-                }
-        );
-        http.exceptionHandling(configurer -> {
-            final RequestMatcher matcher = new NegatedRequestMatcher(
-                    new MediaTypeRequestMatcher(MediaType.TEXT_HTML));
-            configurer
-                    .defaultAuthenticationEntryPointFor((request, response, authException) -> {
-                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    }, matcher);
-        });
-        http.logout(configurer -> configurer
-                .logoutUrl("/logout")
-                .logoutSuccessHandler((request, response, authentication) ->
-                        response.setStatus(HttpStatus.NO_CONTENT.value())));
-        http.csrf(AbstractHttpConfigurer::disable);
-        return http.build();
-    }
-*/
-
-/*
-    @Bean
-    @Profile("basic-security")
-    @Order(Ordered.HIGHEST_PRECEDENCE)
-    public SecurityFilterChain h2ConsoleSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.securityMatcher(PathRequest.toH2Console());
-        http.csrf(AbstractHttpConfigurer::disable);
-        http.headers((headers) -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
-        return http.build();
-    }
-
-*/
 }

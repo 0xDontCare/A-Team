@@ -1,11 +1,16 @@
 package com.lostpetfinder.service;
 
+import com.lostpetfinder.dao.RegisteredRepository;
 import com.lostpetfinder.dao.RoleRepository;
+import com.lostpetfinder.dao.ShelterRepository;
 import com.lostpetfinder.dao.UserRepository;
 import com.lostpetfinder.dto.LoginInfoDTO;
 import com.lostpetfinder.dto.RegistrationInfoDTO;
+import com.lostpetfinder.entity.Registered;
 import com.lostpetfinder.entity.Role;
+import com.lostpetfinder.entity.Shelter;
 import com.lostpetfinder.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,16 +26,22 @@ import java.util.Collections;
 @Service
 public class AuthenticationService {
 
+    @Autowired
+    private UserService userService;
     private AuthenticationManager authenticationManager;
-    private UserRepository userRepository;
+    private UserRepository<User> userRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
+    private RegisteredRepository registeredRepository;
+    private ShelterRepository shelterRepository;
 
-    public AuthenticationService(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public AuthenticationService(AuthenticationManager authenticationManager, UserRepository<User> userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, RegisteredRepository registeredRepository, ShelterRepository shelterRepository) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.registeredRepository = registeredRepository;
+        this.shelterRepository = shelterRepository;
     }
 
     public ResponseEntity<String> login(LoginInfoDTO dto) {
@@ -39,6 +50,9 @@ public class AuthenticationService {
                     new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword())
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            userService.setLoggedUser(userRepository.findByUsernameOrEmail(dto.getUsername(), dto.getEmail()).orElseThrow());
+
             return new ResponseEntity<>("Login successful!", HttpStatus.OK);
         } catch (AuthenticationException e) {
             return new ResponseEntity<>("Login failed: " + e.getMessage(), HttpStatus.UNAUTHORIZED);
@@ -62,14 +76,14 @@ public class AuthenticationService {
         Role roles;
         if (dto.getShelterName() != null) {
             roles = roleRepository.findByName("ROLE_SHELTER").get();
-            // save the user in the 'registered' table using RegisteredRepository
+            shelterRepository.save(new Shelter(user, dto.getShelterName()));
         } else {
             roles = roleRepository.findByName("ROLE_REGISTERED").get();
-            // save the user in the 'registered' table using ShelterRepository
+            registeredRepository.save(new Registered(user, dto.getFirstName(), dto.getLastName()));
         }
         user.setRoles(Collections.singleton(roles));
 
-        userRepository.save(user);
+        //userRepository.save(user);
 
         return new ResponseEntity<>("User is registered successfully!", HttpStatus.OK);
 
