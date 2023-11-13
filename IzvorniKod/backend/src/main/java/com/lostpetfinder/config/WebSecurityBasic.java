@@ -59,13 +59,18 @@ public class WebSecurityBasic {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .requestMatchers(mvcRequestMatcher.pattern("/api/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/api/login")).permitAll()
                         .anyRequest().authenticated()
-
-
                 );
+        http.logout(configurer -> configurer
+                .logoutUrl("/api/logout")
+                .logoutSuccessHandler((request, response, authentication) ->
+                        response.setStatus(HttpStatus.NO_CONTENT.value())));
+        http.csrf(AbstractHttpConfigurer::disable);
+
 
         http.headers(headers -> headers.frameOptions((frameOptions) -> frameOptions.disable()));
-        http.sessionManagement(session  -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        //http.sessionManagement(session  -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
 

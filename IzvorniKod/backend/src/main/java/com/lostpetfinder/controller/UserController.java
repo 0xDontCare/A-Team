@@ -5,7 +5,10 @@ import com.lostpetfinder.dto.LoginInfoDTO;
 import com.lostpetfinder.dto.RegistrationInfoDTO;
 import com.lostpetfinder.service.AuthenticationService;
 import com.lostpetfinder.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,20 +29,11 @@ public class UserController {
      * @return HomeUserDTO
      */
     @PostMapping("/logged")
-    public ResponseEntity<String> getLoggedUser() {return userService.getLoggedUser();}
-
-    /**
-     * This method logs the current user out.
-     * If no user is logged when called it returns with 400 Bad Request with message "No logged-in user!".
-     * Otherwise, it returns message "User successfully logged out!"
-     * @return ResponseEntity<String>
-     */
-    @PostMapping("/logout")
-    public ResponseEntity<String> logout() {return userService.logout();}
+    public ResponseEntity<Object> getLoggedUser() {return userService.getLoggedUser();}
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginInfoDTO dto) {
-        return authenticationService.login(dto);
+    public ResponseEntity<String> login(HttpServletRequest req, @RequestBody LoginInfoDTO dto) {
+        return authenticationService.login(req, dto);
     }
 
     @PostMapping("/register")

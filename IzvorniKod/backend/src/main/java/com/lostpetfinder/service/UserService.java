@@ -14,12 +14,14 @@ import jakarta.persistence.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -42,36 +44,16 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    User loggedUser = null;
 
-    public ResponseEntity<String> getLoggedUser() {
-        String output = "";
-        if (loggedUser == null)
+    public ResponseEntity<Object> getLoggedUser() {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication instanceof AnonymousAuthenticationToken) {
             return new ResponseEntity<>("No logged-in user!", HttpStatus.BAD_REQUEST);
-        else {
-            // need to find a better way to do this!!!
-            try {
-                ObjectMapper objectMapper = new ObjectMapper();
-                output = objectMapper.writeValueAsString(new HomeUserDTO(loggedUser));
-            } catch (JsonProcessingException e) {
-                return new ResponseEntity<>("Error converting object to JSON", HttpStatus.INTERNAL_SERVER_ERROR);
-            }
         }
-        return new ResponseEntity<>(output, HttpStatus.OK);
-    }
+        String username = authentication.getName();
 
-    public void setLoggedUser(User loggedUser) {
-        this.loggedUser = loggedUser;
-    }
-
-    public ResponseEntity<String> logout() {
-        if (loggedUser == null)
-            return new ResponseEntity<>("No logged-in user!", HttpStatus.BAD_REQUEST);
-        else {
-            setLoggedUser(null);
-            return new ResponseEntity<>("User successfully logged out!", HttpStatus.OK);
-        }
-
+        User user = userRepository.findByUsernameOrEmail(username,username).orElseThrow();
+        return new ResponseEntity<>(new HomeUserDTO(user), HttpStatus.OK);
     }
 
     @Override

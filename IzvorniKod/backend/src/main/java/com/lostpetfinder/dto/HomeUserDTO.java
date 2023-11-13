@@ -19,18 +19,6 @@ public class HomeUserDTO {
         this.shelterName = shelterName;
     }
 
-
-    @Override
-    public String toString() {
-        return "{"
-                + "                        \"username\":\"" + username + "\""
-                + ",                         \"email\":\"" + email + "\""
-                + ",                         \"firstName\":\"" + firstName + "\""
-                + ",                         \"lastName\":\"" + lastName + "\""
-                + ",                         \"shelterName\":\"" + shelterName + "\""
-                + "}";
-    }
-
     public HomeUserDTO(User user) {
         this.username = user.getUsername();
         this.email = user.getEmail();

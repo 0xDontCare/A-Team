@@ -10,6 +10,8 @@ import com.lostpetfinder.entity.Registered;
 import com.lostpetfinder.entity.Role;
 import com.lostpetfinder.entity.Shelter;
 import com.lostpetfinder.entity.User;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -44,14 +47,19 @@ public class AuthenticationService {
         this.shelterRepository = shelterRepository;
     }
 
-    public ResponseEntity<String> login(LoginInfoDTO dto) {
+    public ResponseEntity<String> login(HttpServletRequest request, LoginInfoDTO dto) {
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword())
+                new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword())
             );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            SecurityContext securityContext = SecurityContextHolder.getContext();
+            securityContext.setAuthentication(authentication);
 
-            userService.setLoggedUser(userRepository.findByUsernameOrEmail(dto.getUsername(), dto.getEmail()).orElseThrow());
+            // Create a new session and add the security context.
+            HttpSession session = request.getSession(true);
+            session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+
+            //userService.setLoggedUser();
 
             return new ResponseEntity<>("Login successful!", HttpStatus.OK);
         } catch (AuthenticationException e) {
