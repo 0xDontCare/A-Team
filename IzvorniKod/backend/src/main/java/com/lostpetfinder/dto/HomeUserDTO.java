@@ -11,14 +11,6 @@ public class HomeUserDTO {
     private String lastName;
     private String shelterName;
 
-    public HomeUserDTO(String username, String email, String firstName, String lastName, String shelterName) {
-        this.username = username;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.shelterName = shelterName;
-    }
-
     public HomeUserDTO(User user) {
         this.username = user.getUsername();
         this.email = user.getEmail();

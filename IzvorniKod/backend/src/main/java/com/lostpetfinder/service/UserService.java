@@ -44,7 +44,6 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-
     public ResponseEntity<Object> getLoggedUser() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication instanceof AnonymousAuthenticationToken) {
@@ -54,6 +53,7 @@ public class UserService implements UserDetailsService {
 
         User user = userRepository.findByUsernameOrEmail(username,username).orElseThrow();
         return new ResponseEntity<>(new HomeUserDTO(user), HttpStatus.OK);
+
     }
 
     @Override
@@ -66,7 +66,4 @@ public class UserService implements UserDetailsService {
                 .collect(Collectors.toSet());
         return new org.springframework.security.core.userdetails.User(username,user.getPassword(),authorities);
     }
-
-
-
 }

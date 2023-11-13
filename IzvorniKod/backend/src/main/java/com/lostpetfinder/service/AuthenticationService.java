@@ -29,8 +29,6 @@ import java.util.Collections;
 @Service
 public class AuthenticationService {
 
-    @Autowired
-    private UserService userService;
     private AuthenticationManager authenticationManager;
     private UserRepository<User> userRepository;
     private RoleRepository roleRepository;
