@@ -7,15 +7,8 @@
     <list default="true" id="abe80cba-b5a4-4957-912f-167188a0bd44" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Home.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Login.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/NavbarElement.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/NavbarElement.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Oglas.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Oglas.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Register.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/main.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/vite.config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,6 +72,7 @@
       <workItem from="1699792387003" duration="3754000" />
       <workItem from="1699909145131" duration="4129000" />
       <workItem from="1699913317008" duration="40000" />
+      <workItem from="1699915966905" duration="682000" />
     </task>
     <servers />
   </component>

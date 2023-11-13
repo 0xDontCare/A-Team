@@ -46,7 +46,7 @@ function NavbarElement({isLoggedIn, userData}) {
                         {!isLoggedIn && <Nav.Link href="/register">Registracija</Nav.Link>}
                         {isLoggedIn && (
                             <Nav.Link disabled className="text-dark fs-4 fw-bold">
-                                Pozdrav, {userData.firstName}! 👋
+                                Pozdrav, {userData.firstName || userData.shelterName}! 👋
                             </Nav.Link>
                         )}
                     </Nav>
