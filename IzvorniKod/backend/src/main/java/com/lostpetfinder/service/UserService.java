@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.print.DocFlavor;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -53,7 +54,12 @@ public class UserService implements UserDetailsService {
 
         User user = userRepository.findByUsernameOrEmail(username,username).orElseThrow();
         return new ResponseEntity<>(new HomeUserDTO(user), HttpStatus.OK);
+    }
 
+    public Optional<User> LoggedUser() {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        return userRepository.findByUsernameOrEmail(username,username);
     }
 
     @Override

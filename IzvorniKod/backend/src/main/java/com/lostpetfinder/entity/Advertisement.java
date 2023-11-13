@@ -18,12 +18,9 @@ public class Advertisement {
     private Pet pet;
 
 
-    /*
     @ManyToOne
     @JoinColumn(name = "username",nullable = false)
-     */
-    @Column(nullable = false, name = "username")
-    private String user;
+    private User user;
 
     @Column(nullable = false)
     private LocalDateTime disappearanceDateTime;
@@ -35,22 +32,19 @@ public class Advertisement {
     @Column(nullable = false)
     private String location;
 
-    /*
     @ManyToOne
     @JoinColumn(name = "categoryId",nullable = false)
-     */
-    @Column(nullable = false)
-    private String category;
+    private Category category;
 
     public Advertisement() {}
 
     // change when possible
-    public Advertisement(Pet pet, AdvertisementDetailsDTO dto) {
+    public Advertisement(Pet pet, User user, Category category, LocalDateTime disappearanceDateTime, String disappearanceLocation) {
         this.pet = pet;
-        this.user = "Luka";
-        this.disappearanceDateTime = dto.getDisappearanceDateTime();
-        this.location = dto.getDisappearanceLocation();
-        this.category = "Traga se";
+        this.user = user;
+        this.disappearanceDateTime = disappearanceDateTime;
+        this.category = category;
+        this.location = disappearanceLocation;
     }
 
     public void updateAdvertisement(AdvertisementDetailsDTO dto) {
@@ -76,11 +70,11 @@ public class Advertisement {
         this.pet = pet;
     }
 
-    public String getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(String user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -100,11 +94,11 @@ public class Advertisement {
         this.location = location;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

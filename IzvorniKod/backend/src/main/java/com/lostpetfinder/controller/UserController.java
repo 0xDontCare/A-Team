@@ -28,7 +28,7 @@ public class UserController {
      * If no user is logged when called it returns with 400 Bad Request with message "No logged-in user!".
      * @return HomeUserDTO
      */
-    @PostMapping("/logged")
+    @GetMapping("/logged")
     public ResponseEntity<Object> getLoggedUser() {return userService.getLoggedUser();}
 
     @PostMapping("/login")

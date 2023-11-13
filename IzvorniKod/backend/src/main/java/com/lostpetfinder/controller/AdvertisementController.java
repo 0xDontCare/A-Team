@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/advertisements")
+@RequestMapping("/api/advertisements")
 public class AdvertisementController {
 
     private final AdvertisementService advertisementService;
@@ -29,9 +29,9 @@ public class AdvertisementController {
         return advertisementService.addNewAdvertisement(dto);
     }
 
-    @GetMapping("/{petId}")
-    public AdvertisementDetailsDTO seeAdvertisementInfo(@PathVariable("petId") long petId) {
-        return advertisementService.seeAdvertisementInfo(petId);
+    @GetMapping("/{adId}")
+    public AdvertisementDetailsDTO seeAdvertisementInfo(@PathVariable("adId") long adId) {
+        return advertisementService.seeAdvertisementInfo(adId);
     }
 
     // potentially just return nothing? i don't see any point in returning anything

@@ -37,20 +37,20 @@ public class Pet {
 
     // possibly change
     public Pet(AdvertisementDetailsDTO dto) {
-        this.name = dto.getName();
+        this.name = dto.getPetName();
         this.species = dto.getSpecies();
         this.age = dto.getAge();
         this.color = dto.getColor();
-        this.description = dto.getDescription();
+        this.description = dto.getPetDescription();
     }
 
     // possibly change
     public void updatePet(AdvertisementDetailsDTO dto) {
-        this.name = dto.getName();
+        this.name = dto.getPetName();
         this.species = dto.getSpecies();
         this.age = dto.getAge();
         this.color = dto.getColor();
-        this.description = dto.getDescription();
+        this.description = dto.getPetDescription();
     }
 
     public Long getPetId() {

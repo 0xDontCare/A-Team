@@ -5,21 +5,21 @@ import com.lostpetfinder.entity.Advertisement;
 public class AdvertisementSummaryDTO {
 
     // not sending the image link for now
-    private Long petId;
+    private Long adId;
     private String petName;
 
-    public AdvertisementSummaryDTO(Long petId, String petName) {
-        this.petId = petId;
+    public AdvertisementSummaryDTO(Long adId, String petName) {
+        this.adId = adId;
         this.petName = petName;
     }
 
     public AdvertisementSummaryDTO(Advertisement advertisement) {
-        this.petId = advertisement.getPet().getPetId();
+        this.adId = advertisement.getPet().getPetId();
         this.petName = advertisement.getPet().getName();
     }
 
-    public Long getPetId() {
-        return petId;
+    public Long getAdId() {
+        return adId;
     }
 
     public String getPetName() {
