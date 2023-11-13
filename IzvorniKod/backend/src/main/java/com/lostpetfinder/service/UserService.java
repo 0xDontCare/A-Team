@@ -42,6 +42,7 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    /*
     User loggedUser = null;
 
     public ResponseEntity<String> getLoggedUser() {
@@ -63,15 +64,29 @@ public class UserService implements UserDetailsService {
     public void setLoggedUser(User loggedUser) {
         this.loggedUser = loggedUser;
     }
+     */
+
+    public ResponseEntity<String> getLoggedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return new ResponseEntity<>("No logged-in user!", HttpStatus.BAD_REQUEST);
+        } else {
+            Object principal = authentication.getPrincipal();
+            String username = ((org.springframework.security.core.userdetails.User) principal).getUsername();
+            return new ResponseEntity<>(username, HttpStatus.OK);
+        }
+    }
 
     public ResponseEntity<String> logout() {
-        if (loggedUser == null)
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()) {
             return new ResponseEntity<>("No logged-in user!", HttpStatus.BAD_REQUEST);
-        else {
-            setLoggedUser(null);
+        } else {
+            SecurityContextHolder.getContext().setAuthentication(null);
             return new ResponseEntity<>("User successfully logged out!", HttpStatus.OK);
         }
-
     }
 
     @Override
@@ -84,7 +99,4 @@ public class UserService implements UserDetailsService {
                 .collect(Collectors.toSet());
         return new org.springframework.security.core.userdetails.User(username,user.getPassword(),authorities);
     }
-
-
-
 }

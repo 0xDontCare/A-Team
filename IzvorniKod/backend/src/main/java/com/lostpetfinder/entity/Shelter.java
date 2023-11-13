@@ -19,7 +19,6 @@ public class Shelter extends User{
 
     public Shelter(String name) {
         this.name = name;
-
     }
 
     // temp constructor

@@ -26,8 +26,8 @@ import java.util.Collections;
 @Service
 public class AuthenticationService {
 
-    @Autowired
-    private UserService userService;
+    //@Autowired
+    //private UserService userService;
     private AuthenticationManager authenticationManager;
     private UserRepository<User> userRepository;
     private RoleRepository roleRepository;
@@ -51,7 +51,7 @@ public class AuthenticationService {
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            userService.setLoggedUser(userRepository.findByUsernameOrEmail(dto.getUsername(), dto.getEmail()).orElseThrow());
+            // userService.setLoggedUser(userRepository.findByUsernameOrEmail(dto.getUsername(), dto.getEmail()).orElseThrow());
 
             return new ResponseEntity<>("Login successful!", HttpStatus.OK);
         } catch (AuthenticationException e) {

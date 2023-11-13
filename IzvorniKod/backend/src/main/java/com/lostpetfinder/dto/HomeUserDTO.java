@@ -11,12 +11,15 @@ public class HomeUserDTO {
     private String lastName;
     private String shelterName;
 
-    public HomeUserDTO(String username, String email, String firstName, String lastName, String shelterName) {
-        this.username = username;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.shelterName = shelterName;
+    public HomeUserDTO(User user) {
+        this.username = user.getUsername();
+        this.email = user.getEmail();
+        if (user instanceof Registered) {
+            this.firstName = ((Registered)user).getName();
+            this.lastName = ((Registered)user).getSurname();
+        } else {
+            this.shelterName = ((Shelter)user).getName();
+        }
     }
 
 
@@ -29,17 +32,6 @@ public class HomeUserDTO {
                 + ",                         \"lastName\":\"" + lastName + "\""
                 + ",                         \"shelterName\":\"" + shelterName + "\""
                 + "}";
-    }
-
-    public HomeUserDTO(User user) {
-        this.username = user.getUsername();
-        this.email = user.getEmail();
-        if (user instanceof Registered) {
-            this.firstName = ((Registered)user).getName();
-            this.lastName = ((Registered)user).getSurname();
-        } else {
-            this.shelterName = ((Shelter)user).getName();
-        }
     }
 
     public String getUsername() {
