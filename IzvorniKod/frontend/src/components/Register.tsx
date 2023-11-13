@@ -56,8 +56,8 @@ function Register() {
 
     try {
       await axios.post("/api/register", {
-        name: ime,
-        surname: prezime,
+        firstName: ime,
+        lastName: prezime,
         email: email,
         phoneNumber: brojTelefona,
         username: username,
@@ -99,7 +99,7 @@ function Register() {
 
     try {
       await axios.post("/api/register", {
-        name: imeSklonista,
+        shelterName: imeSklonista,
         email: emailSklonista,
         phoneNumber: brojTelefonaSklonista,
         username: usernameSklonista,
