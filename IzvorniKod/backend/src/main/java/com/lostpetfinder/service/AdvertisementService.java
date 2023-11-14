@@ -20,10 +20,8 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class AdvertisementService {
@@ -88,9 +86,11 @@ public class AdvertisementService {
         }
 
         // one Advertisement = one Pet
+        List<Image> listOfImages = new LinkedList<>();
         Pet pet = petRepository.save(new Pet(dto));
         for (String linkToImage : linktoImageList) {
             Image image = new Image(linkToImage, pet);
+            listOfImages.add(image);
             imageRepository.save(image);
         }
         User user = userService.LoggedUser().orElseThrow();
@@ -98,7 +98,7 @@ public class AdvertisementService {
         categoryRepository.save(category);
         Advertisement newAdvertisement = new Advertisement(pet,user,category,dto.getDisappearanceDateTime(),dto.getDisappearanceLocation());
 
-        return new ResponseEntity<>(new AdvertisementDetailsDTO(advertisementRepository.save(newAdvertisement)), HttpStatus.OK);
+        return new ResponseEntity<>(new AdvertisementDetailsDTO(advertisementRepository.save(newAdvertisement), listOfImages), HttpStatus.OK);
     }
 
     // add the exception handling / completely remove it
@@ -106,18 +106,23 @@ public class AdvertisementService {
         Advertisement advertisement = advertisementRepository
                 .findByAdvertisementId(adId)
                 .orElseThrow();
-        return new AdvertisementDetailsDTO(advertisement);
+        Long petId = advertisement.getPet().getPetId();
+        List<Image> images = imageRepository.findAllByPetPetId(petId);
+        return new AdvertisementDetailsDTO(advertisement,images);
     }
 
     // potentially just return nothing? i don't see any point in returning anything
     // add the exception handling / completely remove it
-    public AdvertisementDetailsDTO changeAdvertisement(long petId, AddAdvertisementDTO dto) {
-        if (!advertisementRepository.existsByPetPetIdNot(petId)) {
+    public AdvertisementDetailsDTO changeAdvertisement(long adId, AddAdvertisementDTO dto) {
+        if (!advertisementRepository.existsByPetPetIdNot(adId)) {
             throw new NoSuchElementException();
         }
-        Advertisement changedAdvertisement = advertisementRepository.findByPetPetId(petId).orElseThrow();
+        Advertisement changedAdvertisement = advertisementRepository.findByAdvertisementId(adId).orElseThrow();
         changedAdvertisement.updateAdvertisement(dto);
-        return new AdvertisementDetailsDTO(advertisementRepository.save(changedAdvertisement));
+
+        Long petId = changedAdvertisement.getPet().getPetId();
+        List<Image> images = imageRepository.findAllByPetPetId(petId);
+        return new AdvertisementDetailsDTO(advertisementRepository.save(changedAdvertisement),images);
     }
 
     // adjust later so it only changes the 'deleted' flag in the Advertisement entity

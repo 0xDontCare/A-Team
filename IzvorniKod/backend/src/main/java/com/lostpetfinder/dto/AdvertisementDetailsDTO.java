@@ -1,13 +1,11 @@
 package com.lostpetfinder.dto;
 
-import com.lostpetfinder.entity.Advertisement;
-import com.lostpetfinder.entity.Registered;
-import com.lostpetfinder.entity.Shelter;
-import com.lostpetfinder.entity.User;
+import com.lostpetfinder.entity.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AdvertisementDetailsDTO {
 
@@ -26,12 +24,12 @@ public class AdvertisementDetailsDTO {
     private String petDescription;
     private LocalDateTime disappearanceDateTime; // potentially change the data type
     private String disappearanceLocation; // change the data type
-    private List<MultipartFile> images; // potentially change the data type
+    private List<String> images; // potentially change the data type
 
     public AdvertisementDetailsDTO() {}
 
     // change the value for pictures property when possible
-    public AdvertisementDetailsDTO(Advertisement advertisement) {
+    public AdvertisementDetailsDTO(Advertisement advertisement, List<Image> listOfImage) {
         User user = advertisement.getUser();
         this.username = user.getUsername();
         this.email = user.getEmail();
@@ -51,7 +49,7 @@ public class AdvertisementDetailsDTO {
         this.petDescription = advertisement.getPet().getDescription();
         this.disappearanceDateTime = advertisement.getDisappearanceDateTime();
         //this.disappearanceLocation = advertisement.getLocation();
-        this.images = null;
+        this.images = listOfImage.stream().map(Image::getLinkToImage).collect(Collectors.toList());
     }
 
     public Long getAdvertisementId() {
@@ -87,7 +85,7 @@ public class AdvertisementDetailsDTO {
         return disappearanceLocation;
     }
 
-    public List<MultipartFile> getImages() {
+    public List<String> getImages() {
         return images;
     }
 
@@ -118,4 +116,5 @@ public class AdvertisementDetailsDTO {
     public String getCategoryDescription() {
         return categoryDescription;
     }
+
 }
