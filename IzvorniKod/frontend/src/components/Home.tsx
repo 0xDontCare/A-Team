@@ -17,7 +17,8 @@ function Home({isLoggedIn}) {
             {isLoggedIn && (
                 <Row className="mb-3">
                     <Col className="text-center">
-                        <div>
+                        <div
+                            className="mt-3 p-3 rounded border border-dark border-2 bg-info"> {/* Changed background color to light blue */}
                             <Link to="/addAd" className="btn btn-success me-2">
                                 Dodajte oglas
                             </Link>
@@ -34,7 +35,6 @@ function Home({isLoggedIn}) {
                     </Col>
                 ))}
             </Row>
-            
         </Container>
     );
 }

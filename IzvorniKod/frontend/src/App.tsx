@@ -25,8 +25,12 @@ function App() {
         }
     }, [isLoggedIn]);
 
-    const updateUser = () => {
+    const prijaviUser = () => {
         setLoginStatus(true);
+    };
+
+    const odjaviUser = () => {
+        setLoginStatus(false);
     };
 
     const cardData = [
@@ -38,8 +42,8 @@ function App() {
 
     return (
         <div>
-            <NavbarElement isLoggedIn={isLoggedIn} userData={userData}/>
             <BrowserRouter>
+                <NavbarElement isLoggedIn={isLoggedIn} userData={userData} setLoginStatus={odjaviUser}/>
                 <Routes>
                     <Route
                         path="/"
@@ -48,7 +52,7 @@ function App() {
                     <Route path="/register" element={<Register/>}/>
                     <Route
                         path="/login"
-                        element={<Login setLoginStatus={updateUser} setUserData={setUserData}/>}
+                        element={<Login setLoginStatus={prijaviUser} setUserData={setUserData}/>}
                     />
 
                     <Route path="/addAd" element={<AddAd/>}/>

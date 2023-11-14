@@ -4,10 +4,10 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 function AddAd() {
-    const [adCategory, setAdCategory] = useState("category1");
     const [adPet, setAdPet] = useState("");
     const [adSpecies, setAdSpecies] = useState("");
     const [adName, setAdName] = useState("");
+    const [adLocation, setAdLocation] = useState("");
     const [adDateTime, setAdDateTime] = useState("");
     const [adColor, setAdColor] = useState("");
     const [adAge, setAdAge] = useState("");
@@ -16,10 +16,10 @@ function AddAd() {
     const [adPhoto2, setAdPhoto2] = useState(null);
     const [adPhoto3, setAdPhoto3] = useState(null);
 
-    const handleCategoryChange = (e) => setAdCategory(e.target.value);
     const handlePetChange = (e) => setAdPet(e.target.value);
     const handleSpeciesChange = (e) => setAdSpecies(e.target.value);
     const handleNameChange = (e) => setAdName(e.target.value);
+    const handleLocationChange = (e) => setAdLocation(e.target.value);
     const handleDateTimeChange = (e) => setAdDateTime(e.target.value);
     const handleColorChange = (e) => setAdColor(e.target.value);
     const handleAgeChange = (e) => setAdAge(e.target.value);
@@ -35,6 +35,7 @@ function AddAd() {
             formData.append("species", adSpecies);
             formData.append("petName", adName);
             formData.append("disappearanceDateTime", adDateTime);
+            formData.append("disappearanceLocation", adLocation);
             formData.append("color", adColor);
             formData.append("age", adAge);
             formData.append("petDescription", adDescription);
@@ -45,10 +46,10 @@ function AddAd() {
             const options = {
                 method: "POST",
                 body: formData,
-              };
+            };
             console.log(formData.get("petName"));
 
-          let res = await fetch("/api/advertisements", options)
+            let res = await fetch("/api/advertisements", options)
             if (res.status === 200) {
                 alert("Oglas uspješno dodan!");
             } else {
@@ -58,7 +59,7 @@ function AddAd() {
             console.error(err);
             alert("Error while adding ad!");
         }
-      };
+    };
 
     return (
         <Container>
@@ -66,15 +67,6 @@ function AddAd() {
                 <h1 className="mb-4 text-center" style={{borderBottom: "1px solid #ccc", paddingBottom: "10px"}}>Dodajte
                     oglas</h1>
                 <Form onSubmit={handleSubmit}>
-                    <Form.Group className="mb-3" controlId="adCategory">
-                        <Form.Label>Odaberite kategoriju oglasa</Form.Label>
-                        <Form.Select aria-label="Kategorija oglasa" onChange={handleCategoryChange} value={adCategory}>
-                            <option value="category1">Ljubimac je nestao i za njim se traga</option>
-                            <option value="category2">Ljubimac je sretno pronađen</option>
-                            <option value="category3">Ljubimac nije pronađen i za njim se više aktivno ne traga</option>
-                            <option value="category4">Ljubimac je pronađen u nesretnim okolnostima</option>
-                        </Form.Select>
-                    </Form.Group>
                     <Form.Group className="mb-3" controlId="adPet">
                         <Form.Label>Ljubimac</Form.Label>
                         <Form.Control type="text" placeholder="Upišite ljubimca" onChange={handlePetChange}
@@ -93,6 +85,12 @@ function AddAd() {
                     <Form.Group className="mb-3" controlId="adDateTime">
                         <Form.Label>Odaberite datum i vrijeme nestanka ljubimca</Form.Label>
                         <Form.Control type="datetime-local" onChange={handleDateTimeChange} value={adDateTime}/>
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="adLocation">
+                        <Form.Label>Lokacija nestanka ljubimca</Form.Label>
+                        <Form.Control type="text" placeholder="Upišite lokaciju nestanka ljubimca"
+                                      onChange={handleLocationChange}
+                                      value={adLocation}/>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="adColor">
                         <Form.Label>Boja ljubimca</Form.Label>
