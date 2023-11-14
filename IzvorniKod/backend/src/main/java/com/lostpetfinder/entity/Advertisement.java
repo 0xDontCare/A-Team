@@ -1,6 +1,6 @@
 package com.lostpetfinder.entity;
 
-import com.lostpetfinder.dto.AdvertisementDetailsDTO;
+import com.lostpetfinder.dto.AddAdvertisementDTO;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -29,8 +29,8 @@ public class Advertisement {
     @ManyToOne
     @JoinColumn(name = "coordinates")
      */
-    @Column(nullable = false)
-    private String location;
+    //@Column(nullable = false)
+    //private String location;
 
     @ManyToOne
     @JoinColumn(name = "categoryId",nullable = false)
@@ -44,13 +44,14 @@ public class Advertisement {
         this.user = user;
         this.disappearanceDateTime = disappearanceDateTime;
         this.category = category;
-        this.location = disappearanceLocation;
+        // this.location = disappearanceLocation;
     }
 
-    public void updateAdvertisement(AdvertisementDetailsDTO dto) {
+    public void updateAdvertisement(AddAdvertisementDTO dto) {
         pet.updatePet(dto);
         this.disappearanceDateTime = dto.getDisappearanceDateTime();
-        this.location = dto.getDisappearanceLocation();
+        // need to implement this in frontend
+        // this.location = dto.getDisappearanceLocation();
         // this.category = dto.getCategory;
     }
 
@@ -85,7 +86,7 @@ public class Advertisement {
     public void setDisappearanceDateTime(LocalDateTime disappearanceDateTime) {
         this.disappearanceDateTime = disappearanceDateTime;
     }
-
+/*
     public String getLocation() {
         return location;
     }
@@ -93,7 +94,7 @@ public class Advertisement {
     public void setLocation(String location) {
         this.location = location;
     }
-
+*/
     public Category getCategory() {
         return category;
     }

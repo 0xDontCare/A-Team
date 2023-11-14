@@ -26,6 +26,7 @@ function OglasDetalj({ cardData }) {
           <Carousel.Item interval={null}>
             <Carousel.Caption>
               <h3>Second slide label</h3>
+              <img src="/api/20231114-124455786.jfif" alt="" />
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
             </Carousel.Caption>
           </Carousel.Item>

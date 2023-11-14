@@ -1,5 +1,5 @@
 package com.lostpetfinder.entity;
-/*
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
@@ -40,5 +40,5 @@ public class Image {
     }
 
 }
-*/
+
 

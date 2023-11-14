@@ -34,6 +34,7 @@ function Home({isLoggedIn}) {
                     </Col>
                 ))}
             </Row>
+            
         </Container>
     );
 }

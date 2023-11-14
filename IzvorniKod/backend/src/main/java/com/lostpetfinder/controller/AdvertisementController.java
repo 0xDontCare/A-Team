@@ -1,10 +1,14 @@
 package com.lostpetfinder.controller;
 
+import com.lostpetfinder.dto.AddAdvertisementDTO;
 import com.lostpetfinder.dto.AdvertisementDetailsDTO;
-import com.lostpetfinder.entity.Advertisement;
 import com.lostpetfinder.dto.AdvertisementSummaryDTO;
 import com.lostpetfinder.service.AdvertisementService;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 
@@ -24,8 +28,9 @@ public class AdvertisementController {
     }
 
     // potentially change the data type of the returned value to summary/details?
-    @PostMapping
-    public AdvertisementDetailsDTO addNewAdvertisement(@RequestBody AdvertisementDetailsDTO dto) {
+
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Object> addNewAdvertisement(@ModelAttribute AddAdvertisementDTO dto) {
         return advertisementService.addNewAdvertisement(dto);
     }
 
@@ -37,7 +42,7 @@ public class AdvertisementController {
     // potentially just return nothing? i don't see any point in returning anything
     @PutMapping("/{petId}")
     public AdvertisementDetailsDTO changeAdvertisement(@PathVariable("petId") long petId,
-                                                       @RequestBody AdvertisementDetailsDTO dto) {
+                                                   @RequestBody AddAdvertisementDTO dto) {
         return advertisementService.changeAdvertisement(petId, dto);
     }
 
