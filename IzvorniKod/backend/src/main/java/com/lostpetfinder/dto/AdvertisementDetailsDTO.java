@@ -16,7 +16,7 @@ public class AdvertisementDetailsDTO {
     private String firstName;
     private String lastName;
     private String shelterName;
-    private String categoryDescription;
+    private CategoryEnum categoryDescription;
     private String petName;
     private String species;
     private String color;
@@ -40,7 +40,7 @@ public class AdvertisementDetailsDTO {
         } else {
             this.shelterName = ((Shelter)user).getName();
         }
-        this.categoryDescription = advertisement.getCategory().getDescription();
+        this.categoryDescription = advertisement.getCategory();
         this.advertisementId = advertisement.getAdvertisementId();
         this.petName = advertisement.getPet().getName();
         this.species = advertisement.getPet().getSpecies();
@@ -48,7 +48,7 @@ public class AdvertisementDetailsDTO {
         this.age = advertisement.getPet().getAge();
         this.petDescription = advertisement.getPet().getDescription();
         this.disappearanceDateTime = advertisement.getDisappearanceDateTime();
-        //this.disappearanceLocation = advertisement.getLocation();
+        this.disappearanceLocation = advertisement.getLocation();
         this.images = listOfImage.stream().map(Image::getLinkToImage).collect(Collectors.toList());
     }
 
@@ -113,7 +113,7 @@ public class AdvertisementDetailsDTO {
         return shelterName;
     }
 
-    public String getCategoryDescription() {
+    public CategoryEnum getCategoryDescription() {
         return categoryDescription;
     }
 

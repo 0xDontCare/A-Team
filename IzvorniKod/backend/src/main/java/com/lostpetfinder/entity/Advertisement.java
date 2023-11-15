@@ -29,22 +29,21 @@ public class Advertisement {
     @ManyToOne
     @JoinColumn(name = "coordinates")
      */
-    //@Column(nullable = false)
-    //private String location;
+    @Column(nullable = false)
+    private String location;
 
-    @ManyToOne
-    @JoinColumn(name = "categoryId",nullable = false)
-    private Category category;
+    @Enumerated(EnumType.ORDINAL)
+    private CategoryEnum category;
 
     public Advertisement() {}
 
     // change when possible
-    public Advertisement(Pet pet, User user, Category category, LocalDateTime disappearanceDateTime, String disappearanceLocation) {
+    public Advertisement(Pet pet, User user, CategoryEnum category, LocalDateTime disappearanceDateTime, String disappearanceLocation) {
         this.pet = pet;
         this.user = user;
         this.disappearanceDateTime = disappearanceDateTime;
         this.category = category;
-        // this.location = disappearanceLocation;
+        this.location = disappearanceLocation;
     }
 
     public void updateAdvertisement(AddAdvertisementDTO dto) {
@@ -86,7 +85,7 @@ public class Advertisement {
     public void setDisappearanceDateTime(LocalDateTime disappearanceDateTime) {
         this.disappearanceDateTime = disappearanceDateTime;
     }
-/*
+
     public String getLocation() {
         return location;
     }
@@ -94,12 +93,12 @@ public class Advertisement {
     public void setLocation(String location) {
         this.location = location;
     }
-*/
-    public Category getCategory() {
+
+    public CategoryEnum getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(CategoryEnum category) {
         this.category = category;
     }
 

@@ -4,6 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import {Link, useNavigate} from "react-router-dom";
 import "./NavbarElement.css";
+import axios from "axios";
 
 function NavbarElement({isLoggedIn, userData, setLoginStatus}) {
     const [isBrandHovered, setIsBrandHovered] = useState(false);
@@ -21,7 +22,8 @@ function NavbarElement({isLoggedIn, userData, setLoginStatus}) {
         navigate("/", {state: {isLoggedIn}});
     };
 
-    const handleLogout = () => {
+    async function handleLogout()  {
+        await axios.get("/api/logout");
         setLoginStatus(false);
     };
 

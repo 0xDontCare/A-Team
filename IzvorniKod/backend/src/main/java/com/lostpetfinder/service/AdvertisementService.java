@@ -1,22 +1,18 @@
 package com.lostpetfinder.service;
 
 import com.lostpetfinder.dao.AdvertisementRepository;
-import com.lostpetfinder.dao.CategoryRepository;
 import com.lostpetfinder.dao.ImageRepository;
 import com.lostpetfinder.dao.PetRepository;
 import com.lostpetfinder.dto.AddAdvertisementDTO;
 import com.lostpetfinder.dto.AdvertisementDetailsDTO;
-import com.lostpetfinder.entity.Advertisement;
-import com.lostpetfinder.entity.Category;
-import com.lostpetfinder.entity.Pet;
+import com.lostpetfinder.entity.*;
 import com.lostpetfinder.dto.AdvertisementSummaryDTO;
-import com.lostpetfinder.entity.User;
 import com.lostpetfinder.exception.ImageNotSelectedException;
 import com.lostpetfinder.exception.FileUploadFailedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import com.lostpetfinder.entity.Image;
+
 import java.util.*;
 import java.util.List;
 
@@ -27,21 +23,18 @@ public class AdvertisementService {
     private final UserService userService;
     private final AdvertisementRepository advertisementRepository;
     private final PetRepository petRepository;
-    private final CategoryRepository categoryRepository;
     private final ImageRepository imageRepository;
 
     public AdvertisementService(ResourceService resourceService,
                                 UserService userService,
                                 AdvertisementRepository advertisementRepository,
                                 PetRepository petRepository,
-                                CategoryRepository categoryRepository,
                                 ImageRepository imageRepository)
     {
         this.resourceService = resourceService;
         this.userService = userService;
         this.advertisementRepository = advertisementRepository;
         this.petRepository = petRepository;
-        this.categoryRepository = categoryRepository;
         this.imageRepository = imageRepository;
     }
 
@@ -76,8 +69,7 @@ public class AdvertisementService {
         }
 
         User user = userService.LoggedUser().orElseThrow();
-        Category category = new Category("DEFAULT_VALUE");
-        categoryRepository.save(category);
+        CategoryEnum category = CategoryEnum.LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA;
         Advertisement newAdvertisement = new Advertisement(pet,user,category,dto.getDisappearanceDateTime(),dto.getDisappearanceLocation());
 
         return new ResponseEntity<>(new AdvertisementDetailsDTO(advertisementRepository.save(newAdvertisement), listOfImages), HttpStatus.OK);
