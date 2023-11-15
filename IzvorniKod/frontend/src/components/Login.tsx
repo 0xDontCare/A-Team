@@ -8,7 +8,7 @@ function Login({setLoginStatus, setUserData}) {
     const [lozinka, setLozinka] = useState("");
     const navigate = useNavigate();
 
-    async function login(event) {
+    async function login(event: { preventDefault: () => void; }) {
         event.preventDefault();
         try {
             const response = await axios.post("/api/login", {

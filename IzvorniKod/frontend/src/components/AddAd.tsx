@@ -1,9 +1,13 @@
-import {useState} from 'react';
+import {SetStateAction, useState} from 'react';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import {useNavigate} from "react-router-dom";
 
 function AddAd() {
+    document.title = "Dodajte oglas";
+    const navigate = useNavigate();
+
     const [adPet, setAdPet] = useState("");
     const [adSpecies, setAdSpecies] = useState("");
     const [adName, setAdName] = useState("");
@@ -16,19 +20,33 @@ function AddAd() {
     const [adPhoto2, setAdPhoto2] = useState(null);
     const [adPhoto3, setAdPhoto3] = useState(null);
 
-    const handlePetChange = (e) => setAdPet(e.target.value);
-    const handleSpeciesChange = (e) => setAdSpecies(e.target.value);
-    const handleNameChange = (e) => setAdName(e.target.value);
-    const handleLocationChange = (e) => setAdLocation(e.target.value);
-    const handleDateTimeChange = (e) => setAdDateTime(e.target.value);
-    const handleColorChange = (e) => setAdColor(e.target.value);
-    const handleAgeChange = (e) => setAdAge(e.target.value);
-    const handleDescriptionChange = (e) => setAdDescription(e.target.value);
-    const handlePhoto1Change = (e) => setAdPhoto1(e.target.files[0]);
-    const handlePhoto2Change = (e) => setAdPhoto2(e.target.files[0]);
-    const handlePhoto3Change = (e) => setAdPhoto3(e.target.files[0]);
+    const handlePetChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdPet(e.target.value);
+    const handleSpeciesChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdSpecies(e.target.value);
+    const handleNameChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdName(e.target.value);
+    const handleLocationChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdLocation(e.target.value);
+    const handleDateTimeChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdDateTime(e.target.value);
+    const handleColorChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdColor(e.target.value);
+    const handleAgeChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdAge(e.target.value);
+    const handleDescriptionChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdDescription(e.target.value);
+    const handlePhoto1Change = (e: { target: { files: SetStateAction<null>[]; }; }) => setAdPhoto1(e.target.files[0]);
+    const handlePhoto2Change = (e: { target: { files: SetStateAction<null>[]; }; }) => setAdPhoto2(e.target.files[0]);
+    const handlePhoto3Change = (e: { target: { files: SetStateAction<null>[]; }; }) => setAdPhoto3(e.target.files[0]);
 
-    let handleSubmit = async (e) => {
+    const resetFormFields = () => {
+        setAdPet("");
+        setAdSpecies("");
+        setAdName("");
+        setAdLocation("");
+        setAdDateTime("");
+        setAdColor("");
+        setAdAge("");
+        setAdDescription("");
+        setAdPhoto1(null);
+        setAdPhoto2(null);
+        setAdPhoto3(null);
+    };
+
+    const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         try {
             const formData = new FormData();
@@ -42,16 +60,17 @@ function AddAd() {
             formData.append("images", adPhoto1);
             formData.append("images", adPhoto2);
             formData.append("images", adPhoto3);
-            console.log(formData);
+
             const options = {
                 method: "POST",
                 body: formData,
             };
-            console.log(formData.get("petName"));
 
-            let res = await fetch("/api/advertisements", options)
+            const res = await fetch("/api/advertisements", options)
             if (res.status === 200) {
                 alert("Oglas uspješno dodan!");
+                resetFormFields();
+                navigate('/');
             } else {
                 alert("Oglas nije uspješno dodan!");
             }
@@ -64,8 +83,6 @@ function AddAd() {
     return (
         <Container>
             <div className="card p-5 mt-4" style={{border: "1px solid #ccc", borderRadius: "5px"}}>
-                <h1 className="mb-4 text-center" style={{borderBottom: "1px solid #ccc", paddingBottom: "10px"}}>Dodajte
-                    oglas</h1>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3" controlId="adPet">
                         <Form.Label>Ljubimac</Form.Label>
@@ -127,6 +144,5 @@ function AddAd() {
         </Container>
     );
 }
-
 
 export default AddAd;

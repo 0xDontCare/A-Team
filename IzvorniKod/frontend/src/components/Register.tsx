@@ -1,9 +1,11 @@
 import {useState} from "react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 function Register() {
     document.title = "Registracija";
     const [userType, setUserType] = useState("regular");
+    const navigate = useNavigate();
 
     // Regular User Form State
     const [ime, setIme] = useState("");
@@ -66,6 +68,7 @@ function Register() {
 
             alert("Uspješno ste se registrirali!");
             resetFormFields();
+            navigate('/');
         } catch (err) {
             alert(err);
         }
@@ -108,6 +111,7 @@ function Register() {
 
             alert("Uspješno ste se registrirali kao sklonište!");
             resetFormFields();
+            navigate('/');
         } catch (err) {
             alert(err);
         }

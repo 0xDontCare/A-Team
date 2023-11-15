@@ -9,13 +9,12 @@ import AddAd from "./components/AddAd";
 import axios from "axios";
 
 function App() {
-    const [isLoggedIn, setLoginStatus] = useState(false); // State to track login status
-    const [userData, setUserData] = useState(null); // State to store user data
+    const [isLoggedIn, setLoginStatus] = useState(false);
+    const [userData, setUserData] = useState(null);
 
-    // Function to update user data after a successful login
     useEffect(() => {
         if (isLoggedIn) {
-            axios.get("/api/logged") // Replace with your API endpoint
+            axios.get("/api/logged")
                 .then((response) => {
                     setUserData(response.data);
                 })
@@ -33,13 +32,6 @@ function App() {
         setLoginStatus(false);
     };
 
-    const cardData = [
-        {id: 1, title: "Oglas 1", content: "This is some content for Card 1."},
-        {id: 2, title: "Oglas 2", content: "This is some content for Card 2."},
-        {id: 3, title: "Oglas 3", content: "This is some content for Card 3."},
-        {id: 4, title: "Oglas 4", content: "This is some content for Card 4."},
-    ];
-
     return (
         <div>
             <BrowserRouter>
@@ -47,7 +39,7 @@ function App() {
                 <Routes>
                     <Route
                         path="/"
-                        element={<Home cardData={cardData} isLoggedIn={isLoggedIn}/>}
+                        element={<Home isLoggedIn={isLoggedIn}/>}
                     />
                     <Route path="/register" element={<Register/>}/>
                     <Route
@@ -56,7 +48,7 @@ function App() {
                     />
 
                     <Route path="/addAd" element={<AddAd/>}/>
-                    <Route path="/:id" element={<OglasDetalj cardData={cardData}/>}/>
+                    <Route path="/:id" element={<OglasDetalj/>}/>
                 </Routes>
             </BrowserRouter>
         </div>

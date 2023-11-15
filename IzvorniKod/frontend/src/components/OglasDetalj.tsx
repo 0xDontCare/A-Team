@@ -1,46 +1,91 @@
 import {useParams} from "react-router-dom";
 import Card from "react-bootstrap/Card";
-import "./OglasDetalj.css";
-import "react-slideshow-image/dist/styles.css";
 import Carousel from "react-bootstrap/Carousel";
+import {useEffect, useState} from "react";
+import './OglasDetalj.css';
 
-function OglasDetalj({cardData}) {
+function OglasDetalj() {
     const {id} = useParams();
-    const card = cardData.find((card) => card.id === parseInt(id, 10));
+    const [card, setCard] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        // Fetch data from /api/advertisements/{id}
+        fetch(`/api/advertisements/${id}`)
+            .then((response) => response.json())
+            .then((data) => {
+                setCard(data);
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.error("Error fetching advertisement details:", error);
+                setLoading(false);
+            });
+
+        return () => {
+            document.title = "";
+        };
+    }, [id]);
+
+    useEffect(() => {
+        if (card) {
+            document.title = card.petName;
+        }
+    }, [card]);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     if (!card) {
         return <div>Card not found</div>;
     }
 
     return (
-        <div className="slide-container">
+        <div className="container mt-4">
             <Card>
-                <Card.Title>{card.title}</Card.Title>
-                <Carousel touch={true}>
-                    <Carousel.Item interval={null}>
-                        <Carousel.Caption>
-                            <h3>First slide label</h3>
-                            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                    <Carousel.Item interval={null}>
-                        <Carousel.Caption>
-                            <h3>Second slide label</h3>
-                            <img src="/api/20231114-124455786.jfif" alt=""/>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                    <Carousel.Item interval={null}>
-                        <Carousel.Caption>
-                            <h3>Third slide label</h3>
-                            <p>
-                                Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+                <Card.Body className="custom-card bg-warning bg-gradient">
+                    <Card.Title className="text-center">{card.petName}</Card.Title>
+                    {card.images && card.images.length > 0 && (
+                        <Carousel touch={true} className="mb-4">
+                            {card.images.map((image, index) => (
+                                <Carousel.Item key={index}>
+                                    <img
+                                        src={`/api/${image}`}
+                                        alt={`Slide ${index}`}
+                                        className="d-block mx-auto img-fluid"
+                                        style={{width: '900px', height: '600px'}}
+                                    />
+                                </Carousel.Item>
+                            ))}
+                        </Carousel>
+                    )}
+                    <div className="row">
+                        <div className="col-md-6">
+                            <p className="mb-2">
+                                <strong>Vrsta :</strong> {card.species}
                             </p>
-                        </Carousel.Caption>
-                    </Carousel.Item>
-                </Carousel>
-                <Card.Body>
-                    <Card.Text>{card.content}</Card.Text>
+                            <p className="mb-2">
+                                <strong>Datum i vrijeme nestanka :</strong>{" "}
+                                {card.disappearanceDateTime}
+                            </p>
+                            <p className="mb-2">
+                                <strong>Mjesto nestanka :</strong>{" "}
+                                {card.disappearanceLocation}
+                            </p>
+                        </div>
+                        <div className="col-md-6">
+                            <p className="mb-2">
+                                <strong>Boja :</strong> {card.color}
+                            </p>
+                            <p className="mb-2">
+                                <strong>Starost :</strong> {card.age}
+                            </p>
+                            <p className="mb-2">
+                                <strong>Opis :</strong> {card.petDescription}
+                            </p>
+                        </div>
+                    </div>
                 </Card.Body>
             </Card>
         </div>

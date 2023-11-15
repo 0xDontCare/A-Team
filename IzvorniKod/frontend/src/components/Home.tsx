@@ -1,24 +1,36 @@
+import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Oglas from "./Oglas.tsx";
 
+interface Advertisement {
+    adId: number;
+    petName: string;
+}
+
 function Home({isLoggedIn}) {
-    const cardData = [
-        {id: 1, title: "Oglas 1", content: "This is some content for Card 1."},
-        {id: 2, title: "Oglas 2", content: "This is some content for Card 2."},
-        {id: 3, title: "Oglas 3", content: "This is some content for Card 3."},
-        {id: 4, title: "Oglas 4", content: "This is some content for Card 4."},
-    ];
+    const [advertisements, setAdvertisements] = useState<Advertisement[]>([]);
+    document.title = "Nestali ljubimci";
+
+    useEffect(() => {
+        fetch("/api/advertisements")
+            .then((response) => response.json())
+            .then((data) => {
+                setAdvertisements(data);
+            })
+            .catch((error) => {
+                console.error("Error fetching advertisement data:", error);
+            });
+    }, []);
 
     return (
         <Container>
             {isLoggedIn && (
                 <Row className="mb-3">
                     <Col className="text-center">
-                        <div
-                            className="mt-3 p-3 rounded border border-dark border-2 bg-info"> {/* Changed background color to light blue */}
+                        <div className="mt-3 p-3 rounded border border-dark border-2 bg-info">
                             <Link to="/addAd" className="btn btn-success me-2">
                                 Dodajte oglas
                             </Link>
@@ -29,9 +41,12 @@ function Home({isLoggedIn}) {
                 </Row>
             )}
             <Row xs={1} md={2} lg={4} className="g-4">
-                {cardData.map((card) => (
-                    <Col key={card.id}>
-                        <Oglas id={card.id} title={card.title} content={card.content}/>
+                {advertisements.map((advertisement) => (
+                    <Col key={advertisement.adId}>
+                        <Oglas
+                            id={advertisement.adId}
+                            title={advertisement.petName}
+                        />
                     </Col>
                 ))}
             </Row>

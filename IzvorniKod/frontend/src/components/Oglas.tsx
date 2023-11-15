@@ -7,7 +7,7 @@ interface CardProps {
     content: string;
 }
 
-const Oglas: React.FC<CardProps> = ({id, title, content}) => {
+const Oglas: React.FC<CardProps> = ({id, title}) => {
     const [isHovered, setIsHovered] = useState(false);
 
     const cardStyle = {
@@ -41,10 +41,10 @@ const Oglas: React.FC<CardProps> = ({id, title, content}) => {
             <div className="card" style={cardStyle}>
                 <div className="card-body">
                     <h5 className="card-title" style={titleStyle}>
-                        {title}
+                        Oglas {id}
                     </h5>
                     <p className="card-text" style={contentStyle}>
-                        {content}
+                        {title}
                     </p>
                 </div>
             </div>
