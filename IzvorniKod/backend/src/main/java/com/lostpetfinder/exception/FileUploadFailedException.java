@@ -6,3 +6,4 @@ public class FileUploadFailedException extends RuntimeException {
         super(message);
     }
 
+}

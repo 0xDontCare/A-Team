@@ -9,64 +9,76 @@ import java.util.List;
 
 public class AddAdvertisementDTO {
 
-    private final String petName;
-    private final String species;
-    private final String color;
-    private final Integer age;
-    private final String petDescription;
-    private final LocalDateTime disappearanceDateTime;
-    private final String disappearanceLocation; // change the data type
-    private final List<MultipartFile> images;
-
-    public AddAdvertisementDTO(String petName,
-                               String species,
-                               String color,
-                               Integer age,
-                               String petDescription,
-                               LocalDateTime disappearanceDateTime,
-                               String disappearanceLocation,
-                               List<MultipartFile> images)
-    {
-        this.petName = petName;
-        this.species = species;
-        this.color = color;
-        this.age = age;
-        this.petDescription = petDescription;
-        this.disappearanceDateTime = disappearanceDateTime;
-        this.disappearanceLocation = disappearanceLocation;
-        this.images = images;
-    }
+    private String petName;
+    private String species;
+    private String color;
+    private Integer age;
+    private String petDescription;
+    private LocalDateTime disappearanceDateTime;
+    private String disappearanceLocation; // change the data type
+    private List<MultipartFile> images;
 
     public String getPetName() {
         return petName;
+    }
+
+    public void setPetName(String petName) {
+        this.petName = petName;
     }
 
     public String getSpecies() {
         return species;
     }
 
+    public void setSpecies(String species) {
+        this.species = species;
+    }
+
     public String getColor() {
         return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public Integer getAge() {
         return age;
     }
 
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
     public String getPetDescription() {
         return petDescription;
+    }
+
+    public void setPetDescription(String petDescription) {
+        this.petDescription = petDescription;
     }
 
     public LocalDateTime getDisappearanceDateTime() {
         return disappearanceDateTime;
     }
 
+    public void setDisappearanceDateTime(LocalDateTime disappearanceDateTime) {
+        this.disappearanceDateTime = disappearanceDateTime;
+    }
+
     public String getDisappearanceLocation() {
         return disappearanceLocation;
+    }
+
+    public void setDisappearanceLocation(String disappearanceLocation) {
+        this.disappearanceLocation = disappearanceLocation;
     }
 
     public List<MultipartFile> getImages() {
         return images;
     }
 
+    public void setImages(List<MultipartFile> images) {
+        this.images = images;
+    }
 }
