@@ -2,15 +2,18 @@ package com.lostpetfinder.service;
 
 import com.lostpetfinder.exception.FileUploadFailedException;
 import com.lostpetfinder.exception.ImageNotSelectedException;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.nio.file.Paths;
 
 @Service
 public class ResourceService {
@@ -28,7 +31,17 @@ public class ResourceService {
             List<String> linktoImageList = new LinkedList<>();
 
             // Get the root directory of your static folder
-            String rootDirectory = System.getProperty("user.dir") + "/src/main/resources/static/";
+            String resourceFolderPath = "";
+            try {
+                ClassLoader classLoader = getClass().getClassLoader();
+                File file = new File(classLoader.getResource("").getFile());
+                 resourceFolderPath = file.getAbsolutePath();
+            } catch (NullPointerException e) {
+                // Handle the exception
+                e.printStackTrace();
+                return null;
+            }
+            String rootDirectory = resourceFolderPath + "/static/";
 
             for (MultipartFile file : files) {
                 if (file.isEmpty()) {
