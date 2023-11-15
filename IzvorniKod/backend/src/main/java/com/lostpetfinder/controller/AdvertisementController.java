@@ -27,8 +27,6 @@ public class AdvertisementController {
         return advertisementService.getAllAdvertisements();
     }
 
-    // potentially change the data type of the returned value to summary/details?
-
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> addNewAdvertisement(@ModelAttribute AddAdvertisementDTO dto) {
         return advertisementService.addNewAdvertisement(dto);
@@ -39,17 +37,16 @@ public class AdvertisementController {
         return advertisementService.seeAdvertisementInfo(adId);
     }
 
-    // potentially just return nothing? i don't see any point in returning anything
-    @PutMapping("/{petId}")
-    public AdvertisementDetailsDTO changeAdvertisement(@PathVariable("petId") long petId,
+    // change the data type of the return value
+    @PutMapping("/{adId}")
+    public AdvertisementDetailsDTO changeAdvertisement(@PathVariable("adId") long adId,
                                                    @RequestBody AddAdvertisementDTO dto) {
-        return advertisementService.changeAdvertisement(petId, dto);
+        return advertisementService.changeAdvertisement(adId, dto);
     }
 
-    // potentially just return nothing? i don't see any point in returning anything
-    @DeleteMapping("/{petId}")
-    public void deleteAdvertisement(@PathVariable("petId") Long petId) {
-        advertisementService.deleteAdvertisement(petId);
+    @DeleteMapping("/{adId}")
+    public void deleteAdvertisement(@PathVariable("adId") Long adId) {
+        advertisementService.deleteAdvertisement(adId);
     }
 
 }
