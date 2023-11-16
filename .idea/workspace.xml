@@ -5,8 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="abe80cba-b5a4-4957-912f-167188a0bd44" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/dto/LoginInfoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/dto/LoginInfoDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/dto/RegistrationInfoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/dto/RegistrationInfoDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/Advertisement.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/Advertisement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/Pet.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/Pet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/Registered.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/Registered.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/Role.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/Shelter.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/Shelter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/service/AdvertisementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/service/AdvertisementService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/service/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/service/AuthenticationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/service/ResourceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/service/ResourceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,27 +40,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/rober/Desktop/A-Team&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\38595\\A-Team\\IzvorniKod\\frontend\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "dev",
+    "last_opened_file_path": "C:/Users/rober/Desktop/A-Team",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "settings.editor.selected.configurable": "advanced.settings",
+    "ts.external.directory.path": "C:\\Users\\38595\\A-Team\\IzvorniKod\\frontend\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="LostPetFinderApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="ACTIVE_PROFILES" value="basic-security,dev" />
