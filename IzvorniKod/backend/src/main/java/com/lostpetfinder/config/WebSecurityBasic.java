@@ -36,28 +36,23 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class WebSecurityBasic {
 
     @Bean
-    @Profile("basic-security")
     public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    @Profile("basic-security")
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 
     @Bean
-    @Profile("basic-security")
     public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
 
         MvcRequestMatcher.Builder mvcRequestMatcher = new MvcRequestMatcher.Builder(introspector);
 
-        http.csrf(csrf -> csrf
-                        .ignoringRequestMatchers(PathRequest.toH2Console()).disable())
+        http.csrf(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .requestMatchers(mvcRequestMatcher.pattern("/api/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/login")).permitAll()
                         .anyRequest().authenticated()
@@ -66,12 +61,20 @@ public class WebSecurityBasic {
                 .logoutUrl("/api/logout")
                 .logoutSuccessHandler((request, response, authentication) ->
                         response.setStatus(HttpStatus.NO_CONTENT.value())));
-        http.csrf(AbstractHttpConfigurer::disable);
-
 
         http.headers(headers -> headers.frameOptions((frameOptions) -> frameOptions.disable()));
-        //http.sessionManagement(session  -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
+
+        return http.build();
+    }
+
+    @Bean
+    @Profile("dev")
+    public SecurityFilterChain h2ConsoleSecurityFilterChain(HttpSecurity http) throws Exception {
+
+        http.securityMatcher(PathRequest.toH2Console());
+        http.csrf(AbstractHttpConfigurer::disable);
+        http.headers((headers) -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
         return http.build();
 
     }
