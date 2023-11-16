@@ -1,5 +1,5 @@
 # build container
-FROM openjdk:21-jdk-alpine as build
+FROM openjdk:21-jdk as build
 
 # copy source code to container
 COPY .mvn .mvn
@@ -12,7 +12,7 @@ RUN  chmod +x ./mvnw
 RUN ./mvnw clean package -DskipTests
 
 # create container for running app
-FROM openjdk:21-jdk-alpine
+FROM openjdk:21-jdk
 
 # place for installing additional programs
 
