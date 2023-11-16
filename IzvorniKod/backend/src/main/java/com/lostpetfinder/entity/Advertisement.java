@@ -99,5 +99,4 @@ public class Advertisement {
     public void setCategory(CategoryEnum category) {
         this.category = category;
     }
-
 }

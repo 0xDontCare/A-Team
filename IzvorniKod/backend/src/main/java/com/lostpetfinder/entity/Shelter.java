@@ -27,4 +27,7 @@ public class Shelter extends User{
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 }
