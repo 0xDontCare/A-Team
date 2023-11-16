@@ -1,4 +1,17 @@
 nav {
-    background-color: #FFA62B;
+    background-color: #d5b083f2;
     border-bottom: 2px solid black;
+}
+
+.logo {
+    width: 55px;
+    height: 55px;
+}
+
+.gumb {
+    background: #000000f2;
+    border-radius: 10px;
+    border: 2px solid black;
+    font-weight: bold;
+    transform: scale(1.1);
 }
