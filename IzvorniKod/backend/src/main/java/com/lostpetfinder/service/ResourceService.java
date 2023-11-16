@@ -37,7 +37,6 @@ public class ResourceService {
                 File file = new File(classLoader.getResource("").getFile());
                  resourceFolderPath = file.getAbsolutePath();
             } catch (NullPointerException e) {
-                // Handle the exception
                 e.printStackTrace();
                 return null;
             }

@@ -29,14 +29,21 @@ import java.util.Collections;
 @Service
 public class AuthenticationService {
 
-    private AuthenticationManager authenticationManager;
-    private UserRepository<User> userRepository;
-    private RoleRepository roleRepository;
-    private PasswordEncoder passwordEncoder;
-    private RegisteredRepository registeredRepository;
-    private ShelterRepository shelterRepository;
+    private final AuthenticationManager authenticationManager;
+    private final UserRepository<User> userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final RegisteredRepository registeredRepository;
+    private final ShelterRepository shelterRepository;
 
-    public AuthenticationService(AuthenticationManager authenticationManager, UserRepository<User> userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, RegisteredRepository registeredRepository, ShelterRepository shelterRepository) {
+    public AuthenticationService(
+            AuthenticationManager authenticationManager,
+            UserRepository<User> userRepository,
+            RoleRepository roleRepository,
+            PasswordEncoder passwordEncoder,
+            RegisteredRepository registeredRepository,
+            ShelterRepository shelterRepository)
+    {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -56,8 +63,6 @@ public class AuthenticationService {
             // Create a new session and add the security context.
             HttpSession session = request.getSession(true);
             session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
-
-            //userService.setLoggedUser();
 
             return new ResponseEntity<>("Login successful!", HttpStatus.OK);
         } catch (AuthenticationException e) {
@@ -79,20 +84,17 @@ public class AuthenticationService {
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setPhoneNumber(dto.getPhoneNumber());
 
-        Role roles;
+        Role role;
         if (dto.getShelterName() != null) {
-            roles = roleRepository.findByName("ROLE_SHELTER").get();
+            role = roleRepository.findByName("ROLE_SHELTER").get();
             shelterRepository.save(new Shelter(user, dto.getShelterName()));
         } else {
-            roles = roleRepository.findByName("ROLE_REGISTERED").get();
+            role = roleRepository.findByName("ROLE_REGISTERED").get();
             registeredRepository.save(new Registered(user, dto.getFirstName(), dto.getLastName()));
         }
-        user.setRoles(Collections.singleton(roles));
-
-        //userRepository.save(user);
+        user.setRoles(Collections.singleton(role));
 
         return new ResponseEntity<>("User is registered successfully!", HttpStatus.OK);
-
     }
 
 }

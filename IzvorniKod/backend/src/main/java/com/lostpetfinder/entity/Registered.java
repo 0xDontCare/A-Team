@@ -21,18 +21,6 @@ public class Registered extends User {
 
     public Registered() {}
 
-    public Registered(String name, String surname) {
-        this.name = name;
-        this.surname = surname;
-    }
-/*
-    public Registered(String username, String password, String email, String phoneNumber, Place place, String name, String surname) {
-        super(username, password, email, phoneNumber, place);
-        this.name = name;
-        this.surname = surname;
-    }
-*/
-
     // temp constructor
     public Registered(User superUser, String name, String surname) {
         super(superUser.getUsername(), superUser.getPassword(), superUser.getEmail(), superUser.getPhoneNumber());
@@ -44,15 +32,8 @@ public class Registered extends User {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getSurname() {
         return surname;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
 }

@@ -70,9 +70,18 @@ public class AdvertisementService {
 
         User user = userService.LoggedUser().orElseThrow();
         CategoryEnum category = CategoryEnum.LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA;
-        Advertisement newAdvertisement = new Advertisement(pet,user,category,dto.getDisappearanceDateTime(),dto.getDisappearanceLocation());
+        Advertisement newAdvertisement = new Advertisement(
+                pet,
+                user,
+                category,
+                dto.getDisappearanceDateTime(),
+                dto.getDisappearanceLocation()
+        );
 
-        return new ResponseEntity<>(new AdvertisementDetailsDTO(advertisementRepository.save(newAdvertisement), listOfImages), HttpStatus.OK);
+        return new ResponseEntity<>(
+                new AdvertisementDetailsDTO(advertisementRepository.save(newAdvertisement), listOfImages)
+                , HttpStatus.OK
+        );
     }
 
     // add the exception handling / completely remove it
@@ -86,7 +95,6 @@ public class AdvertisementService {
     }
 
     // change the data type of the return value
-    // add the exception handling / completely remove it
     public AdvertisementDetailsDTO changeAdvertisement(long adId, AddAdvertisementDTO dto) {
         if (!advertisementRepository.existsByPetPetIdNot(adId)) {
             throw new NoSuchElementException();
@@ -100,7 +108,6 @@ public class AdvertisementService {
     }
 
     // adjust later so it only changes the 'deleted' flag in the Advertisement entity
-    // add the exception handling / completely remove it
     public void deleteAdvertisement(Long petId) {
         Advertisement advertisement = advertisementRepository.findByPetPetId(petId).orElseThrow();
         advertisementRepository.delete(advertisement);

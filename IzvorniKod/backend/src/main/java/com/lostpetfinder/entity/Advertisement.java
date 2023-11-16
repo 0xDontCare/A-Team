@@ -17,7 +17,6 @@ public class Advertisement {
     @JoinColumn(name = "petId",nullable = false)
     private Pet pet;
 
-
     @ManyToOne
     @JoinColumn(name = "username",nullable = false)
     private User user;
@@ -37,7 +36,6 @@ public class Advertisement {
 
     public Advertisement() {}
 
-    // change when possible
     public Advertisement(Pet pet, User user, CategoryEnum category, LocalDateTime disappearanceDateTime, String disappearanceLocation) {
         this.pet = pet;
         this.user = user;

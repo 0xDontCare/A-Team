@@ -7,16 +7,18 @@
     <list default="true" id="abe80cba-b5a4-4957-912f-167188a0bd44" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/AddAd.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/AddAd.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Home.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Login.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Oglas.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Oglas.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/OglasDetalj.css" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/OglasDetalj.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/OglasDetalj.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/OglasDetalj.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Register.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/dto/LoginInfoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/dto/LoginInfoDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/dto/RegistrationInfoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/dto/RegistrationInfoDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/Advertisement.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/Advertisement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/Pet.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/Pet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/Registered.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/Registered.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/Role.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/Shelter.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/Shelter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/service/AdvertisementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/service/AdvertisementService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/service/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/service/AuthenticationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/service/ResourceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/service/ResourceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +57,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "yarn",
     "settings.editor.selected.configurable": "advanced.settings",
-    "ts.external.directory.path": "C:\\Users\\rober\\Desktop\\A-Team\\IzvorniKod\\frontend\\node_modules\\typescript\\lib",
+    "ts.external.directory.path": "C:\\Users\\38595\\A-Team\\IzvorniKod\\frontend\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>

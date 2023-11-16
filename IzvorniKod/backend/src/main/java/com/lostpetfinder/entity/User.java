@@ -21,7 +21,6 @@ public class User {
     @Size(max = 100)
     private String password;
 
-    // email should also be unique
     @Column(nullable = false, unique = true)
     @Size(max = 100)
     private String email;
@@ -31,7 +30,7 @@ public class User {
     private String phoneNumber;
 
     @ManyToMany
-    @LazyCollection(LazyCollectionOption.FALSE) // potentially include
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Set<Role> roles;
 
     /*
