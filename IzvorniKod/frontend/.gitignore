@@ -25,3 +25,5 @@ dist-ssr
 
 # yarn.lock
 yarn.lock
+
+vite.config.ts
