@@ -112,12 +112,12 @@ function OglasDetalj() {
               <div className="row">
                 {userFirstName && userLastName && (
                   <>
-                    <div className="col-md-4">
+                    <div className="col-md-6">
                       <p className="mb-2">
                         <strong>Ime:</strong> {userFirstName}
                       </p>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-6">
                       <p className="mb-2">
                         <strong>Prezime:</strong> {userLastName}
                       </p>
@@ -127,12 +127,12 @@ function OglasDetalj() {
 
                 {(!userFirstName || !userLastName) && (
                   <>
-                    <div className="col-md-4">
+                    <div className="col-md-6">
                       <p className="mb-2">
                         <strong>Ime skloništa:</strong> {shelterName}
                       </p>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-6">
                       <p className="mb-2">
                         <strong>Korisničko ime:</strong> {card.username}
                       </p>
@@ -140,13 +140,13 @@ function OglasDetalj() {
                   </>
                 )}
                 <div className="row">
-                  <div className="col-md-4">
+                  <div className="col-md-6">
                     <p className="mb-2">
                       <strong>E-pošta:</strong> {card.email}
                     </p>
                   </div>
 
-                  <div className="col-md-4">
+                  <div className="col-md-6">
                     <p className="mb-2">
                       <strong>Broj telefona:</strong> {card.phoneNumber}
                     </p>
@@ -156,7 +156,7 @@ function OglasDetalj() {
                 <div className="row">
                   {userFirstName && userLastName && (
                     <>
-                      <div className="col-md-4">
+                      <div className="col-md-6">
                         <p className="mb-2">
                           <strong>Korisničko ime:</strong> {card.username}
                         </p>
