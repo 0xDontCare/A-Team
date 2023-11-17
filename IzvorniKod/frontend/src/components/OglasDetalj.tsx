@@ -61,7 +61,7 @@ function OglasDetalj() {
         <Card.Body className="custom-card bg-gradient customCard">
           <Card.Title className="text-center">{card.petName}</Card.Title>
           {card.images && card.images.length > 0 && (
-            <Carousel touch={true} className="mb-4">
+            <Carousel data-bs-theme="dark" touch={true} className="mb-4">
               {card.images.map((image, index) => (
                 <Carousel.Item interval={null} key={index}>
                   <img
