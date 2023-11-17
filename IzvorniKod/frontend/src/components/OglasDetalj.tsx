@@ -55,7 +55,7 @@ function OglasDetalj() {
     return (
         <div className="container mt-4">
             <Card>
-                <Card.Body className="custom-card bg-warning bg-gradient">
+                <Card.Body className="custom-card bg-gradient customCard">
                     <Card.Title className="text-center">{card.petName}</Card.Title>
                     {card.images && card.images.length > 0 && (
                         <Carousel touch={true} className="mb-4">

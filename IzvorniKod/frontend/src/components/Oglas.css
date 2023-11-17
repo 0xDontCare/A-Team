@@ -4,7 +4,7 @@
     padding: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: #d5b083f2;
-    transition: all 0.2s ease-in;
+    transition: all 0.5ms ease-in;
 }
 
 .cardContainer:hover {
@@ -22,7 +22,7 @@
     color: #555;
 }
 
-link {
+a {
     text-decoration: none;
 }
 
