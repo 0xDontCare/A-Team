@@ -289,21 +289,29 @@
 		\section{Dijagram razreda}
 			
 			\textbf{\textit{dio 1. revizije}}\\
+
+                \noindent Na slikama 4.4, 4.5, 4.6 i 4.7 su prikazani razredi koji pripadaju \textit{backend} dijelu MVC arhitekture. Na slici 4.4 je vidljiv paket \textit{controller} koji dijelimo na razrede. Metode koje su implementirane u tim razredima koriste DTO-ove\textit{(Data transfer object)}, a njima pristupamo putem metoda koje su implementirane u \textit{entity} razredima. Metode unutar \textit{controller} paketa vraćaju JSON objekte s odgovarajućim HTTP status kodovima.
 			
+			Razredi su strukturirani prema pravima pristupa metodama            različitih aktora kako bi se rasteretio dijagram od prevelike       složenosti. Prikazane su samo ovisnosti između razreda unutar       istog segmenta dijagrama. Na osnovu naziva i tipova atributa        unutar razreda, može se zaključiti vrsta veza među različitim       entitetima.
+
 			\begin{figure}[htb]
 				\centering
 				\includegraphics[width=\textwidth]{slike/dr1_kontroleri.png}
 				\caption{Dijagram razreda - paket "controller"}
 			\end{figure}
 			\pagebreak
-			
+
+                Servisni sloj pruža poslovnu logiku i pristup podacima za različite funkcionalnosti aplikacije. Razredi paketa \textit{services} koriste repozitorije za pristup podacima. Rezultati ovih servisa se koriste u razredima koji se nalaze u paketu \textit{controller} kako bi se generirali odgovori na zahtjeve korisnika.
+   
 			\begin{figure}[htb]
 				\centering
 				\includegraphics[width=\textwidth]{slike/dr2_servisi.png}
 				\caption{Dijagram razreda - paket "services"}
 			\end{figure}
 			\pagebreak
-			
+
+                \textit{Entity} razredi odražavaju strukturu baze podataka u aplikaciji. Metode unutar ovih razreda komuniciraju izravno s bazom podataka kako bi dohvatili željene podatke. Razred \textit{User} predstavlja neregistriranog korisnika koji se može registrirati popunjavajući obrazac svojim osnovnim informacijama. Registrirane korisnike dijelimo na razred \textit{Registered} koji predstavlja korisnika koji je registriran i može koristiti osnovne funkcionalnosti sustava te na razred \textit{Shelter} koji predstavlja sklonište za životinje. Sklonište ima mogućnost oglašavanja pronađenih životinja.
+   
 			\begin{figure}[htb]
 				\centering
 				\includegraphics[width=\textwidth]{slike/dr3_entiteti.png}
