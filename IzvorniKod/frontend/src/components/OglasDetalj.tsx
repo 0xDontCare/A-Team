@@ -59,6 +59,10 @@ function OglasDetalj() {
     const userLastName = card.lastName || "";
     const shelterName = card.shelterName || "";
 
+    const displayUserDetails =
+        (userFirstName && userLastName) ||
+        (!userFirstName && !userLastName && shelterName);
+
     return (
         <div className="container mt-4">
             <Card>
@@ -102,28 +106,46 @@ function OglasDetalj() {
                             </p>
                         </div>
                     </div>
+                    {displayUserDetails && (
+                        <div className="mt-4">
+                            <h4>Podaci o korisniku:</h4>
+                            <div className="row">
+                                {userFirstName && userLastName && (
+                                    <>
+                                        <div className="col-md-6">
+                                            <p className="mb-2">
+                                                <strong>Ime:</strong> {userFirstName}
+                                            </p>
+                                        </div>
+                                        <div className="col-md-6">
+                                            <p className="mb-2">
+                                                <strong>Prezime:</strong> {userLastName}
+                                            </p>
+                                        </div>
+                                    </>
+                                )}
 
-                    <div className="mt-4">
-                        <h4>Podaci o korisniku:</h4>
-                        <p className="mb-2">
-                            <strong>Korisničko ime:</strong> {card.username}
-                        </p>
-                        <p className="mb-2">
-                            <strong>E-pošta:</strong> {card.email}
-                        </p>
-                        <p className="mb-2">
-                            <strong>Broj telefona:</strong> {card.phoneNumber}
-                        </p>
-                        <p className="mb-2">
-                            <strong>Ime:</strong> {userFirstName}
-                        </p>
-                        <p className="mb-2">
-                            <strong>Prezime:</strong> {userLastName}
-                        </p>
-                        <p className="mb-2">
-                            <strong>Ime skloništa:</strong> {shelterName}
-                        </p>
-                    </div>
+                                {(!userFirstName || !userLastName) && (
+                                    <div className="col-md-6">
+                                        <p className="mb-2">
+                                            <strong>Ime skloništa:</strong> {shelterName}
+                                        </p>
+                                    </div>
+                                )}
+                                <div className="col-md-6">
+                                    <p className="mb-2">
+                                        <strong>Korisničko ime:</strong> {card.username}
+                                    </p>
+                                    <p className="mb-2">
+                                        <strong>E-pošta:</strong> {card.email}
+                                    </p>
+                                    <p className="mb-2">
+                                        <strong>Broj telefona:</strong> {card.phoneNumber}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </Card.Body>
             </Card>
         </div>
