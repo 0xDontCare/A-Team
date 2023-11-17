@@ -7,7 +7,6 @@ function Register() {
   const [userType, setUserType] = useState("regular");
   const navigate = useNavigate();
 
-  // Regular User Form State
   const [ime, setIme] = useState("");
   const [prezime, setPrezime] = useState("");
   const [email, setEmail] = useState("");
@@ -16,7 +15,6 @@ function Register() {
   const [lozinka, setLozinka] = useState("");
   const [error, setError] = useState("");
 
-  // Shelter User Form State
   const [imeSklonista, setImeSklonista] = useState("");
   const [emailSklonista, setEmailSklonista] = useState("");
   const [brojTelefonaSklonista, setBrojTelefonaSklonista] = useState("");
@@ -31,7 +29,6 @@ function Register() {
   };
 
   const validatePhoneNumber = (phoneNumber) => {
-    // Domestic US phone number regex pattern (with optional area code)
     const phoneRegex =
       /^(?:\+?1[-. ]?)?\(?(\d{3})\)?[-. ]?(\d{3})[-. ]?(\d{4})$/;
     return phoneRegex.test(phoneNumber);
@@ -40,7 +37,6 @@ function Register() {
   const saveRegularUser = async (event) => {
     event.preventDefault();
 
-    // Validation checks for regular user
     if (!ime || !prezime || !email || !brojTelefona || !lozinka) {
       setError("Niste upisali podatke u sva zadana polja!");
       return;
@@ -77,7 +73,6 @@ function Register() {
   const saveShelterUser = async (event) => {
     event.preventDefault();
 
-    // Validation checks for shelter user
     if (
       !imeSklonista ||
       !emailSklonista ||
