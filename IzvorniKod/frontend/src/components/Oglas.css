@@ -3,13 +3,12 @@
     border-radius: 8px !important;
     margin: 10px;
     padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: #d5b083f2 !important;
     transition: all 0.5ms ease-in;
 }
 
 .cardContainer:hover {
-    border: 2px solid #7CC8F0;
+    border: 5px solid #7CC8F0;
 }
 
 .cardTitle {
