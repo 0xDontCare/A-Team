@@ -15,8 +15,6 @@ nav {
     margin: 10px;
 }
 
-
-
 .prijavaRegistracija:hover {
     transform: scale(1.1);
 }
@@ -34,6 +32,12 @@ nav {
 
 .brandName:hover {
     transform: scale(1.1);
+}
+
+@media (max-width: 1000px) {
+    .prijavaRegistracija {
+        padding-left: 10px !important;
+    }
 }
 
 @media (max-width: 314px) {
