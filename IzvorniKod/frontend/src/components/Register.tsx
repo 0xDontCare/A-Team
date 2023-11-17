@@ -362,7 +362,7 @@ function Register() {
 
               <button
                 type="submit"
-                className="btn btn-dark mt-4"
+                className="btn btn-success mt-4"
                 onClick={saveShelterUser}
               >
                 Registrirajte se
