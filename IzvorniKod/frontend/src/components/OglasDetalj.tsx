@@ -68,7 +68,6 @@ function OglasDetalj() {
                     src={`/api/images/${image}`}
                     alt={`Slide ${index}`}
                     className="oglasSlika d-block mx-auto img-fluid"
-                    style={{ width: "900px", height: "600px" }}
                   />
                 </Carousel.Item>
               ))}
