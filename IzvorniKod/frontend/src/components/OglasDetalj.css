@@ -2,6 +2,10 @@
     background-color: #d5b083f2;
 }
 
+.oglasSlika {
+    width: 50vw;
+    height: auto;
+}
 
 @media (maxscreen: 1000px) {
     .oglasSlika {
