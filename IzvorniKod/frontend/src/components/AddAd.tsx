@@ -9,7 +9,7 @@ function AddAd() {
     const navigate = useNavigate();
 
     const formErrorRef = useRef(null);
-    const ageErrorRef = useRef(null);
+    const ageErrorRef = useRef<HTMLDivElement | null>(null);
 
     const [adPet, setAdPet] = useState("");
     const [adSpecies, setAdSpecies] = useState("");
@@ -166,7 +166,7 @@ function AddAd() {
                             onChange={handleAgeChange}
                             value={adAge}
                             isInvalid={ageError !== ""}
-                            ref={ageErrorRef} // Add the ref to the age error element
+                            ref={(element) => ageErrorRef.current = element}
                         />
                         <Form.Control.Feedback type="invalid">{ageError}</Form.Control.Feedback>
                     </Form.Group>
