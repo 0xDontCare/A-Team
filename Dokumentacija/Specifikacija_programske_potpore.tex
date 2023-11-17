@@ -71,10 +71,10 @@
 				
 				\subsubsection{Opis obrazaca uporabe}		
 
-					\noindent \underbar{\textbf{UC1 - Pregled nestalih ljubimaca}}
+					\noindent \underbar{\textbf{UC1 - Pregled oglasa nestalih ljubimaca}}
 					\begin{packed_item}
 	
-						\item \textbf{Glavni sudionik: }Korisnik, klijent, sklonište
+						\item \textbf{Glavni sudionik: }Korisnik, Registrirani korisnik, Sklonište
 						\item  \textbf{Cilj:} Pregledavanje oglašenih nestalih kućnih ljubimaca i skloništa za životinje
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} -
@@ -128,10 +128,10 @@
 						\end{packed_item}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC3 - Pretraživanje nestalih ljubimaca}}
+					\noindent \underbar{\textbf{UC3 - Pretraživanje oglasa nestalih ljubimaca}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }Korisnik, klijent, sklonište
+						\item \textbf{Glavni sudionik: }Korisnik, Registrirani korisnik, Sklonište
 						\item  \textbf{Cilj:} Pretraživanje nestalih ljubimaca po svim dostupnim kategorijama podataka
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} -
@@ -148,7 +148,7 @@
 					\noindent \underbar{\textbf{UC4 - Prijava u sustav}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }Klijent, sklonište
+						\item \textbf{Glavni sudionik: }Registrirani korisnik, Sklonište
 						\item  \textbf{Cilj:} Dobiti pristup korisničkom sučelju
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} Registracija
@@ -183,10 +183,10 @@
 						\end{packed_item}
 					\end{packed_item}
 					\pagebreak
-					\noindent \underbar{\textbf{UC5 - Komuniciranje oko potrage}}
+					\noindent \underbar{\textbf{UC5 - Komuniciranje oko potrage za nestalim ljubimcem}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }Klijent, sklonište
+						\item \textbf{Glavni sudionik: }Registrirani korisnik, Sklonište
 						\item  \textbf{Cilj:} Ostvariti komunikaciju s vlasnikom izgubljenog ljubimca
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} Korisnik je prijavljen
@@ -200,10 +200,10 @@
 						\end{packed_enum}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC6.1 - Postavljanje oglasa}}
+					\noindent \underbar{\textbf{UC6.1 - Postavljanje oglasa nestalog ljubimca}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }Klijent, sklonište 
+						\item \textbf{Glavni sudionik: }Registrirani korisnik, Sklonište 
 						\item  \textbf{Cilj:} Postaviti oglas o izgubljenom ljubimcu
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} Korisnik je prijavljen
@@ -237,10 +237,10 @@
 						\end{packed_item}
 					\end{packed_item}
 					\pagebreak
-					\noindent \underbar{\textbf{UC6.2 - Uklanjanje oglasa}}
+					\noindent \underbar{\textbf{UC6.2 - Uklanjanje oglasa nestalog ljubimca}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }Klijent, sklonište
+						\item \textbf{Glavni sudionik: }Registrirani korisnik, Sklonište
 						\item  \textbf{Cilj:} Ukloniti oglas o izgubljenom ljubimcu
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} Korisnik je prijavljen i objavio je oglas
@@ -256,10 +256,10 @@
 						
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC6.3 - Izmjena oglasa}}
+					\noindent \underbar{\textbf{UC6.3 - Izmjena oglasa nestalog ljubimca}}
 					\begin{packed_item}
 						
-						\item \textbf{Glavni sudionik: }Klijent, sklonište
+						\item \textbf{Glavni sudionik: }Registrirani korisnik, Sklonište
 						\item  \textbf{Cilj:} Izmjena oglasa o izgubljenom ljubimcu
 						\item  \textbf{Sudionici:} Baza podataka
 						\item  \textbf{Preduvjet:} Korisnik je prijavljen i objavio je oglas
@@ -297,7 +297,23 @@
 						\end{packed_item}
 					\end{packed_item}
 					\pagebreak
-					\noindent \underbar{\textbf{UC7 - Oglašavanje pronađenih životinja}}
+                    \noindent \underbar{\textbf{UC7 - Odjava iz sustava}}
+					\begin{packed_item}
+						
+						\item \textbf{Glavni sudionik: }Registrirani korisnik, Sklonište
+						\item  \textbf{Cilj:} Odjaviti svoj korisnički profil iz aplikacije.
+						\item  \textbf{Sudionici:} Baza podataka
+						\item  \textbf{Preduvjet:} Korisnik je prijavljen
+						\item  \textbf{Opis osnovnog tijeka:}
+						
+						\item[] \begin{packed_enum}
+							
+							\item Korisnik odabire opciju za odjavu iz sustava
+							\item Korisnik se preusmjerava na sučelje neregistriranog korisnika.
+						\end{packed_enum}
+					\end{packed_item}
+     
+					\noindent \underbar{\textbf{UC8 - Oglašavanje pronađenih životinja}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik: }Sklonište
@@ -341,7 +357,7 @@
 				
 					\begin{figure}[htb]
 						\centering
-						\includegraphics[width=\textwidth]{slike/funkcionalnosti_korisnika.png}
+						\includegraphics[width=\textwidth]{slike/funkcionalnost_korisnika.jpg}
 						\caption{Dijagram obrasca uporabe, funkcionalnost korisnika}
 					\end{figure}		
 				
