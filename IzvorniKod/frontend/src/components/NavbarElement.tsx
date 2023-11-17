@@ -37,30 +37,31 @@ function NavbarElement({ isLoggedIn, userData, setLoginStatus }) {
         <Navbar.Collapse className="containerPrijReg" id="basic-navbar-nav">
           <Nav className="ms-auto">
             {!isLoggedIn && (
-              <Nav.Link className="prijavaRegistracija" as={Link} to="/login">
+              <Nav.Link className="navBtns" as={Link} to="/login">
                 Prijava
               </Nav.Link>
             )}
             {!isLoggedIn && (
-              <Nav.Link
-                className="prijavaRegistracija"
-                as={Link}
-                to="/register"
-              >
+              <Nav.Link className="navBtns" as={Link} to="/register">
                 Registracija
               </Nav.Link>
             )}
             {isLoggedIn && (
-              <Nav className="text-center flex-grow-1 justify-content-center">
-                <Nav.Item className="text-dark fs-4 fw-bold">
-                  Pozdrav, {userData.firstName || userData.shelterName}! 👋
-                </Nav.Item>
-              </Nav>
-            )}
-            {isLoggedIn && (
-              <Nav.Link as={Link} to="/" onClick={handleLogout}>
+              <Nav.Link
+                as={Link}
+                to="/"
+                className="navBtns"
+                onClick={handleLogout}
+              >
                 Odjava
               </Nav.Link>
+            )}
+            {isLoggedIn && (
+              <Nav className="text-center flex-grow-1 align-items-center justify-content-center">
+                <Nav.Item className="text-dark fs-4 fw-bold">
+                  {userData.firstName || userData.shelterName}
+                </Nav.Item>
+              </Nav>
             )}
           </Nav>
         </Navbar.Collapse>
