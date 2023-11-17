@@ -1,4 +1,51 @@
 nav {
-    background-color: #FFA62B;
+    background-color: #d5b083f2;
     border-bottom: 2px solid black;
+}
+
+.logo {
+    width: 55px;
+}
+
+.prijavaRegistracija {
+    border-radius: 10px;
+    border: 2px solid black !important;
+    font-weight: bold !important;
+    transition: all 80ms ease-in !important;
+    margin: 10px;
+}
+
+.prijavaRegistracija:hover {
+    transform: scale(1.1);
+}
+
+.container > button {
+    border: 1px solid black !important;
+} 
+
+
+.brandName {
+    padding-left: 20px;
+    font-weight: bold;
+    transition: all 80ms ease-in;
+}
+
+.brandName:hover {
+    transform: scale(1.1);
+}
+
+@media (max-width: 1000px) {
+    .prijavaRegistracija {
+        padding-left: 10px !important;
+    }
+}
+
+@media (max-width: 314px) {
+    .brandName {
+        font-weight: normal;
+        padding-left: 0;
+    }
+    .logo {
+        width: 40px;
+    }
 }
