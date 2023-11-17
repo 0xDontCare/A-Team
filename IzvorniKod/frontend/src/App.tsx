@@ -52,8 +52,7 @@ function App() {
           setLoginStatus={odjaviUser}
         />
         <Routes>
-          <Route path="/" element={<Home isLoggedIn={true} />} />
-          {/* vrati ovo na  isLoggedIn={isLoggedIn}*/}
+          <Route path="/" element={<Home isLoggedIn={isLoggedIn} />} />
           <Route path="/register" element={<Register />} />
           <Route
             path="/login"
