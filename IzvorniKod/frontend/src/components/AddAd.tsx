@@ -54,15 +54,15 @@ function AddAd() {
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
 
-        const ageRegex = /^\d+$/;
-        if (!ageRegex.test(adAge)) {
-            setAgeError("Starost mora sadržavati samo brojeve.");
-            return;
-        }
-
         const requiredFields = [adPet, adSpecies, adName, adLocation, adDateTime, adColor, adAge, adDescription];
         if (requiredFields.some(field => !field)) {
             setFormError("Molimo popunite sva polja.");
+            return;
+        }
+
+        const ageRegex = /^\d+$/;
+        if (!ageRegex.test(adAge)) {
+            setAgeError("Starost mora sadržavati samo brojeve.");
             return;
         }
 
@@ -109,6 +109,9 @@ function AddAd() {
     return (
         <Container>
             <div className="card p-5 mt-4" style={{border: "1px solid #ccc", borderRadius: "5px"}}>
+                {formError && (
+                    <div className="alert alert-danger">{formError}</div>
+                )}
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3" controlId="adPet">
                         <Form.Label>Ljubimac</Form.Label>
@@ -171,9 +174,6 @@ function AddAd() {
                     <Button variant="success" type="submit">
                         Dodajte oglas
                     </Button>
-                    {formError && (
-                        <div className="mt-2 text-danger">{formError}</div>
-                    )}
                 </Form>
             </div>
         </Container>
