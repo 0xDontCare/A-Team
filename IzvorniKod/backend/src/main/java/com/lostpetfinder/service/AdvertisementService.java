@@ -50,22 +50,16 @@ public class AdvertisementService {
     public ResponseEntity<Object> addNewAdvertisement(AddAdvertisementDTO dto) {
         List<String> linktoImageList;
 
-        try {
-            linktoImageList = resourceService.addImages(dto.getImages());
-        } catch (ImageNotSelectedException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (FileUploadFailedException e) {
-            return ResponseEntity.status(500).body(e.getMessage());
-        }
-
         // one Advertisement = one Pet
         List<Image> listOfImages = new LinkedList<>();
         Pet pet = petRepository.save(new Pet(dto));
 
-        for (String linkToImage : linktoImageList) {
-            Image image = new Image(linkToImage, pet);
-            listOfImages.add(image);
-            imageRepository.save(image);
+        try {
+            resourceService.addImages(dto.getImages(), pet);
+        } catch (ImageNotSelectedException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (FileUploadFailedException e) {
+            return ResponseEntity.status(500).body(e.getMessage());
         }
 
         User user = userService.LoggedUser().orElseThrow();

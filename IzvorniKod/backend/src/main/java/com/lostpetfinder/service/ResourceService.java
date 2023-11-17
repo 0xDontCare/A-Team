@@ -1,5 +1,8 @@
 package com.lostpetfinder.service;
 
+import com.lostpetfinder.dao.ImageRepository;
+import com.lostpetfinder.entity.Image;
+import com.lostpetfinder.entity.Pet;
 import com.lostpetfinder.exception.FileUploadFailedException;
 import com.lostpetfinder.exception.ImageNotSelectedException;
 import jakarta.annotation.Resource;
@@ -14,33 +17,28 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 @Service
 public class ResourceService {
+
+    private final ImageRepository imageRepository;
+
+    public ResourceService(ImageRepository imageRepository) {
+        this.imageRepository = imageRepository;
+    }
 
     private String generateFileName() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd-HHmmssSSS");
         return dateFormat.format(new Date());
     }
 
-    public List<String> addImages(List<MultipartFile> files) throws ImageNotSelectedException, FileUploadFailedException {
+    public void addImages(List<MultipartFile> files, Pet pet) throws ImageNotSelectedException, FileUploadFailedException {
         if (files.isEmpty()) {
             throw new ImageNotSelectedException("Please select an image to upload.");
         }
         try {
-            List<String> linktoImageList = new LinkedList<>();
-
-            // Get the root directory of your static folder
-            String resourceFolderPath = "";
-            try {
-                ClassLoader classLoader = getClass().getClassLoader();
-                File file = new File(classLoader.getResource("").getFile());
-                 resourceFolderPath = file.getAbsolutePath();
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-                return null;
-            }
-            String rootDirectory = resourceFolderPath + "/static/";
+            List<Image> imageList = new LinkedList<>();
 
             for (MultipartFile file : files) {
                 if (file.isEmpty()) {
@@ -50,18 +48,24 @@ public class ResourceService {
                 String originalFileName = file.getOriginalFilename();
                 String extension = originalFileName.substring(originalFileName.lastIndexOf('.'));
                 String newFileName = generateFileName() + extension;
-                String pathname = rootDirectory + newFileName;
-                linktoImageList.add(newFileName);
 
-                // Save each file to the static folder
-                file.transferTo(new File(pathname));
+
+                Image image = new Image();
+                image.setPet(pet);
+                image.setLinkToImage(newFileName);
+                image.setData(file.getBytes());
+                image.setContentType(file.getContentType());
+
+                imageRepository.save(image);
+
             }
-
-            return linktoImageList;
         } catch (IOException e) {
             e.printStackTrace();
             throw new FileUploadFailedException("File upload failed.");
         }
+    }
+    public Optional<Image> getFile(String linkToImage) {
+        return imageRepository.findByLinkToImage(linkToImage);
     }
 
 }

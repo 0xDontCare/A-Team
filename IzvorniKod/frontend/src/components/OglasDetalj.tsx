@@ -51,7 +51,7 @@ function OglasDetalj() {
                             {card.images.map((image, index) => (
                                 <Carousel.Item key={index}>
                                     <img
-                                        src={`/api/${image}`}
+                                        src={`/api/images/${image}`}
                                         alt={`Slide ${index}`}
                                         className="d-block mx-auto img-fluid"
                                         style={{width: '900px', height: '600px'}}
