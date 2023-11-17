@@ -7,16 +7,7 @@ import "./NavbarElement.css";
 import axios from "axios";
 
 function NavbarElement({ isLoggedIn, userData, setLoginStatus }) {
-  const [isBrandHovered, setIsBrandHovered] = useState(false);
   const navigate = useNavigate();
-
-  const handleBrandMouseEnter = () => {
-    setIsBrandHovered(true);
-  };
-
-  const handleBrandMouseLeave = () => {
-    setIsBrandHovered(false);
-  };
 
   const handleNestaliLjubimciClick = () => {
     navigate("/", { state: { isLoggedIn } });
@@ -33,13 +24,7 @@ function NavbarElement({ isLoggedIn, userData, setLoginStatus }) {
         <Navbar.Brand
           as={Link}
           to="/"
-          onMouseEnter={handleBrandMouseEnter}
-          onMouseLeave={handleBrandMouseLeave}
           onClick={handleNestaliLjubimciClick}
-          style={{
-            fontWeight: isBrandHovered ? "bold" : "normal",
-            transition: "font-weight 0.1s",
-          }}
           className="d-flex align-items-center"
         >
           <img
@@ -47,18 +32,22 @@ function NavbarElement({ isLoggedIn, userData, setLoginStatus }) {
             alt="logo"
             className="logo d-inline-block align-top"
           />
-          Nestali ljubimci
+          <span className="brandName">Nestali ljubimci</span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Collapse className="containerPrijReg" id="basic-navbar-nav">
           <Nav className="ms-auto">
             {!isLoggedIn && (
-              <Nav.Link className="gumb" as={Link} to="/login">
+              <Nav.Link className="prijavaRegistracija" as={Link} to="/login">
                 Prijava
               </Nav.Link>
             )}
             {!isLoggedIn && (
-              <Nav.Link as={Link} to="/register">
+              <Nav.Link
+                className="prijavaRegistracija"
+                as={Link}
+                to="/register"
+              >
                 Registracija
               </Nav.Link>
             )}
