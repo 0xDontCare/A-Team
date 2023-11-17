@@ -1,3 +1,11 @@
 .customCard {
     background-color: #d5b083f2;
 }
+
+
+@media (maxscreen: 1000px) {
+    .oglasSlika {
+        width: 80vw;
+        height: auto;
+    }
+}
