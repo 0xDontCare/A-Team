@@ -60,16 +60,14 @@ function AddAd() {
             return;
         }
 
-        const ageInput = e.target.value;
-        setAdAge(ageInput);
-
         const ageRegex = /^\d+$/;
-        if (ageRegex.test(ageInput)) {
-            setAgeError("");
+        if (!ageRegex.test(adAge)) {
+            setAgeError("Starost mora sadržavati samo brojeve bez slova!");
+            return;
         }
 
         if (!adPhoto1 && !adPhoto2 && !adPhoto3) {
-            setFormError("Molimo učitajte barem jednu fotografiju.");
+            setFormError("Učitajte barem jednu fotografiju!");
             return;
         }
 
