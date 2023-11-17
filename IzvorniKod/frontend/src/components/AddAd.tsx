@@ -20,6 +20,9 @@ function AddAd() {
     const [adPhoto2, setAdPhoto2] = useState(null);
     const [adPhoto3, setAdPhoto3] = useState(null);
 
+    const [ageError, setAgeError] = useState("");
+    const [formError, setFormError] = useState("");
+
     const handlePetChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdPet(e.target.value);
     const handleSpeciesChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdSpecies(e.target.value);
     const handleNameChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdName(e.target.value);
@@ -27,7 +30,9 @@ function AddAd() {
     const handleDateTimeChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdDateTime(e.target.value);
     const handleColorChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdColor(e.target.value);
     const handleAgeChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdAge(e.target.value);
-    const handleDescriptionChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdDescription(e.target.value);
+    const handleDescriptionChange = (e: {
+        target: { value: SetStateAction<string>; };
+    }) => setAdDescription(e.target.value);
     const handlePhoto1Change = (e: { target: { files: SetStateAction<null>[]; }; }) => setAdPhoto1(e.target.files[0]);
     const handlePhoto2Change = (e: { target: { files: SetStateAction<null>[]; }; }) => setAdPhoto2(e.target.files[0]);
     const handlePhoto3Change = (e: { target: { files: SetStateAction<null>[]; }; }) => setAdPhoto3(e.target.files[0]);
@@ -48,6 +53,24 @@ function AddAd() {
 
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
+
+        const ageRegex = /^\d+$/;
+        if (!ageRegex.test(adAge)) {
+            setAgeError("Starost mora sadržavati samo brojeve.");
+            return;
+        }
+
+        const requiredFields = [adPet, adSpecies, adName, adLocation, adDateTime, adColor, adAge, adDescription];
+        if (requiredFields.some(field => !field)) {
+            setFormError("Molimo popunite sva polja.");
+            return;
+        }
+
+        if (!adPhoto1 && !adPhoto2 && !adPhoto3) {
+            setFormError("Molimo učitajte barem jednu fotografiju.");
+            return;
+        }
+
         try {
             const formData = new FormData();
             formData.append("species", adSpecies);
@@ -74,6 +97,9 @@ function AddAd() {
             } else {
                 alert("Oglas nije uspješno dodan!");
             }
+
+            setAgeError("");
+            setFormError("");
         } catch (err) {
             console.error(err);
             alert("Error while adding ad!");
@@ -116,8 +142,14 @@ function AddAd() {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="adAge">
                         <Form.Label>Starost ljubimca</Form.Label>
-                        <Form.Control type="text" placeholder="Upišite starost ljubimca" onChange={handleAgeChange}
-                                      value={adAge}/>
+                        <Form.Control
+                            type="text"
+                            placeholder="Upišite starost ljubimca"
+                            onChange={handleAgeChange}
+                            value={adAge}
+                            isInvalid={ageError !== ""}
+                        />
+                        <Form.Control.Feedback type="invalid">{ageError}</Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="adDescription">
                         <Form.Label>Opis ljubimca</Form.Label>
@@ -139,6 +171,9 @@ function AddAd() {
                     <Button variant="success" type="submit">
                         Dodajte oglas
                     </Button>
+                    {formError && (
+                        <div className="mt-2 text-danger">{formError}</div>
+                    )}
                 </Form>
             </div>
         </Container>
