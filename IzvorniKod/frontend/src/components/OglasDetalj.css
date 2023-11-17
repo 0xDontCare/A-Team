@@ -3,13 +3,13 @@
 }
 
 .oglasSlika {
-    height: 50vw !important;
+    height: 40vw !important;
     width: auto;
 }
 
-@media (maxscreen: 1000px) {
+@media (min-width: 1000px) {
     .oglasSlika {
-        height: 80vw !important;
+        height: 25vw !important;
         width: auto;
     }
 }
