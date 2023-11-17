@@ -1,5 +1,5 @@
 .cardContainer {
-    border: 5px solid black;
+    border: 3px solid black !important;
     border-radius: 8px !important;
     margin: 10px;
     padding: 10px;
@@ -8,7 +8,7 @@
 }
 
 .cardContainer:hover {
-    border: 5px solid #7CC8F0;
+    border: 3px solid white !important;
 }
 
 .cardTitle {
