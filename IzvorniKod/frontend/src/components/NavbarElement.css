@@ -21,7 +21,7 @@ nav {
 
 .container > button {
     border: 1px solid black !important;
-} 
+}
 
 
 .brandName {
@@ -45,6 +45,7 @@ nav {
         font-weight: normal;
         padding-left: 0;
     }
+
     .logo {
         width: 40px;
     }

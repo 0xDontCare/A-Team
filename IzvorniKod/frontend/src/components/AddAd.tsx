@@ -102,7 +102,7 @@ function AddAd() {
             setFormError("");
         } catch (err) {
             console.error(err);
-            alert("Error while adding ad!");
+            alert("Pogreška pri dodavanju oglasa!");
         }
     };
 
