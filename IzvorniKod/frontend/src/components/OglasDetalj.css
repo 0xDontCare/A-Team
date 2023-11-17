@@ -3,13 +3,13 @@
 }
 
 .oglasSlika {
-    width: 50vw;
-    height: auto;
+    height: 50vw;
+    width: auto;
 }
 
 @media (maxscreen: 1000px) {
     .oglasSlika {
-        width: 80vw;
-        height: auto;
+        height: 80vw;
+        width: auto;
     }
 }
