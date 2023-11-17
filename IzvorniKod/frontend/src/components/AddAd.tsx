@@ -56,14 +56,16 @@ function AddAd() {
 
         const requiredFields = [adPet, adSpecies, adName, adLocation, adDateTime, adColor, adAge, adDescription];
         if (requiredFields.some(field => !field)) {
-            setFormError("Molimo popunite sva polja.");
+            setFormError("Niste upisali podatke u sva zadana polja!");
             return;
         }
 
+        const ageInput = e.target.value;
+        setAdAge(ageInput);
+
         const ageRegex = /^\d+$/;
-        if (!ageRegex.test(adAge)) {
-            setAgeError("Starost mora sadržavati samo brojeve.");
-            return;
+        if (ageRegex.test(ageInput)) {
+            setAgeError("");
         }
 
         if (!adPhoto1 && !adPhoto2 && !adPhoto3) {
