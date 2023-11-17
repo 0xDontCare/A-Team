@@ -122,33 +122,31 @@ function OglasDetalj() {
                                                 <strong>Prezime:</strong> {userLastName}
                                             </p>
                                         </div>
-                                        <div className="col-md-4">
-                                            <p className="mb-2">
-                                                <strong>Korisničko ime:</strong> {card.username}
-                                            </p>
-                                        </div>
                                     </>
                                 )}
 
                                 {(!userFirstName || !userLastName) && (
-                                    <>
-                                        <div className="col-md-4">
-                                            <p className="mb-2">
-                                                <strong>Ime skloništa:</strong> {shelterName}
-                                            </p>
-                                        </div>
-                                        <div className="col-md-4">
-                                            <p className="mb-2">
-                                                <strong>Korisničko ime:</strong> {card.username}
-                                            </p>
-                                        </div>
-                                        <div className="col-md-4">
-                                            <p className="mb-2">
-                                                <strong>E-pošta:</strong> {card.email}
-                                            </p>
-                                        </div>
-                                    </>
+                                    <div className="col-md-4">
+                                        <p className="mb-2">
+                                            <strong>Ime skloništa:</strong> {shelterName}
+                                        </p>
+                                    </div>
                                 )}
+
+                                <div className="col-md-4">
+                                    <p className="mb-2">
+                                        <strong>Korisničko ime:</strong> {card.username}
+                                    </p>
+                                </div>
+
+                                {!userFirstName && (
+                                    <div className="col-md-4">
+                                        <p className="mb-2">
+                                            <strong>E-pošta:</strong> {card.email}
+                                        </p>
+                                    </div>
+                                )}
+
                                 <div className="col-md-4">
                                     <p className="mb-2">
                                         <strong>Broj telefona:</strong> {card.phoneNumber}
