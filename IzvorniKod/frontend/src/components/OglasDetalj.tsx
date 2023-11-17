@@ -9,8 +9,19 @@ function OglasDetalj() {
     const [card, setCard] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const options = {
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        timeZone: 'Europe/Berlin'
+    };
+    const formattedDateTimeWithU = card?.disappearanceDateTime
+        ? new Date(card.disappearanceDateTime).toLocaleString('en-GB', options).replace(/,/g, ' u') : '';
+
     useEffect(() => {
-        // Fetch data from /api/advertisements/{id}
         fetch(`/api/advertisements/${id}`)
             .then((response) => response.json())
             .then((data) => {
@@ -51,7 +62,7 @@ function OglasDetalj() {
                             {card.images.map((image, index) => (
                                 <Carousel.Item key={index}>
                                     <img
-                                        src={`/api/${image}`}
+                                        src={`/api/images/${image}`}
                                         alt={`Slide ${index}`}
                                         className="d-block mx-auto img-fluid"
                                         style={{width: '900px', height: '600px'}}
@@ -67,7 +78,7 @@ function OglasDetalj() {
                             </p>
                             <p className="mb-2">
                                 <strong>Datum i vrijeme nestanka :</strong>{" "}
-                                {card.disappearanceDateTime}
+                                {formattedDateTimeWithU}
                             </p>
                             <p className="mb-2">
                                 <strong>Mjesto nestanka :</strong>{" "}

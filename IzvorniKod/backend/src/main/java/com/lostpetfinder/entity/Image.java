@@ -2,6 +2,7 @@ package com.lostpetfinder.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "images")
@@ -11,6 +12,11 @@ public class Image {
     @Id
     @Size(max = 500)
     private String linkToImage;
+
+    private String contentType;
+
+    @Lob
+    private byte[] data;
 
     @ManyToOne
     @JoinColumn(name = "petId",nullable = false)
@@ -39,6 +45,21 @@ public class Image {
         return pet;
     }
 
+    public byte[] getData() {
+        return data;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
 }
 
 

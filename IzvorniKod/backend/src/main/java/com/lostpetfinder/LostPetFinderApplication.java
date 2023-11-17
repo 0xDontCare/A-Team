@@ -14,17 +14,4 @@ public class LostPetFinderApplication {
 		SpringApplication.run(LostPetFinderApplication.class, args);
 	}
 
-	@Bean
-	public CommandLineRunner demo(RoleRepository roleRepo) {
-		return (args) -> {
-			Role roleS = new Role();
-			roleS.setName("ROLE_SHELTER");
-			roleRepo.save(roleS);
-
-			Role roleR = new Role();
-			roleR.setName("ROLE_REGISTERED");
-			roleRepo.save(roleR);
-		};
-	}
-
 }
