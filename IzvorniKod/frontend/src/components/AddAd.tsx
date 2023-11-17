@@ -1,4 +1,4 @@
-import {SetStateAction, useState, useRef} from 'react';
+import {SetStateAction, useState} from 'react';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -7,9 +7,6 @@ import {useNavigate} from "react-router-dom";
 function AddAd() {
     document.title = "Dodajte oglas";
     const navigate = useNavigate();
-
-    const formErrorRef = useRef(null);
-    const ageErrorRef = useRef<HTMLDivElement | null>(null);
 
     const [adPet, setAdPet] = useState("");
     const [adSpecies, setAdSpecies] = useState("");
@@ -58,22 +55,19 @@ function AddAd() {
         e.preventDefault();
 
         const requiredFields = [adPet, adSpecies, adName, adLocation, adDateTime, adColor, adAge, adDescription];
-        if (requiredFields.some((field) => !field)) {
+        if (requiredFields.some(field => !field)) {
             setFormError("Niste upisali podatke u sva zadana polja!");
-            scrollToError(formErrorRef);
             return;
         }
 
         const ageRegex = /^\d+$/;
         if (!ageRegex.test(adAge)) {
             setAgeError("Starost mora sadržavati samo brojeve bez slova!");
-            scrollToError(ageErrorRef);
             return;
         }
 
         if (!adPhoto1 && !adPhoto2 && !adPhoto3) {
             setFormError("Učitajte barem jednu fotografiju!");
-            scrollToError(formErrorRef);
             return;
         }
 
@@ -112,20 +106,11 @@ function AddAd() {
         }
     };
 
-    const scrollToError = (errorRef) => {
-        errorRef.current.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-        });
-    };
-
     return (
         <Container>
             <div className="card p-5 mt-4" style={{border: "1px solid #ccc", borderRadius: "5px"}}>
                 {formError && (
-                    <div className="alert alert-danger" ref={formErrorRef}>
-                        {formError}
-                    </div>
+                    <div className="alert alert-danger">{formError}</div>
                 )}
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3" controlId="adPet">
@@ -166,7 +151,6 @@ function AddAd() {
                             onChange={handleAgeChange}
                             value={adAge}
                             isInvalid={ageError !== ""}
-                            ref={(element) => ageErrorRef.current = element}
                         />
                         <Form.Control.Feedback type="invalid">{ageError}</Form.Control.Feedback>
                     </Form.Group>

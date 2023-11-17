@@ -7,9 +7,23 @@ function Login({setLoginStatus, setUserData}) {
     const [username, setUsername] = useState("");
     const [lozinka, setLozinka] = useState("");
     const navigate = useNavigate();
+    const [error, setError] = useState("");
 
-    async function login(event: { preventDefault: () => void; }) {
+    const validateLoginForm = () => {
+        if (!username || !lozinka) {
+            setError("Niste upisali podatke u sva zadana polja!");
+            return false;
+        }
+        return true;
+    };
+
+    async function login(event: { preventDefault: () => void }) {
         event.preventDefault();
+
+        if (!validateLoginForm()) {
+            return;
+        }
+
         try {
             const response = await axios.post("/api/login", {
                 username: username,
@@ -29,13 +43,13 @@ function Login({setLoginStatus, setUserData}) {
                     alert("Failed to get user data.");
                 }
             } else if (response.status === 401) {
-                alert(response.data.message);
+                setError(response.data.message);
             } else {
-                alert("Invalid username or password!");
+                setError("Invalid username or password!");
             }
         } catch (err) {
             console.error(err);
-            alert("Error while logging in!");
+            setError("Error while logging in!");
         }
     }
 
@@ -43,6 +57,8 @@ function Login({setLoginStatus, setUserData}) {
         <div>
             <div className="container mt-4">
                 <div className="card p-5">
+                    {error && <div className="alert alert-danger">{error}</div>}
+
                     <form>
                         <div className="form-group mb-2">
                             <label>Korisničko ime</label>
