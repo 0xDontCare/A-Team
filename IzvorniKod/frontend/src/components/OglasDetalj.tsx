@@ -55,6 +55,10 @@ function OglasDetalj() {
         return <div>Card not found</div>;
     }
 
+    const userFirstName = card.firstName || "";
+    const userLastName = card.lastName || "";
+    const shelterName = card.shelterName || "";
+
     return (
         <div className="container mt-4">
             <Card>
@@ -97,6 +101,28 @@ function OglasDetalj() {
                                 <strong>Opis :</strong> {card.petDescription}
                             </p>
                         </div>
+                    </div>
+
+                    <div className="mt-4">
+                        <h4>Podaci o korisniku:</h4>
+                        <p className="mb-2">
+                            <strong>Korisničko ime:</strong> {card.username}
+                        </p>
+                        <p className="mb-2">
+                            <strong>E-pošta:</strong> {card.email}
+                        </p>
+                        <p className="mb-2">
+                            <strong>Broj telefona:</strong> {card.phoneNumber}
+                        </p>
+                        <p className="mb-2">
+                            <strong>Ime:</strong> {userFirstName}
+                        </p>
+                        <p className="mb-2">
+                            <strong>Prezime:</strong> {userLastName}
+                        </p>
+                        <p className="mb-2">
+                            <strong>Ime skloništa:</strong> {shelterName}
+                        </p>
                     </div>
                 </Card.Body>
             </Card>

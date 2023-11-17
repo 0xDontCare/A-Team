@@ -60,7 +60,7 @@ function App() {
                             <Login setLoginStatus={prijaviUser} setUserData={setUserData}/>
                         }
                     />
-                    <Route path="/addAd" element={<AddAd/>}/>
+                    <Route path="/addAd" element={<AddAd/>} userData={userData}/>
                     <Route path="/:id" element={<OglasDetalj/>}/>
                 </Routes>
             </BrowserRouter>
