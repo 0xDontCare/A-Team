@@ -139,7 +139,6 @@ function OglasDetalj() {
                     </div>
                   </>
                 )}
-                <div className="row">
                   <div className="col-md-6">
                     <p className="mb-2">
                       <strong>E-pošta:</strong> {card.email}
@@ -151,7 +150,6 @@ function OglasDetalj() {
                       <strong>Broj telefona:</strong> {card.phoneNumber}
                     </p>
                   </div>
-                </div>
 
                 <div className="row">
                   {userFirstName && userLastName && (

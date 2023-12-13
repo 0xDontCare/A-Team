@@ -1,4 +1,4 @@
-import {SetStateAction, useState} from 'react';
+import {SetStateAction, useState, useRef} from 'react';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -22,6 +22,8 @@ function AddAd() {
 
     const [ageError, setAgeError] = useState("");
     const [formError, setFormError] = useState("");
+
+    const errorRef = useRef<HTMLDivElement | null>(null);
 
     const handlePetChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdPet(e.target.value);
     const handleSpeciesChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdSpecies(e.target.value);
@@ -57,17 +59,41 @@ function AddAd() {
         const requiredFields = [adPet, adSpecies, adName, adLocation, adDateTime, adColor, adAge, adDescription];
         if (requiredFields.some(field => !field)) {
             setFormError("Niste upisali podatke u sva zadana polja!");
+
+            if (errorRef.current) {
+                errorRef.current.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start',
+                });
+            }
+
             return;
         }
 
         const ageRegex = /^\d+$/;
         if (!ageRegex.test(adAge)) {
             setAgeError("Starost mora sadržavati samo brojeve bez slova!");
+
+            if (errorRef.current) {
+                errorRef.current.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start',
+                });
+            }
+
             return;
         }
 
         if (!adPhoto1 && !adPhoto2 && !adPhoto3) {
             setFormError("Učitajte barem jednu fotografiju!");
+
+            if (errorRef.current) {
+                errorRef.current.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start',
+                });
+            }
+
             return;
         }
 
@@ -110,7 +136,9 @@ function AddAd() {
         <Container>
             <div className="card p-5 mt-4" style={{border: "1px solid #ccc", borderRadius: "5px"}}>
                 {formError && (
-                    <div className="alert alert-danger">{formError}</div>
+                    <div ref={errorRef} className="alert alert-danger">
+                        {formError}
+                    </div>
                 )}
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3" controlId="adPet">

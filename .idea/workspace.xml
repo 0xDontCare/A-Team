@@ -5,8 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8bea504-cbb3-43ca-a949-d67d77c7a9b7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/AddAd.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/AddAd.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Home.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Oglas.css" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Oglas.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Oglas.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Oglas.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/OglasDetalj.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/OglasDetalj.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,8 +45,10 @@
     &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.LostPetFinderApplication.executor&quot;: &quot;Run&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;devlocal&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/rober/Desktop/FRONT&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -46,6 +57,11 @@
     &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
     &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\rober\\Desktop\\A-Team\\IzvorniKod\\frontend\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
+    ]
   }
 }</component>
   <component name="RunManager">
@@ -58,6 +74,13 @@
       </method>
     </configuration>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.1-openjdk-21.0.1-3183f394aec4-7d648f2c" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -68,6 +91,8 @@
       <updated>1700229386429</updated>
       <workItem from="1700229387759" duration="434000" />
       <workItem from="1700242163426" duration="5737000" />
+      <workItem from="1702398320305" duration="6149000" />
+      <workItem from="1702481705823" duration="3149000" />
     </task>
     <servers />
   </component>

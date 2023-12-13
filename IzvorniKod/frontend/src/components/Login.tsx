@@ -49,7 +49,7 @@ function Login({setLoginStatus, setUserData}) {
             }
         } catch (err) {
             console.error(err);
-            setError("Pogreška pri prijavi!");
+            setError("Pogreška prilikom prijave!");
         }
     }
 

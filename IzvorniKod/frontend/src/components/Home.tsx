@@ -9,10 +9,14 @@ import "./Home.css";
 interface Advertisement {
     adId: number;
     petName: string;
+    username: string;
 }
 
-function Home({isLoggedIn}) {
+function Home({isLoggedIn, userData}) {
     const [advertisements, setAdvertisements] = useState<Advertisement[]>([]);
+    const [deleteMode, setDeleteMode] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
+
     document.title = "Nestali ljubimci";
 
     useEffect(() => {
@@ -26,8 +30,36 @@ function Home({isLoggedIn}) {
             });
     }, []);
 
+    useEffect(() => {
+        const apiUrl = searchTerm ? `/api/advertisements?petName=${searchTerm}` : "/api/advertisements";
+
+        fetch(apiUrl)
+            .then((response) => response.json())
+            .then((data) => {
+                setAdvertisements(data);
+            })
+            .catch((error) => {
+                console.error("Error fetching advertisement data:", error);
+            });
+    }, [searchTerm]);
+
+    const toggleDeleteMode = () => {
+        setDeleteMode(!deleteMode);
+    };
+
     return (
         <Container>
+            <Row className="mb-0">
+                <Col className="text-dg-end">
+                    <input
+                        type="text"
+                        placeholder="Pretražite oglase"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="form-control-lg me-2 my-2"
+                    />
+                </Col>
+            </Row>
             {isLoggedIn && (
                 <Row className="mb-3">
                     <Col className="text-center">
@@ -36,7 +68,9 @@ function Home({isLoggedIn}) {
                                 Dodajte oglas
                             </Link>
                             <button className="oglasBtn btn me-2">Izmijenite oglas</button>
-                            <button className="oglasBtn btn ">Izbrišite oglas</button>
+                            <button className="oglasBtn btn me-2" onClick={toggleDeleteMode}>
+                                {deleteMode ? "Završite brisanje" : "Izbrišite oglas"}
+                            </button>
                         </div>
                     </Col>
                 </Row>
