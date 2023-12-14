@@ -1,6 +1,7 @@
 package com.lostpetfinder.dto;
 
 import com.lostpetfinder.entity.Advertisement;
+import com.lostpetfinder.entity.CategoryEnum;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
@@ -14,6 +15,7 @@ public class AddAdvertisementDTO {
     private String color;
     private Integer age;
     private String petDescription;
+    private CategoryEnum category;
     private LocalDateTime disappearanceDateTime;
     private String disappearanceLocation; // change the data type
     private List<MultipartFile> images;
@@ -80,5 +82,13 @@ public class AddAdvertisementDTO {
 
     public void setImages(List<MultipartFile> images) {
         this.images = images;
+    }
+
+    public CategoryEnum getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryEnum category) {
+        this.category = category;
     }
 }

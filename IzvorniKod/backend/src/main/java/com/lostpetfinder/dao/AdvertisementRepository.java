@@ -18,6 +18,8 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, Lo
 
     boolean existsByPetPetIdNot(Long petId);
 
+    boolean existsByAdvertisementId(Long advertisementId);
+
     // multiple advertisements for the same pet??
     Optional<Advertisement> findByPetPetId(Long petId);
 

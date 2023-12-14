@@ -48,8 +48,8 @@ public class Advertisement {
         pet.updatePet(dto);
         this.disappearanceDateTime = dto.getDisappearanceDateTime();
         // need to implement this in frontend
-        // this.location = dto.getDisappearanceLocation();
-        // this.category = dto.getCategory;
+        this.location = dto.getDisappearanceLocation();
+        this.category = dto.getCategory() == null ? CategoryEnum.LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA : dto.getCategory();
     }
 
     public Long getAdvertisementId() {

@@ -65,7 +65,7 @@ function Register() {
             resetFormFields();
             navigate("/");
         } catch (err) {
-            alert(err);
+            alert(err.response.data);
         }
     };
 
@@ -107,7 +107,7 @@ function Register() {
             resetFormFields();
             navigate("/");
         } catch (err) {
-            alert(err);
+            alert(err.response.data);
         }
     };
 

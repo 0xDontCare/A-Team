@@ -43,7 +43,7 @@ public class AdvertisementService {
         return advertisementRepository
                 .findAll()
                 .stream()
-                .map(ad -> new AdvertisementSummaryDTO(ad.getAdvertisementId(), ad.getPet().getName()))
+                .map(ad -> new AdvertisementSummaryDTO(ad.getAdvertisementId(), ad.getPet().getName(), ad.getUser().getUsername()))
                 .toList();
     }
 
@@ -89,23 +89,29 @@ public class AdvertisementService {
     }
 
     // change the data type of the return value
-    public AdvertisementDetailsDTO changeAdvertisement(long adId, AddAdvertisementDTO dto) {
-        if (!advertisementRepository.existsByPetPetIdNot(adId)) {
+    public void changeAdvertisement(long adId, AddAdvertisementDTO dto) {
+        if (!advertisementRepository.existsByAdvertisementId(adId)) {
             throw new NoSuchElementException();
         }
         Advertisement changedAdvertisement = advertisementRepository.findByAdvertisementId(adId).orElseThrow();
         changedAdvertisement.updateAdvertisement(dto);
+        advertisementRepository.save(changedAdvertisement);
 
-        Long petId = changedAdvertisement.getPet().getPetId();
-        List<Image> images = imageRepository.findAllByPetPetId(petId);
-        return new AdvertisementDetailsDTO(advertisementRepository.save(changedAdvertisement),images);
+        Pet changedPet = changedAdvertisement.getPet();
+        petRepository.save(changedPet);
+
+        // need to add the functionality for changing the images
+        // List<Image> images = imageRepository.findAllByPetPetId(petId);
+
     }
 
     // adjust later so it only changes the 'deleted' flag in the Advertisement entity
-    public void deleteAdvertisement(Long petId) {
-        Advertisement advertisement = advertisementRepository.findByPetPetId(petId).orElseThrow();
+    public void deleteAdvertisement(Long adId) {
+        Advertisement advertisement = advertisementRepository.findByAdvertisementId(adId).orElseThrow();
         advertisementRepository.delete(advertisement);
+        imageRepository.deleteAll(imageRepository.findAllByPetPetId(advertisement.getPet().getPetId()));
         petRepository.delete(advertisement.getPet());
+
     }
 
 }

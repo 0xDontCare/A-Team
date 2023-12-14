@@ -38,6 +38,6 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegistrationInfoDTO dto) {
-        return authenticationService.register(dto);
+            return authenticationService.register(dto);
     }
 }
