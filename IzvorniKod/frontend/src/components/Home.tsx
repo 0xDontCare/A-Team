@@ -12,7 +12,8 @@ interface Advertisement {
     username: string;
 }
 
-function Home({isLoggedIn, userData}) {
+function Home(isLoggedIn) {
+    const [originalAdvertisements, setOriginalAdvertisements] = useState<Advertisement[]>([]);
     const [advertisements, setAdvertisements] = useState<Advertisement[]>([]);
     const [deleteMode, setDeleteMode] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
@@ -23,6 +24,7 @@ function Home({isLoggedIn, userData}) {
         fetch("/api/advertisements")
             .then((response) => response.json())
             .then((data) => {
+                setOriginalAdvertisements(data);
                 setAdvertisements(data);
             })
             .catch((error) => {
@@ -30,18 +32,15 @@ function Home({isLoggedIn, userData}) {
             });
     }, []);
 
-    useEffect(() => {
-        const apiUrl = searchTerm ? `/api/advertisements?petName=${searchTerm}` : "/api/advertisements";
+    const handleSearch = (searchTerm: string) => {
+        setSearchTerm(searchTerm);
 
-        fetch(apiUrl)
-            .then((response) => response.json())
-            .then((data) => {
-                setAdvertisements(data);
-            })
-            .catch((error) => {
-                console.error("Error fetching advertisement data:", error);
-            });
-    }, [searchTerm]);
+        const filteredAdvertisements = originalAdvertisements.filter((advertisement) =>
+            advertisement.petName.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+
+        setAdvertisements(filteredAdvertisements);
+    };
 
     const toggleDeleteMode = () => {
         setDeleteMode(!deleteMode);
@@ -51,13 +50,15 @@ function Home({isLoggedIn, userData}) {
         <Container>
             <Row className="mb-0">
                 <Col className="text-dg-end">
-                    <input
-                        type="text"
-                        placeholder="Pretražite oglase"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="form-control-lg me-2 my-2"
-                    />
+                    <div className="d-flex align-items-center">
+                        <input
+                            type="text"
+                            placeholder="Pretražite oglase"
+                            value={searchTerm}
+                            onChange={(e) => handleSearch(e.target.value)}
+                            className="form-control-lg me-2 my-2"
+                        />
+                    </div>
                 </Col>
             </Row>
             {isLoggedIn && (

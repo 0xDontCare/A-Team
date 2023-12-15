@@ -5,17 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8bea504-cbb3-43ca-a949-d67d77c7a9b7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/AddAd.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/AddAd.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Home.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Login.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Oglas.css" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Oglas.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Oglas.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Oglas.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/OglasDetalj.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/OglasDetalj.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +84,11 @@
       <workItem from="1700229387759" duration="434000" />
       <workItem from="1700242163426" duration="5737000" />
       <workItem from="1702398320305" duration="6149000" />
-      <workItem from="1702481705823" duration="3149000" />
+      <workItem from="1702481705823" duration="3420000" />
+      <workItem from="1702551261125" duration="31000" />
+      <workItem from="1702551315668" duration="97000" />
+      <workItem from="1702556520758" duration="186000" />
+      <workItem from="1702663428015" duration="1177000" />
     </task>
     <servers />
   </component>
