@@ -12,7 +12,14 @@ interface Advertisement {
     username: string;
 }
 
-function Home(isLoggedIn) {
+interface HomeProps {
+    isLoggedIn: boolean;
+    userData: {
+        username: string;
+    };
+}
+
+function Home({ isLoggedIn, userData }: HomeProps) {
     const [originalAdvertisements, setOriginalAdvertisements] = useState<Advertisement[]>([]);
     const [advertisements, setAdvertisements] = useState<Advertisement[]>([]);
     const [deleteMode, setDeleteMode] = useState(false);
@@ -44,6 +51,13 @@ function Home(isLoggedIn) {
 
     const toggleDeleteMode = () => {
         setDeleteMode(!deleteMode);
+    };
+
+    const handleDelete = (deletedAdId: number) => {
+        // Update the state to remove the deleted advertisement
+        setAdvertisements((prevAds) =>
+            prevAds.filter((ad) => ad.adId !== deletedAdId)
+        );
     };
 
     return (
@@ -79,7 +93,14 @@ function Home(isLoggedIn) {
             <Row xs={1} md={2} lg={4} className="g-4">
                 {advertisements.map((advertisement) => (
                     <Col key={advertisement.adId}>
-                        <Oglas id={advertisement.adId} title={advertisement.petName}/>
+                        <Oglas
+                            id={advertisement.adId}
+                            title={advertisement.petName}
+                            loggedInUsername={userData?.username || ""}
+                            username={advertisement.username}
+                            showDeleteButton={deleteMode}
+                            onDelete={handleDelete}
+                        />
                     </Col>
                 ))}
             </Row>
