@@ -10,6 +10,10 @@ interface Advertisement {
     adId: number;
     petName: string;
     username: string;
+    species: string;
+    color: string;
+    age: number;
+    shelterName: string;
 }
 
 interface HomeProps {
@@ -19,11 +23,12 @@ interface HomeProps {
     };
 }
 
-function Home({ isLoggedIn, userData }: HomeProps) {
+function Home({isLoggedIn, userData}: HomeProps) {
     const [originalAdvertisements, setOriginalAdvertisements] = useState<Advertisement[]>([]);
     const [advertisements, setAdvertisements] = useState<Advertisement[]>([]);
     const [deleteMode, setDeleteMode] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
+    const [searchCategory, setSearchCategory] = useState("option1");
 
     document.title = "Nestali ljubimci";
 
@@ -39,22 +44,49 @@ function Home({ isLoggedIn, userData }: HomeProps) {
             });
     }, []);
 
+    const categoryMapping: Record<string, keyof Advertisement> = {
+        option1: "petName",
+        option2: "species",
+        option3: "color",
+        option4: "age",
+        option5: "shelterName",
+    };
+
     const handleSearch = (searchTerm: string) => {
         setSearchTerm(searchTerm);
+    };
 
-        const filteredAdvertisements = originalAdvertisements.filter((advertisement) =>
-            advertisement.petName.toLowerCase().includes(searchTerm.toLowerCase())
-        );
+    useEffect(() => {
+        const category = categoryMapping[searchCategory];
+        if (!category) {
+            console.error("Invalid search category");
+            return;
+        }
+
+        const filteredAdvertisements = originalAdvertisements.filter((advertisement) => {
+            if (searchCategory === 'option5' && advertisement.shelterName === null) {
+                return false;
+            }
+
+            const propertyValue = advertisement[category];
+            const searchLower = searchTerm.toLowerCase();
+
+            if (propertyValue === null) {
+                return false;
+            }
+
+            return String(propertyValue).toLowerCase().includes(searchLower);
+        });
 
         setAdvertisements(filteredAdvertisements);
-    };
+    }, [searchCategory, originalAdvertisements, searchTerm]);
+
 
     const toggleDeleteMode = () => {
         setDeleteMode(!deleteMode);
     };
 
     const handleDelete = (deletedAdId: number) => {
-        // Update the state to remove the deleted advertisement
         setAdvertisements((prevAds) =>
             prevAds.filter((ad) => ad.adId !== deletedAdId)
         );
@@ -62,16 +94,45 @@ function Home({ isLoggedIn, userData }: HomeProps) {
 
     return (
         <Container>
-            <Row className="mb-0">
-                <Col className="text-dg-end">
-                    <div className="d-flex align-items-center">
+            <Row className="mb-3">
+                <Col className="text-dg-end d-flex align-items-center">
+                    <div className="me-2 mt-3">
                         <input
                             type="text"
                             placeholder="Pretražite oglase"
                             value={searchTerm}
                             onChange={(e) => handleSearch(e.target.value)}
-                            className="form-control-lg me-2 my-2"
+                            className="form-control-lg my-2"
                         />
+                    </div>
+                    <div className="container-fluid no-right-margin">
+                        <div className="row">
+                            <div className="col-12">
+                                <div
+                                    className="btnContainer mt-3 p-3 rounded border border-dark border-2 d-flex justify-content-between">
+                                    {['option1', 'option2', 'option3', 'option4', 'option5'].map((option) => (
+                                        <div className="form-check form-check-inline" key={option}>
+                                            <input
+                                                className="form-check-input"
+                                                type="radio"
+                                                name="exampleRadios"
+                                                id={`exampleRadio${option}`}
+                                                value={option}
+                                                checked={searchCategory === option}
+                                                onChange={() => setSearchCategory(option)}
+                                            />
+                                            <label className="form-check-label" htmlFor={`exampleRadio${option}`}>
+                                                {option === 'option1' ? 'Naziv ljubimca' :
+                                                    option === 'option2' ? 'Vrsta' :
+                                                        option === 'option3' ? 'Boja' :
+                                                            option === 'option4' ? 'Starost' :
+                                                                option === 'option5' ? 'Naziv skloništa' : ''}
+                                            </label>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </Col>
             </Row>
