@@ -43,6 +43,7 @@ public class AdvertisementService {
         return advertisementRepository
                 .findAll()
                 .stream()
+                .filter(ad -> ad.getAdState() == AdStateEnum.ACTIVE)
                 .map(ad -> new AdvertisementSummaryDTO(ad.getAdvertisementId(), ad.getPet().getName(), ad.getUser().getUsername()))
                 .toList();
     }
@@ -108,10 +109,12 @@ public class AdvertisementService {
     // adjust later so it only changes the 'deleted' flag in the Advertisement entity
     public void deleteAdvertisement(Long adId) {
         Advertisement advertisement = advertisementRepository.findByAdvertisementId(adId).orElseThrow();
-        advertisementRepository.delete(advertisement);
-        imageRepository.deleteAll(imageRepository.findAllByPetPetId(advertisement.getPet().getPetId()));
-        petRepository.delete(advertisement.getPet());
+        // advertisementRepository.delete(advertisement);
+        // imageRepository.deleteAll(imageRepository.findAllByPetPetId(advertisement.getPet().getPetId()));
+        // petRepository.delete(advertisement.getPet());
 
+        advertisement.setAdState(AdStateEnum.DELETED);
+        advertisementRepository.save(advertisement);
     }
 
 }

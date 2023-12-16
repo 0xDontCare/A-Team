@@ -34,6 +34,9 @@ public class Advertisement {
     @Enumerated(EnumType.ORDINAL)
     private CategoryEnum category;
 
+    @Enumerated(EnumType.STRING)
+    private AdStateEnum adState = AdStateEnum.ACTIVE;
+
     public Advertisement() {}
 
     public Advertisement(Pet pet, User user, CategoryEnum category, LocalDateTime disappearanceDateTime, String disappearanceLocation) {
@@ -98,5 +101,13 @@ public class Advertisement {
 
     public void setCategory(CategoryEnum category) {
         this.category = category;
+    }
+
+    public AdStateEnum getAdState() {
+        return adState;
+    }
+
+    public void setAdState(AdStateEnum adState) {
+        this.adState = adState;
     }
 }
