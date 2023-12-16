@@ -49,7 +49,7 @@ public class UserService implements UserDetailsService {
     public ResponseEntity<Object> getLoggedUser() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication instanceof AnonymousAuthenticationToken) {
-            return new ResponseEntity<>("No logged-in user!", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("No logged-in user!", HttpStatus.NO_CONTENT);
         }
         String username = authentication.getName();
 
