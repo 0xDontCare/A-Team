@@ -1,10 +1,14 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, {useState} from "react";
+import {Link} from "react-router-dom";
 import "./Oglas.css";
 
 interface CardProps {
     id: number;
     title: string;
+    species: string;
+    color: string;
+    age: number;
+    shelterName: string | null; // Update the type to allow null
     loggedInUsername: string;
     username: string;
     showDeleteButton: boolean;
@@ -14,12 +18,17 @@ interface CardProps {
 const Oglas: React.FC<CardProps> = ({
                                         id,
                                         title,
+                                        species,
+                                        color,
+                                        age,
+                                        shelterName,
                                         loggedInUsername,
                                         username,
                                         showDeleteButton,
                                         onDelete,
                                     }) => {
     const [isDeleting, setIsDeleting] = useState(false);
+    const [isCardFlipped, setIsCardFlipped] = useState(false);
 
     const handleDeleteClick = async () => {
         try {
@@ -32,7 +41,7 @@ const Oglas: React.FC<CardProps> = ({
 
             if (response.ok) {
                 setIsDeleting(true);
-                onDelete(id); // Call the onDelete callback to update the state locally
+                onDelete(id);
             } else {
                 console.error("Failed to delete advertisement");
             }
@@ -41,14 +50,37 @@ const Oglas: React.FC<CardProps> = ({
         }
     };
 
+    const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setIsCardFlipped(!isCardFlipped);
+    };
+
     return (
         <div>
             <Link to={`/${id}`}>
-                <div className={`card cardContainer`}>
+                <div className={`card cardContainer ${isCardFlipped ? "flipped" : ""}`}>
                     <div className="card-body cardBody">
-                        <h5 className="card-title cardTitle">Oglas {id}</h5>
-                        <p className="card-text cardText">{title}</p>
+                        {!isCardFlipped && (
+                            <div className="flip-card-front">
+                                <h5 className="card-title cardTitle">{title}</h5>
+                            </div>
+                        )}
+                        {isCardFlipped && (
+                            <div className="flip-card-back">
+                                <p className="card-text cardText">Vrsta: {species}</p>
+                                <p className="card-text cardText">Boja: {color}</p>
+                                <p className="card-text cardText">Starost: {age}</p>
+                                {shelterName !== null && (
+                                    <p className="card-text cardText additional-info">
+                                        Naziv skloništa: {shelterName}
+                                    </p>
+                                )}
+                            </div>
+                        )}
                     </div>
+                    <button className="btn btn-success" onClick={handleButtonClick}>
+                        {isCardFlipped ? "Povratak" : "Detalji"}
+                    </button>
                 </div>
             </Link>
             {showDeleteButton && loggedInUsername === username && (

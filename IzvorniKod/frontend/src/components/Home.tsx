@@ -157,6 +157,10 @@ function Home({isLoggedIn, userData}: HomeProps) {
                         <Oglas
                             id={advertisement.adId}
                             title={advertisement.petName}
+                            species={advertisement.species}
+                            color={advertisement.color}
+                            age={advertisement.age}
+                            shelterName={advertisement.shelterName}
                             loggedInUsername={userData?.username || ""}
                             username={advertisement.username}
                             showDeleteButton={deleteMode}
