@@ -29,8 +29,7 @@ public class AdvertisementService {
                                 UserService userService,
                                 AdvertisementRepository advertisementRepository,
                                 PetRepository petRepository,
-                                ImageRepository imageRepository)
-    {
+                                ImageRepository imageRepository) {
         this.resourceService = resourceService;
         this.userService = userService;
         this.advertisementRepository = advertisementRepository;
@@ -44,8 +43,15 @@ public class AdvertisementService {
                 .findAll()
                 .stream()
                 .filter(ad -> ad.getAdState() == AdStateEnum.ACTIVE)
-                .map(ad -> new AdvertisementSummaryDTO(ad.getAdvertisementId(), ad.getPet().getName(), ad.getUser().getUsername()))
-                .toList();
+                .map(ad -> new AdvertisementSummaryDTO(
+                        ad.getAdvertisementId(),
+                        ad.getPet().getName(),
+                        ad.getPet().getSpecies(),
+                        ad.getPet().getColor(),
+                        ad.getPet().getAge(),
+                        ad.getUser() instanceof Registered ? null : ((Shelter) ad.getUser()).getName(),
+                        ad.getUser().getUsername()))
+                        .toList();
     }
 
     public ResponseEntity<Object> addNewAdvertisement(AddAdvertisementDTO dto) {
@@ -85,7 +91,7 @@ public class AdvertisementService {
                 .orElseThrow();
         Long petId = advertisement.getPet().getPetId();
         List<Image> images = imageRepository.findAllByPetPetId(petId);
-        return new AdvertisementDetailsDTO(advertisement,images);
+        return new AdvertisementDetailsDTO(advertisement, images);
     }
 
     // change the data type of the return value
@@ -104,9 +110,9 @@ public class AdvertisementService {
         try {
             if (dto.getImages() != null) resourceService.addImages(dto.getImages(), changedPet);
         } catch (ImageNotSelectedException e) {
-             return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
         } catch (FileUploadFailedException e) {
-             return ResponseEntity.status(500).body(e.getMessage());
+            return ResponseEntity.status(500).body(e.getMessage());
         }
         return ResponseEntity.ok().body("Advertisement changed successfully!");
     }
