@@ -49,7 +49,6 @@ public class AdvertisementService {
     }
 
     public ResponseEntity<Object> addNewAdvertisement(AddAdvertisementDTO dto) {
-        List<String> linktoImageList;
 
         // one Advertisement = one Pet
         List<Image> listOfImages = new LinkedList<>();
@@ -90,7 +89,7 @@ public class AdvertisementService {
     }
 
     // change the data type of the return value
-    public void changeAdvertisement(long adId, AddAdvertisementDTO dto) {
+    public ResponseEntity<Object> changeAdvertisement(long adId, AddAdvertisementDTO dto) {
         if (!advertisementRepository.existsByAdvertisementId(adId)) {
             throw new NoSuchElementException();
         }
@@ -101,9 +100,15 @@ public class AdvertisementService {
         Pet changedPet = changedAdvertisement.getPet();
         petRepository.save(changedPet);
 
-        // need to add the functionality for changing the images
-        // List<Image> images = imageRepository.findAllByPetPetId(petId);
-
+        imageRepository.deleteAll(dto.getImagesToDelete().stream().filter(Objects::nonNull).toList());
+        try {
+            if (dto.getImages() != null) resourceService.addImages(dto.getImages(), changedPet);
+        } catch (ImageNotSelectedException e) {
+             return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (FileUploadFailedException e) {
+             return ResponseEntity.status(500).body(e.getMessage());
+        }
+        return ResponseEntity.ok().body("Advertisement changed successfully!");
     }
 
     // adjust later so it only changes the 'deleted' flag in the Advertisement entity

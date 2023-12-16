@@ -44,15 +44,14 @@ public class AdvertisementController {
     }
 
     // change the data type of the return value to ResponseEntity
-    @PutMapping("/{adId}")
+    @PutMapping(value ="/{adId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> changeAdvertisement(@PathVariable("adId") long adId,
-                                                      @RequestBody AddAdvertisementDTO dto) {
+                                                      @ModelAttribute AddAdvertisementDTO dto) {
 
         if (userService.getLoggedUser().getStatusCode() != ResponseEntity.ok().build().getStatusCode())
             return ResponseEntity.badRequest().body("You must be logged in to change an advertisement!");
 
-        advertisementService.changeAdvertisement(adId, dto);
-        return ResponseEntity.ok().body("Advertisement changed successfully!");
+        return advertisementService.changeAdvertisement(adId, dto);
     }
 
     // change the data type of the return value to ResponseEntity
