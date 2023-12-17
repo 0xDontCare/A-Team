@@ -113,6 +113,7 @@ function Home({isLoggedIn, userData}: HomeProps) {
                         <input
                             type="text"
                             placeholder="Pretražite oglase"
+                            id="searchBarByCategories"
                             value={searchTerm}
                             onChange={(e) => handleSearch(e.target.value)}
                             className="form-control-lg my-2"

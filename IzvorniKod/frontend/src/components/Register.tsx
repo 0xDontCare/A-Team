@@ -12,7 +12,7 @@ function Register() {
     const [email, setEmail] = useState("");
     const [brojTelefona, setBrojTelefona] = useState("");
     const [username, setUsername] = useState("");
-    const [lozinka, setLozinka] = useState("");
+    const [lozinkaKorisnika, setLozinkaKorisnika] = useState("");
     const [error, setError] = useState("");
 
     const [imeSklonista, setImeSklonista] = useState("");
@@ -25,21 +25,21 @@ function Register() {
     const [showPasswordUser, setShowPasswordUser] = useState(false);
     const [showPasswordShelter, setShowPasswordShelter] = useState(false);
 
-    const validateEmail = (email) => {
+    const validateEmail = (email: string) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     };
 
-    const validatePhoneNumber = (phoneNumber) => {
+    const validatePhoneNumber = (phoneNumber: string) => {
         const phoneRegex =
             /^(?:\+?1[-. ]?)?\(?(\d{3})\)?[-. ]?(\d{3})[-. ]?(\d{4})$/;
         return phoneRegex.test(phoneNumber);
     };
 
-    const saveRegularUser = async (event) => {
+    const saveRegularUser = async (event: { preventDefault: () => void; }) => {
         event.preventDefault();
 
-        if (!ime || !prezime || !email || !brojTelefona || !lozinka) {
+        if (!ime || !prezime || !email || !brojTelefona || !lozinkaKorisnika) {
             setError("Niste upisali podatke u sva zadana polja!");
             return;
         }
@@ -61,7 +61,7 @@ function Register() {
                 email: email,
                 phoneNumber: brojTelefona,
                 username: username,
-                password: lozinka,
+                password: lozinkaKorisnika,
             });
 
             alert("Uspješno ste se registrirali!");
@@ -72,7 +72,7 @@ function Register() {
         }
     };
 
-    const saveShelterUser = async (event) => {
+    const saveShelterUser = async (event: { preventDefault: () => void; }) => {
         event.preventDefault();
 
         if (
@@ -120,7 +120,7 @@ function Register() {
         setEmail("");
         setBrojTelefona("");
         setUsername("");
-        setLozinka("");
+        setLozinkaKorisnika("");
         setError("");
 
         setImeSklonista("");
@@ -192,7 +192,7 @@ function Register() {
                     {userType === "regular" && (
                         <form>
                             <div className="form-group mb-2">
-                                <label>Ime</label>
+                                <label htmlFor="ime">Ime</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -206,7 +206,7 @@ function Register() {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label>Prezime</label>
+                                <label htmlFor="prezime">Prezime</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -220,8 +220,9 @@ function Register() {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label>E-pošta</label>
+                                <label htmlFor="email">E-pošta</label>
                                 <input
+                                    autoComplete="off"
                                     type="email"
                                     className="form-control"
                                     id="email"
@@ -234,7 +235,7 @@ function Register() {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label>Broj telefona</label>
+                                <label htmlFor="brojTelefona">Broj telefona</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -248,8 +249,9 @@ function Register() {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label>Korisničko ime</label>
+                                <label htmlFor="username">Korisničko ime</label>
                                 <input
+                                    autoComplete="off"
                                     type="text"
                                     className="form-control"
                                     id="username"
@@ -262,15 +264,15 @@ function Register() {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label>Lozinka</label>
+                                <label htmlFor="lozinkaKorisnika">Lozinka</label>
                                 <input
                                     type={showPasswordUser ? "text" : "password"}
                                     className="form-control"
-                                    id="lozinka"
+                                    id="lozinkaKorisnika"
                                     placeholder="Kreirajte lozinku"
-                                    value={lozinka}
+                                    value={lozinkaKorisnika}
                                     onChange={(event) => {
-                                        setLozinka(event.target.value);
+                                        setLozinkaKorisnika(event.target.value);
                                     }}
                                 />
                             </div>
@@ -296,7 +298,7 @@ function Register() {
                     {userType === "premium" && (
                         <form>
                             <div className="form-group mb-2">
-                                <label>Ime skloništa</label>
+                                <label htmlFor="imeSklonista">Ime skloništa</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -310,7 +312,7 @@ function Register() {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label>E-pošta</label>
+                                <label htmlFor="emailSklonista">E-pošta</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -324,7 +326,7 @@ function Register() {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label>Broj telefona</label>
+                                <label htmlFor="brojTelefonaSklonista">Broj telefona</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -338,7 +340,7 @@ function Register() {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label>Korisničko ime</label>
+                                <label htmlFor="usernameSklonista">Korisničko ime</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -352,7 +354,7 @@ function Register() {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label>Lozinka</label>
+                                <label htmlFor="lozinkaSklonista">Lozinka</label>
                                 <input
                                     type={showPasswordShelter ? "text" : "password"}
                                     className="form-control"

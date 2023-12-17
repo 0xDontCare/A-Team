@@ -63,12 +63,13 @@ function Login({setLoginStatus, setUserData}) {
 
                     <form>
                         <div className="form-group mb-2">
-                            <label>Korisničko ime</label>
+                            <label htmlFor="email">Korisničko ime</label>
                             <input
                                 type="text"
                                 className="form-control"
                                 id="email"
                                 placeholder="Upišite korisničko ime"
+                                autoComplete="off"
                                 value={username}
                                 onChange={(event) => {
                                     setUsername(event.target.value);
@@ -77,7 +78,7 @@ function Login({setLoginStatus, setUserData}) {
                         </div>
 
                         <div className="form-group mb-2">
-                            <label>Lozinka</label>
+                            <label htmlFor="lozinka">Lozinka</label>
                             <input
                                 type={showPassword ? "text" : "password"}
                                 className="form-control"

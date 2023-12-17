@@ -6,12 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e8bea504-cbb3-43ca-a949-d67d77c7a9b7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Home.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Login.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Oglas.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Oglas.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Register.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/index.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,11 +102,25 @@
       <workItem from="1702663428015" duration="8667000" />
       <workItem from="1702751009316" duration="9666000" />
       <workItem from="1702766082731" duration="3675000" />
-      <workItem from="1702807851650" duration="2324000" />
+      <workItem from="1702807851650" duration="3273000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-core" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.security:spring-security-core" />
+    <option featureType="dependencySupport" implementationName="javascript:npm:react" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-websocket" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.validation:jakarta.validation-api" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.persistence:jakarta.persistence-api" />
+    <option featureType="dependencySupport" implementationName="javascript:npm:vite" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.data:spring-data-commons" />
+    <option featureType="dependencySupport" implementationName="java:org.hibernate.validator:hibernate-validator" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-messaging" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-webmvc" />
   </component>
 </project>
