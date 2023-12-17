@@ -1,5 +1,5 @@
 package com.lostpetfinder.entity;
-/*
+
 import com.lostpetfinder.entity.pkeys.MessagePK;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -15,9 +15,9 @@ public class Message {
     @Size(max = 1000)
     private String messageText;
 
-    @ManyToOne
-    @JoinColumn(name = "coordinates")
-    private Location location;
+    //@ManyToOne
+    //@JoinColumn(name = "coordinates")
+    private String location;
 
     @ManyToOne
     @JoinColumn(name = "linkToImage")
@@ -25,24 +25,16 @@ public class Message {
 
     @ManyToOne
     @JoinColumn(name = "advertisementId", nullable = false)
-    private Advertisement advertisementId;
+    private Advertisement advertisement;
 
     public Message() {}
 
-    public Message(MessagePK pk, String messageText, Location location, Image image, Advertisement advertisementId) {
+    public Message(MessagePK pk, String messageText, String location, Image image, Advertisement advertisement) {
         this.pk = pk;
         this.messageText = messageText;
         this.location = location;
         this.image = image;
-        this.advertisementId = advertisementId;
-    }
-
-    public Advertisement getAdvertisementId() {
-        return advertisementId;
-    }
-
-    public void setAdvertisementId(Advertisement advertisementId) {
-        this.advertisementId = advertisementId;
+        this.advertisement = advertisement;
     }
 
     public MessagePK getPk() {
@@ -61,11 +53,11 @@ public class Message {
         this.messageText = messageText;
     }
 
-    public Location getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
@@ -76,5 +68,12 @@ public class Message {
     public void setImage(Image image) {
         this.image = image;
     }
+
+    public Advertisement getAdvertisement() {
+        return advertisement;
+    }
+
+    public void setAdvertisement(Advertisement advertisement) {
+        this.advertisement = advertisement;
+    }
 }
-*/
