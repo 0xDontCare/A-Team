@@ -9,6 +9,8 @@ function Login({setLoginStatus, setUserData}) {
     const navigate = useNavigate();
     const [error, setError] = useState("");
 
+    const [showPassword, setShowPassword] = useState(false);
+
     const validateLoginForm = () => {
         if (!username || !lozinka) {
             setError("Niste upisali podatke u sva zadana polja!");
@@ -77,7 +79,7 @@ function Login({setLoginStatus, setUserData}) {
                         <div className="form-group mb-2">
                             <label>Lozinka</label>
                             <input
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 className="form-control"
                                 id="lozinka"
                                 placeholder="Upišite lozinku"
@@ -86,6 +88,14 @@ function Login({setLoginStatus, setUserData}) {
                                     setLozinka(event.target.value);
                                 }}
                             />
+                        </div>
+
+                        <div className="form-check mt-2">
+                            <input className="form-check-input" type="checkbox" value="" id="flexCheck"
+                                   onChange={() => setShowPassword(!showPassword)}/>
+                            <label className="form-check-label" htmlFor="flexCheck">
+                                Prikažite lozinku
+                            </label>
                         </div>
 
                         <button

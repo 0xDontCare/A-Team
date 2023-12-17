@@ -5,6 +5,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Oglas from "./Oglas.tsx";
 import "./Home.css";
+import {Simulate} from "react-dom/test-utils";
+import change = Simulate.change;
 
 interface Advertisement {
     adId: number;
@@ -27,6 +29,7 @@ function Home({isLoggedIn, userData}: HomeProps) {
     const [originalAdvertisements, setOriginalAdvertisements] = useState<Advertisement[]>([]);
     const [advertisements, setAdvertisements] = useState<Advertisement[]>([]);
     const [deleteMode, setDeleteMode] = useState(false);
+    const [changeMode, setChangeMode] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [searchCategory, setSearchCategory] = useState("option1");
 
@@ -86,9 +89,19 @@ function Home({isLoggedIn, userData}: HomeProps) {
         setDeleteMode(!deleteMode);
     };
 
+    const toggleChangeMode = () => {
+        setChangeMode(!changeMode);
+    };
+
     const handleDelete = (deletedAdId: number) => {
         setAdvertisements((prevAds) =>
             prevAds.filter((ad) => ad.adId !== deletedAdId)
+        );
+    };
+
+    const handleChange = (changeAdId: number) => {
+        setAdvertisements((prevAds) =>
+            prevAds.filter((ad) => ad.adId !== changeAdId)
         );
     };
 
@@ -143,7 +156,8 @@ function Home({isLoggedIn, userData}: HomeProps) {
                             <Link to="/addAd" className="oglasBtn btn me-2">
                                 Dodajte oglas
                             </Link>
-                            <button className="oglasBtn btn me-2">Izmijenite oglas</button>
+                            <button className="oglasBtn btn me-2"
+                                    onClick={toggleChangeMode}>{changeMode ? "Završite izmjenu" : "Izmijenite oglas"}</button>
                             <button className="oglasBtn btn me-2" onClick={toggleDeleteMode}>
                                 {deleteMode ? "Završite brisanje" : "Izbrišite oglas"}
                             </button>
@@ -165,6 +179,8 @@ function Home({isLoggedIn, userData}: HomeProps) {
                             username={advertisement.username}
                             showDeleteButton={deleteMode}
                             onDelete={handleDelete}
+                            showChangeButton={changeMode}
+                            onChange={handleChange}
                         />
                     </Col>
                 ))}

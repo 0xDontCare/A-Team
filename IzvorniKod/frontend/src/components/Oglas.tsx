@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {Link} from "react-router-dom";
+import React, { useState } from "react";
+import { Link , useNavigate } from "react-router-dom";
 import "./Oglas.css";
 
 interface CardProps {
@@ -8,11 +8,13 @@ interface CardProps {
     species: string;
     color: string;
     age: number;
-    shelterName: string | null; // Update the type to allow null
+    shelterName: string | null;
     loggedInUsername: string;
     username: string;
     showDeleteButton: boolean;
     onDelete: (id: number) => void;
+    showChangeButton: boolean;
+    onChange: (id: number) => void;
 }
 
 const Oglas: React.FC<CardProps> = ({
@@ -26,9 +28,14 @@ const Oglas: React.FC<CardProps> = ({
                                         username,
                                         showDeleteButton,
                                         onDelete,
+                                        showChangeButton,
+                                        onChange,
                                     }) => {
     const [isDeleting, setIsDeleting] = useState(false);
+    const [isChanging, setIsChanging] = useState(false);
     const [isCardFlipped, setIsCardFlipped] = useState(false);
+
+    const navigate = useNavigate();
 
     const handleDeleteClick = async () => {
         try {
@@ -47,6 +54,27 @@ const Oglas: React.FC<CardProps> = ({
             }
         } catch (error) {
             console.error("Error deleting advertisement:", error);
+        }
+    };
+
+    const handleChangeClick = async () => {
+        try {
+            const response = await fetch(`/api/advertisements/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            if (response.ok) {
+                setIsChanging(true);
+                onChange(id);
+
+                navigate('/changeAd/${id}');
+            } else {
+                console.error("Failed to change advertisement");
+            }
+        } catch (error) {
+            console.error("Error changing advertisement:", error);
         }
     };
 
@@ -90,7 +118,18 @@ const Oglas: React.FC<CardProps> = ({
                         onClick={handleDeleteClick}
                         disabled={isDeleting}
                     >
-                        {isDeleting ? "Brisanje..." : "Izbrišite oglas"}
+                        {isDeleting ? "Završite brisanje" : "Izbrišite oglas"}
+                    </button>
+                </div>
+            )}
+            {showChangeButton && loggedInUsername === username && (
+                <div className="d-grid w-50 mx-auto mt-2">
+                    <button
+                        className="btn btn-primary"
+                        onClick={handleChangeClick}
+                        disabled={isChanging}
+                    >
+                        {isChanging ? "Završite izmjenu" : "Izmjenite oglas"}
                     </button>
                 </div>
             )}

@@ -22,6 +22,9 @@ function Register() {
     const [lozinkaSklonista, setLozinkaSklonista] = useState("");
     const [errorSklonista, setErrorSklonista] = useState("");
 
+    const [showPasswordUser, setShowPasswordUser] = useState(false);
+    const [showPasswordShelter, setShowPasswordShelter] = useState(false);
+
     const validateEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
@@ -261,7 +264,7 @@ function Register() {
                             <div className="form-group mb-2">
                                 <label>Lozinka</label>
                                 <input
-                                    type="password"
+                                    type={showPasswordUser ? "text" : "password"}
                                     className="form-control"
                                     id="lozinka"
                                     placeholder="Kreirajte lozinku"
@@ -270,6 +273,14 @@ function Register() {
                                         setLozinka(event.target.value);
                                     }}
                                 />
+                            </div>
+
+                            <div className="form-check mt-2">
+                                <input className="form-check-input" type="checkbox" value="" id="flexCheckUser"
+                                       onChange={() => setShowPasswordUser(!showPasswordUser)}/>
+                                <label className="form-check-label" htmlFor="flexCheckUser">
+                                    Prikažite lozinku
+                                </label>
                             </div>
 
                             <button
@@ -343,7 +354,7 @@ function Register() {
                             <div className="form-group mb-2">
                                 <label>Lozinka</label>
                                 <input
-                                    type="password"
+                                    type={showPasswordShelter ? "text" : "password"}
                                     className="form-control"
                                     id="lozinkaSklonista"
                                     placeholder="Kreirajte lozinku"
@@ -352,6 +363,14 @@ function Register() {
                                         setLozinkaSklonista(event.target.value);
                                     }}
                                 />
+                            </div>
+
+                            <div className="form-check mt-2">
+                                <input className="form-check-input" type="checkbox" value="" id="flexCheckShelter"
+                                       onChange={() => setShowPasswordShelter(!showPasswordShelter)}/>
+                                <label className="form-check-label" htmlFor="flexCheckShelter">
+                                    Prikažite lozinku
+                                </label>
                             </div>
 
                             <button

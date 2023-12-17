@@ -7,6 +7,7 @@ import NavbarElement from "./components/NavbarElement";
 import OglasDetalj from "./components/OglasDetalj.tsx";
 import AddAd from "./components/AddAd";
 import axios from "axios";
+import ChangeAd from "./components/ChangeAd.tsx";
 
 function App() {
     const [isLoggedIn, setLoginStatus] = useState(false);
@@ -61,6 +62,7 @@ function App() {
                         }
                     />
                     <Route path="/addAd" element={<AddAd/>} userData={userData}/>
+                    <Route path="/changeAd/:id" element={<ChangeAd/>} userData={userData}/>
                     <Route path="/:id" element={<OglasDetalj/>}/>
                 </Routes>
             </BrowserRouter>
