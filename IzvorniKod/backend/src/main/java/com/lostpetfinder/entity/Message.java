@@ -4,6 +4,9 @@ import com.lostpetfinder.entity.pkeys.MessagePK;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
 @Entity
 @Table(name = "messages")
 public class Message {
@@ -11,17 +14,19 @@ public class Message {
     @EmbeddedId
     private MessagePK pk;
 
-    @Column(nullable = false)
+    @Column
     @Size(max = 1000)
     private String messageText;
 
-    //@ManyToOne
-    //@JoinColumn(name = "coordinates")
+    /*
+    @ManyToOne
+    @JoinColumn(name = "coordinates")
     private String location;
 
     @ManyToOne
     @JoinColumn(name = "linkToImage")
     private Image image;
+     */
 
     @ManyToOne
     @JoinColumn(name = "advertisementId", nullable = false)
@@ -29,13 +34,16 @@ public class Message {
 
     public Message() {}
 
-    public Message(MessagePK pk, String messageText, String location, Image image, Advertisement advertisement) {
-        this.pk = pk;
+    public Message(User senderUsername, String messageText, Advertisement advertisement) {
+        this.pk = new MessagePK(senderUsername, LocalDateTime.now(ZoneOffset.UTC));
         this.messageText = messageText;
+        /*
         this.location = location;
         this.image = image;
+         */
         this.advertisement = advertisement;
     }
+
 
     public MessagePK getPk() {
         return pk;
@@ -53,6 +61,7 @@ public class Message {
         this.messageText = messageText;
     }
 
+    /*
     public String getLocation() {
         return location;
     }
@@ -68,6 +77,7 @@ public class Message {
     public void setImage(Image image) {
         this.image = image;
     }
+     */
 
     public Advertisement getAdvertisement() {
         return advertisement;

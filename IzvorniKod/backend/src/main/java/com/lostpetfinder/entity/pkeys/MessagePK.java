@@ -12,13 +12,19 @@ import java.time.LocalDateTime;
 @Embeddable
 public class MessagePK implements Serializable {
 
-    // I'm not sure about this at all, it's 2AM and I'm deadly tired :(
     @ManyToOne(optional = false)
     @JoinColumn(name = "username", nullable = false)
     private User user;
 
     @Column(nullable = false)
     private LocalDateTime sendingDateTime;
+
+    public MessagePK() {}
+
+    public MessagePK(User user, LocalDateTime sendingDateTime) {
+        this.user = user;
+        this.sendingDateTime = sendingDateTime;
+    }
 
     public User getUser() {
         return user;
