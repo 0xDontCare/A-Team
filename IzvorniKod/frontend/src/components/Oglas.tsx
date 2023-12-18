@@ -59,7 +59,6 @@ const Oglas: React.FC<CardProps> = ({
 
     const handleChangeClick = () => {
         navigate(`/changeAd/${id}`);
-
     };
 
     const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {

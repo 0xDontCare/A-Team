@@ -3,6 +3,7 @@ import Card from "react-bootstrap/Card";
 import Carousel from "react-bootstrap/Carousel";
 import {useEffect, useState} from "react";
 import "./OglasDetalj.css";
+import {MapContainer, Marker, TileLayer} from "react-leaflet";
 
 function OglasDetalj() {
     const {id} = useParams();
@@ -104,6 +105,17 @@ function OglasDetalj() {
                             <p className="mb-2">
                                 <strong>Opis :</strong> {card.petDescription}
                             </p>
+                        </div>
+                        <div className="mb-3">
+                            <MapContainer center={[card.disappearanceLocationLat, card.disappearanceLocationLng]}
+                                          zoom={9} minZoom={7} style={{height: "400px"}}>
+                                <Marker
+                                    position={[card.disappearanceLocationLat, card.disappearanceLocationLng]}></Marker>
+                                <TileLayer
+                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                                    url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                />
+                            </MapContainer>
                         </div>
                     </div>
                     {displayUserDetails && (
