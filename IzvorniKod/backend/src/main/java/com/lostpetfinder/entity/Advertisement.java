@@ -45,11 +45,11 @@ public class Advertisement {
         this.location = disappearanceLocation;
     }
 
-    public void updateAdvertisement(AddAdvertisementDTO dto) {
+    public void updateAdvertisement(AddAdvertisementDTO dto, Location newLocation) {
         pet.updatePet(dto);
         this.disappearanceDateTime = dto.getDisappearanceDateTime();
-        // this.location = dto.getDisappearanceLocation(); NEED TO IMPLEMENT THIS
         this.category = dto.getCategory() == null ? CategoryEnum.LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA : dto.getCategory();
+        this.location = newLocation == null ? this.location : newLocation;
     }
 
     public Long getAdvertisementId() {

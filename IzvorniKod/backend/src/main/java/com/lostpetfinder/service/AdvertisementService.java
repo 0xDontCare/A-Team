@@ -126,8 +126,33 @@ public class AdvertisementService {
         if (!advertisementRepository.existsByAdvertisementId(adId)) {
             throw new NoSuchElementException();
         }
+        Location newLocation = null;
+        if (dto.getDisappearanceLocationLng() != null && dto.getDisappearanceLocationLat() != null) {
+            RestTemplate restTemplate = new RestTemplate();
+            String apiKey = "AIzaSyDXFHTxz_VlUm8TRSq9D_6xsiIuLiUf3vs";
+
+            ResponseEntity<MapsApiResponseDTO> mapsApiResponse = restTemplate.exchange(
+                    "https://maps.googleapis.com/maps/api/geocode/json?key="+apiKey+"&latlng="+dto.getDisappearanceLocationLat()+","+dto.getDisappearanceLocationLng(),
+                    HttpMethod.GET, null, MapsApiResponseDTO.class );
+
+            MapsSummaryDTO mapsSummaryDTO = new MapsSummaryDTO(mapsApiResponse.getBody());
+
+            County newCounty = countyRepository.save(new County(mapsSummaryDTO.getCounty()));
+            Place newPlace = placeRepository.save(new Place(
+                    Long.parseLong(mapsSummaryDTO.getPostalCode())
+                    ,mapsSummaryDTO.getPlace(),
+                    newCounty
+            ));
+
+            newLocation = locationRepository.save(new Location(
+                    dto.getDisappearanceLocationLat(),
+                    dto.getDisappearanceLocationLng(),
+                    newPlace
+            ));
+        }
+
         Advertisement changedAdvertisement = advertisementRepository.findByAdvertisementId(adId).orElseThrow();
-        changedAdvertisement.updateAdvertisement(dto);
+        changedAdvertisement.updateAdvertisement(dto, newLocation);
         advertisementRepository.save(changedAdvertisement);
 
         Pet changedPet = changedAdvertisement.getPet();
@@ -143,6 +168,7 @@ public class AdvertisementService {
         } catch (FileUploadFailedException e) {
             return ResponseEntity.status(500).body(e.getMessage());
         }
+
         return ResponseEntity.ok().body("Advertisement changed successfully!");
     }
 

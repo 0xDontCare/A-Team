@@ -25,6 +25,8 @@ public class AdvertisementDetailsDTO {
     private String petDescription;
     private LocalDateTime disappearanceDateTime; // potentially change the data type
     private String disappearanceLocation; // change the data type
+    private Double disappearanceLocationLat;
+    private Double disappearanceLocationLng;
     private List<String> images; // potentially change the data type
 
     public AdvertisementDetailsDTO() {}
@@ -54,6 +56,8 @@ public class AdvertisementDetailsDTO {
                                      advertisement.getLocation().getPlace().getZipCode() + ", " +
                                      advertisement.getLocation().getPlace().getCounty().getName() + ", " +
                                      "Hrvatska"; // NEED TO ADD toString METHOD
+        this.disappearanceLocationLat = advertisement.getLocation().getCoordinates().getLatitude();
+        this.disappearanceLocationLng = advertisement.getLocation().getCoordinates().getLongitude();
         this.images = listOfImage.stream().map(Image::getLinkToImage).collect(Collectors.toList());
     }
 
@@ -124,5 +128,13 @@ public class AdvertisementDetailsDTO {
 
     public String getBreed() {
         return breed;
+    }
+
+    public Double getDisappearanceLocationLat() {
+        return disappearanceLocationLat;
+    }
+
+    public Double getDisappearanceLocationLng() {
+        return disappearanceLocationLng;
     }
 }
