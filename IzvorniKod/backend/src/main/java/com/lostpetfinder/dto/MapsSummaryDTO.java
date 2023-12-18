@@ -10,9 +10,33 @@ public class MapsSummaryDTO {
     public MapsSummaryDTO() {}
 
     public MapsSummaryDTO(MapsApiResponseDTO mapsApiResponseDTO) {
-        this.place = mapsApiResponseDTO.getResults().getFirst().getAddress_components().stream().filter(addressComponent -> addressComponent.getTypes().contains("route")).toList().getFirst().getLong_name();
-        this.postalCode = mapsApiResponseDTO.getResults().getFirst().getAddress_components().stream().filter(addressComponent -> addressComponent.getTypes().contains("postal_code")).toList().getFirst().getLong_name();
-        this.county = mapsApiResponseDTO.getResults().getFirst().getAddress_components().stream().filter(addressComponent -> addressComponent.getTypes().contains("locality")).toList().getFirst().getLong_name();
+
+        int i = 0;
+        while (true) {
+            var tmp = mapsApiResponseDTO.getResults().get(i);
+
+            try {
+                this.postalCode = tmp.getAddress_components().stream()
+                        .filter(addressComponent -> addressComponent.getTypes().contains("postal_code"))
+                        .toList()
+                        .getFirst()
+                        .getLong_name();
+                this.place = tmp.getAddress_components().stream()
+                        .filter(addressComponent -> addressComponent.getTypes().contains("route"))
+                        .toList()
+                        .getFirst()
+                        .getLong_name();
+                this.county = tmp.getAddress_components().stream()
+                        .filter(addressComponent -> addressComponent.getTypes().contains("locality"))
+                        .toList()
+                        .getFirst()
+                        .getLong_name();
+            } catch (Exception e) {
+                i++;
+                continue;
+            }
+            break;
+        }
     }
 
     public String getPlace() {
