@@ -3,8 +3,9 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import {useNavigate, useParams} from "react-router-dom";
-import Carousel from "react-bootstrap/Carousel";
-import {FormGroup} from "react-bootstrap";
+import "./AddAdChangeAd.css";
+import "leaflet/dist/leaflet.css";
+import {MapContainer, Marker, TileLayer, useMapEvents} from "react-leaflet";
 
 function ChangeAd() {
     document.title = 'Izmijenite oglas';
@@ -14,7 +15,8 @@ function ChangeAd() {
     const [changeSpecies, setChangeSpecies] = useState("");
     const [changeBreed, setChangeBreed] = useState("");
     const [changeName, setChangeName] = useState("");
-    const [changeLocation, setChangeLocation] = useState("");
+    const [changeDisappearanceLocationLat, setChangeDisappearanceLocationLat] = useState<number | null>(null);
+    const [changeDisappearanceLocationLng, setChangeDisappearanceLocationLng] = useState<number | null>(null);
     const [changeDateTime, setChangeDateTime] = useState("");
     const [changeColor, setChangeColor] = useState("");
     const [changeAge, setChangeAge] = useState("");
@@ -31,6 +33,9 @@ function ChangeAd() {
     const [formError, setFormError] = useState("");
     const errorRef = useRef<HTMLDivElement | null>(null);
 
+    const [mapCenter, setMapCenter] = useState<[number, number]>([44.5, 16.0]);
+    const [markerPosition, setMarkerPosition] = useState<[number, number] | null>(null);
+
     const handleSpeciesChange = (e: {
         target: { value: SetStateAction<string>; };
     }) => setChangeSpecies(e.target.value);
@@ -38,9 +43,6 @@ function ChangeAd() {
         target: { value: SetStateAction<string>; };
     }) => setChangeBreed(e.target.value);
     const handleNameChange = (e: { target: { value: SetStateAction<string>; }; }) => setChangeName(e.target.value);
-    const handleLocationChange = (e: {
-        target: { value: SetStateAction<string>; };
-    }) => setChangeLocation(e.target.value);
     const handleDateTimeChange = (e: {
         target: { value: SetStateAction<string>; };
     }) => setChangeDateTime(e.target.value);
@@ -70,7 +72,8 @@ function ChangeAd() {
                 setChangeSpecies(data.species);
                 setChangeBreed(data.breed);
                 setChangeName(data.petName);
-                setChangeLocation(data.disappearanceLocation);
+                setChangeDisappearanceLocationLat(data.disappearanceLocationLat);
+                setChangeDisappearanceLocationLng(data.disappearanceLocationLng);
                 setChangeDateTime(data.disappearanceDateTime);
                 setChangeColor(data.color);
                 setChangeAge(data.age);
@@ -83,6 +86,15 @@ function ChangeAd() {
 
         fetchData();
     }, [id]);
+
+    useEffect(() => {
+        if (card && card.disappearanceLocationLat && card.disappearanceLocationLng) {
+            const lat = parseFloat(card.disappearanceLocationLat);
+            const lng = parseFloat(card.disappearanceLocationLng);
+            setMarkerPosition([lat, lng]);
+            setMapCenter([lat, lng]);
+        }
+    }, [card]);
 
     const handleImageCheckboxChange = (e) => {
         const imageName = e.target.name;
@@ -102,14 +114,24 @@ function ChangeAd() {
     const handleSubmit = async (e: { preventDefault: () => void }) => {
         e.preventDefault();
 
-        const requiredFields = [changeSpecies, changeBreed, changeName, changeLocation, changeDateTime, changeColor, changeAge, changeDescription];
-        if (requiredFields.some((field) => !field)) {
-            setFormError("Niste upisali podatke u sva zadana polja!");
+        const requiredFields = [
+            changeSpecies,
+            changeBreed,
+            changeName,
+            changeDateTime,
+            changeColor,
+            changeAge,
+            changeDescription,
+        ];
+
+        if (requiredFields.some((field) => field === null || field === "")) {
+            setAgeError("");
+            setFormError("Niste unijeli podatke u sva zadana polja!");
 
             if (errorRef.current) {
                 errorRef.current.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start',
+                    behavior: "smooth",
+                    block: "start",
                 });
             }
 
@@ -118,12 +140,20 @@ function ChangeAd() {
 
         const ageRegex = /^\d+$/;
         if (!ageRegex.test(changeAge)) {
+            setFormError("");
             setAgeError("Starost mora sadržavati samo brojeve bez slova!");
+
+            return;
+        }
+
+        if (changeDisappearanceLocationLat === null || changeDisappearanceLocationLng === null) {
+            setAgeError("");
+            setFormError("Odaberite lokaciju nestanka ljubimca na karti!");
 
             if (errorRef.current) {
                 errorRef.current.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start',
+                    behavior: "smooth",
+                    block: "start",
                 });
             }
 
@@ -135,6 +165,7 @@ function ChangeAd() {
         const totalImages = totalImagesAfterChanges + newImagesCount;
 
         if (totalImages < 1 || totalImages > 3) {
+            setAgeError("");
             setFormError("Morate imati barem jednu i najviše tri slike.");
 
             if (errorRef.current) {
@@ -153,7 +184,8 @@ function ChangeAd() {
             formData.append("breed", changeBreed);
             formData.append("petName", changeName);
             formData.append("disappearanceDateTime", changeDateTime);
-            formData.append("disappearanceLocation", changeLocation);
+            formData.append("disappearanceLocationLat", changeDisappearanceLocationLat.toString());
+            formData.append("disappearanceLocationLng", changeDisappearanceLocationLng.toString());
             formData.append("color", changeColor);
             formData.append("age", changeAge);
             formData.append("petDescription", changeDescription);
@@ -174,6 +206,7 @@ function ChangeAd() {
             };
 
             const res = await fetch(`/api/advertisements/${id}`, options);
+
             if (res.status === 200) {
                 alert("Oglas uspješno promijenjen!");
                 navigate('/');
@@ -193,6 +226,23 @@ function ChangeAd() {
     const handleCancel = () => {
         navigate('/');
     };
+
+    function MapClickHandler() {
+        const map = useMapEvents({
+            click: (e) => {
+                const lat = e.latlng.lat;
+                const lng = e.latlng.lng;
+
+                setMarkerPosition([lat, lng]);
+                setChangeDisappearanceLocationLat(lat);
+                setChangeDisappearanceLocationLng(lng);
+
+                setMapCenter([lat, lng]);
+            },
+        });
+
+        return markerPosition ? <Marker position={markerPosition}></Marker> : null;
+    }
 
     return (
         <Container>
@@ -222,11 +272,15 @@ function ChangeAd() {
                         <Form.Label>Odaberite datum i vrijeme nestanka ljubimca</Form.Label>
                         <Form.Control type="datetime-local" onChange={handleDateTimeChange} value={changeDateTime}/>
                     </Form.Group>
+                    Lokacija nestanka ljubimca
                     <Form.Group className="mb-3" controlId="adLocation">
-                        <Form.Label>Lokacija nestanka ljubimca</Form.Label>
-                        <Form.Control type="text" placeholder="Upišite lokaciju nestanka ljubimca"
-                                      onChange={handleLocationChange}
-                                      value={changeLocation}/>
+                        <MapContainer center={mapCenter} zoom={7} minZoom={7}>
+                            <MapClickHandler/>
+                            <TileLayer
+                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                                url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            />
+                        </MapContainer>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="adColor">
                         <Form.Label>Boja ljubimca</Form.Label>

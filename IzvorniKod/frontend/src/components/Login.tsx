@@ -55,6 +55,10 @@ function Login({setLoginStatus, setUserData}) {
         }
     }
 
+    const handleCancel = () => {
+        navigate('/');
+    };
+
     return (
         <div>
             <div className="container mt-4">
@@ -105,6 +109,14 @@ function Login({setLoginStatus, setUserData}) {
                             onClick={login}
                         >
                             Prijavite se
+                        </button>
+                        <button
+                            type="button"
+                            className="btn btn-secondary mt-4"
+                            style={{marginLeft: '10px'}}
+                            onClick={handleCancel}
+                        >
+                            Odustanite
                         </button>
                     </form>
                 </div>

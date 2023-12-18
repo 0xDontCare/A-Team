@@ -6,10 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="e8bea504-cbb3-43ca-a949-d67d77c7a9b7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/AddAd.css" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/AddAdChangeAd.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/AddAd.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/AddAd.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/ChangeAd.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/ChangeAd.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Register.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +55,7 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "devlocal",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/rober/Desktop/FRONT",
+    "last_opened_file_path": "C:/Users/rober/Desktop/A-Team",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -108,7 +109,9 @@
       <workItem from="1702807851650" duration="3966000" />
       <workItem from="1702843962148" duration="8456000" />
       <workItem from="1702895502217" duration="11906000" />
-      <workItem from="1702915951121" duration="8566000" />
+      <workItem from="1702915951121" duration="14367000" />
+      <workItem from="1702937284143" duration="26000" />
+      <workItem from="1702937935270" duration="901000" />
     </task>
     <servers />
   </component>

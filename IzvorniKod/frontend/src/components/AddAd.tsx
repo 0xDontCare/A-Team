@@ -3,11 +3,9 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import {useNavigate} from "react-router-dom";
-import {MapContainer, TileLayer, Marker, Popup, useMapEvents} from 'react-leaflet';
-import L from 'leaflet';
-import "./AddAd.css";
+import {MapContainer, TileLayer, Marker, useMapEvents} from 'react-leaflet';
+import "./AddAdChangeAd.css";
 import "leaflet/dist/leaflet.css";
-
 
 function AddAd() {
     document.title = "Dodajte oglas";
@@ -181,7 +179,6 @@ function AddAd() {
 
         return markerPosition ? <Marker position={markerPosition}></Marker> : null;
     }
-
 
     return (
         <Container>
