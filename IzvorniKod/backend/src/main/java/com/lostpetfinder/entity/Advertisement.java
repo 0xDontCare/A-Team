@@ -24,12 +24,10 @@ public class Advertisement {
     @Column(nullable = false)
     private LocalDateTime disappearanceDateTime;
 
-    /*
+
     @ManyToOne
-    @JoinColumn(name = "coordinates")
-     */
-    @Column(nullable = false)
-    private String location;
+    @JoinColumn(name = "locationId", nullable = false)
+    private Location location;
 
     @Enumerated(EnumType.ORDINAL)
     private CategoryEnum category;
@@ -39,7 +37,7 @@ public class Advertisement {
 
     public Advertisement() {}
 
-    public Advertisement(Pet pet, User user, CategoryEnum category, LocalDateTime disappearanceDateTime, String disappearanceLocation) {
+    public Advertisement(Pet pet, User user, CategoryEnum category, LocalDateTime disappearanceDateTime, Location disappearanceLocation) {
         this.pet = pet;
         this.user = user;
         this.disappearanceDateTime = disappearanceDateTime;
@@ -50,8 +48,7 @@ public class Advertisement {
     public void updateAdvertisement(AddAdvertisementDTO dto) {
         pet.updatePet(dto);
         this.disappearanceDateTime = dto.getDisappearanceDateTime();
-        // need to implement this in frontend
-        this.location = dto.getDisappearanceLocation();
+        // this.location = dto.getDisappearanceLocation(); NEED TO IMPLEMENT THIS
         this.category = dto.getCategory() == null ? CategoryEnum.LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA : dto.getCategory();
     }
 
@@ -87,11 +84,11 @@ public class Advertisement {
         this.disappearanceDateTime = disappearanceDateTime;
     }
 
-    public String getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 

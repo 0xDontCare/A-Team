@@ -5,6 +5,7 @@ import com.lostpetfinder.entity.CategoryEnum;
 import com.lostpetfinder.entity.Image;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.xml.crypto.Data;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,7 +20,8 @@ public class AddAdvertisementDTO {
     private String petDescription;
     private CategoryEnum category;
     private LocalDateTime disappearanceDateTime;
-    private String disappearanceLocation; // change the data type
+    private Double disappearanceLocationLat;
+    private Double disappearanceLocationLng;
     private List<MultipartFile> images;
 
     // used in put method
@@ -74,12 +76,20 @@ public class AddAdvertisementDTO {
         this.disappearanceDateTime = disappearanceDateTime;
     }
 
-    public String getDisappearanceLocation() {
-        return disappearanceLocation;
+    public Double getDisappearanceLocationLat() {
+        return disappearanceLocationLat;
     }
 
-    public void setDisappearanceLocation(String disappearanceLocation) {
-        this.disappearanceLocation = disappearanceLocation;
+    public void setDisappearanceLocationLat(Double disappearanceLocationLat) {
+        this.disappearanceLocationLat = disappearanceLocationLat;
+    }
+
+    public Double getDisappearanceLocationLng() {
+        return disappearanceLocationLng;
+    }
+
+    public void setDisappearanceLocationLng(Double disappearanceLocationLng) {
+        this.disappearanceLocationLng = disappearanceLocationLng;
     }
 
     public List<MultipartFile> getImages() {

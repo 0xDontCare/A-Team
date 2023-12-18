@@ -50,7 +50,10 @@ public class AdvertisementDetailsDTO {
         this.age = advertisement.getPet().getAge();
         this.petDescription = advertisement.getPet().getDescription();
         this.disappearanceDateTime = advertisement.getDisappearanceDateTime();
-        this.disappearanceLocation = advertisement.getLocation();
+        this.disappearanceLocation = advertisement.getLocation().getPlace().getName() + ", " +
+                                     advertisement.getLocation().getPlace().getZipCode() + ", " +
+                                     advertisement.getLocation().getPlace().getCounty().getName() + ", " +
+                                     "Hrvatska"; // NEED TO ADD toString METHOD
         this.images = listOfImage.stream().map(Image::getLinkToImage).collect(Collectors.toList());
     }
 

@@ -1,25 +1,25 @@
 package com.lostpetfinder.service;
 
-import com.lostpetfinder.dao.AdvertisementRepository;
-import com.lostpetfinder.dao.ImageRepository;
-import com.lostpetfinder.dao.PetRepository;
-import com.lostpetfinder.dto.AddAdvertisementDTO;
-import com.lostpetfinder.dto.AdvertisementDetailsDTO;
+import com.lostpetfinder.dao.*;
+import com.lostpetfinder.dto.*;
 import com.lostpetfinder.entity.*;
-import com.lostpetfinder.dto.AdvertisementSummaryDTO;
 import com.lostpetfinder.exception.ImageNotSelectedException;
 import com.lostpetfinder.exception.FileUploadFailedException;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 import java.util.List;
 
 @Service
 public class AdvertisementService {
-
+    private final LocationRepository locationRepository;
+    private final PlaceRepository placeRepository;
+    private final CountyRepository countyRepository;
     private final ResourceService resourceService;
     private final UserService userService;
     private final AdvertisementRepository advertisementRepository;
@@ -30,12 +30,18 @@ public class AdvertisementService {
                                 UserService userService,
                                 AdvertisementRepository advertisementRepository,
                                 PetRepository petRepository,
-                                ImageRepository imageRepository) {
+                                ImageRepository imageRepository,
+                                LocationRepository locationRepository,
+                                PlaceRepository placeRepository,
+                                CountyRepository countyRepository) {
         this.resourceService = resourceService;
         this.userService = userService;
         this.advertisementRepository = advertisementRepository;
         this.petRepository = petRepository;
         this.imageRepository = imageRepository;
+        this.locationRepository = locationRepository;
+        this.placeRepository = placeRepository;
+        this.countyRepository = countyRepository;
     }
 
     // adjust later so it only returns active ads
@@ -70,6 +76,28 @@ public class AdvertisementService {
             return ResponseEntity.status(500).body(e.getMessage());
         }
 
+        RestTemplate restTemplate = new RestTemplate();
+        String apiKey = "AIzaSyDXFHTxz_VlUm8TRSq9D_6xsiIuLiUf3vs";
+
+        ResponseEntity<MapsApiResponseDTO> mapsApiResponse = restTemplate.exchange(
+                "https://maps.googleapis.com/maps/api/geocode/json?key="+apiKey+"&latlng="+dto.getDisappearanceLocationLat()+","+dto.getDisappearanceLocationLng(),
+                HttpMethod.GET, null, MapsApiResponseDTO.class );
+
+        MapsSummaryDTO mapsSummaryDTO = new MapsSummaryDTO(mapsApiResponse.getBody());
+
+        County newCounty = countyRepository.save(new County(mapsSummaryDTO.getCounty()));
+        Place newPlace = placeRepository.save(new Place(
+                Long.parseLong(mapsSummaryDTO.getPostalCode())
+                ,mapsSummaryDTO.getPlace(),
+                newCounty
+        ));
+
+        Location newLocation = locationRepository.save(new Location(
+                dto.getDisappearanceLocationLat(),
+                dto.getDisappearanceLocationLng(),
+                newPlace
+        ));
+
         User user = userService.LoggedUser().orElseThrow();
         CategoryEnum category = CategoryEnum.LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA;
         Advertisement newAdvertisement = new Advertisement(
@@ -77,7 +105,7 @@ public class AdvertisementService {
                 user,
                 category,
                 dto.getDisappearanceDateTime(),
-                dto.getDisappearanceLocation()
+                newLocation
         );
         newAdvertisement = advertisementRepository.save(newAdvertisement);
         return ResponseEntity.ok().header(HttpHeaders.LOCATION, "/api/advertisements/" + newAdvertisement.getAdvertisementId()).body("Advertisement added successfully!");
