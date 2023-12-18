@@ -105,7 +105,9 @@ public class AdvertisementService {
         Pet changedPet = changedAdvertisement.getPet();
         petRepository.save(changedPet);
 
-        imageRepository.deleteAll(dto.getImagesToDelete().stream().filter(Objects::nonNull).toList());
+        if (dto.getImagesToDelete() != null)
+            imageRepository.deleteAll(dto.getImagesToDelete().stream().filter(Objects::nonNull).toList());
+
         try {
             if (dto.getImages() != null) resourceService.addImages(dto.getImages(), changedPet);
         } catch (ImageNotSelectedException e) {
