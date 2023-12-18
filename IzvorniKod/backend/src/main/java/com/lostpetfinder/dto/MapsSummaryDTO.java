@@ -13,7 +13,12 @@ public class MapsSummaryDTO {
 
         int i = 0;
         while (true) {
-            var tmp = mapsApiResponseDTO.getResults().get(i);
+            MapsApiResponseDTO.Result tmp;
+            try {
+                 tmp = mapsApiResponseDTO.getResults().get(i);
+            } catch (Exception e) {
+                break; // throw exception that no results were found
+            }
 
             try {
                 this.postalCode = tmp.getAddress_components().stream()
@@ -27,7 +32,7 @@ public class MapsSummaryDTO {
                         .getFirst()
                         .getLong_name();
                 this.county = tmp.getAddress_components().stream()
-                        .filter(addressComponent -> addressComponent.getTypes().contains("locality"))
+                        .filter(addressComponent -> addressComponent.getTypes().contains("administrative_area_level_1"))
                         .toList()
                         .getFirst()
                         .getLong_name();
