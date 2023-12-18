@@ -13,6 +13,7 @@ public class AddAdvertisementDTO {
 
     private String petName;
     private String species;
+    private String breed;
     private String color;
     private Integer age;
     private String petDescription;
@@ -103,5 +104,13 @@ public class AddAdvertisementDTO {
 
     public void setImagesToDelete(List<Image> imagesToDelete) {
         this.imagesToDelete = imagesToDelete;
+    }
+
+    public String getBreed() {
+        return breed;
+    }
+
+    public void setBreed(String breed) {
+        this.breed = breed;
     }
 }

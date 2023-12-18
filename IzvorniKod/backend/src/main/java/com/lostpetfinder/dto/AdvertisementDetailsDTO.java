@@ -19,6 +19,7 @@ public class AdvertisementDetailsDTO {
     private CategoryEnum categoryDescription;
     private String petName;
     private String species;
+    private String breed;
     private String color;
     private Integer age;
     private String petDescription;
@@ -44,6 +45,7 @@ public class AdvertisementDetailsDTO {
         this.advertisementId = advertisement.getAdvertisementId();
         this.petName = advertisement.getPet().getName();
         this.species = advertisement.getPet().getSpecies();
+        this.breed = advertisement.getPet().getBreed();
         this.color = advertisement.getPet().getColor();
         this.age = advertisement.getPet().getAge();
         this.petDescription = advertisement.getPet().getDescription();
@@ -117,4 +119,7 @@ public class AdvertisementDetailsDTO {
         return categoryDescription;
     }
 
+    public String getBreed() {
+        return breed;
+    }
 }

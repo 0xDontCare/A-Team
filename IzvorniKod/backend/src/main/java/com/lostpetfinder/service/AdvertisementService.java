@@ -9,6 +9,7 @@ import com.lostpetfinder.entity.*;
 import com.lostpetfinder.dto.AdvertisementSummaryDTO;
 import com.lostpetfinder.exception.ImageNotSelectedException;
 import com.lostpetfinder.exception.FileUploadFailedException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -47,6 +48,7 @@ public class AdvertisementService {
                         ad.getAdvertisementId(),
                         ad.getPet().getName(),
                         ad.getPet().getSpecies(),
+                        ad.getPet().getBreed(),
                         ad.getPet().getColor(),
                         ad.getPet().getAge(),
                         ad.getUser() instanceof Registered ? null : ((Shelter) ad.getUser()).getName(),
@@ -77,11 +79,8 @@ public class AdvertisementService {
                 dto.getDisappearanceDateTime(),
                 dto.getDisappearanceLocation()
         );
-
-        return new ResponseEntity<>(
-                new AdvertisementDetailsDTO(advertisementRepository.save(newAdvertisement), listOfImages)
-                , HttpStatus.OK
-        );
+        newAdvertisement = advertisementRepository.save(newAdvertisement);
+        return ResponseEntity.ok().header(HttpHeaders.LOCATION, "/api/advertisements/" + newAdvertisement.getAdvertisementId()).body("Advertisement added successfully!");
     }
 
     // add the exception handling / completely remove it

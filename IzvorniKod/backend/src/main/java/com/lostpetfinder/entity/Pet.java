@@ -22,6 +22,10 @@ public class Pet {
     @Size(max = 100)
     private String species;
 
+    @Column
+    @Size(max = 100)
+    private String breed;
+
     @Column(nullable = false)
     private Integer age;
 
@@ -39,6 +43,7 @@ public class Pet {
     public Pet(AddAdvertisementDTO dto) {
         this.name = dto.getPetName();
         this.species = dto.getSpecies();
+        this.breed = dto.getBreed();
         this.age = dto.getAge();
         this.color = dto.getColor();
         this.description = dto.getPetDescription();
@@ -48,6 +53,7 @@ public class Pet {
     public void updatePet(AddAdvertisementDTO dto) {
         this.name = dto.getPetName();
         this.species = dto.getSpecies();
+        this.breed = dto.getBreed();
         this.age = dto.getAge();
         this.color = dto.getColor();
         this.description = dto.getPetDescription();
@@ -99,5 +105,13 @@ public class Pet {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getBreed() {
+        return breed;
+    }
+
+    public void setBreed(String breed) {
+        this.breed = breed;
     }
 }

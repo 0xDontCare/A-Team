@@ -9,16 +9,18 @@ public class AdvertisementSummaryDTO {
     private final String petName;
     private final String username;
     private final String species;
+    private final String breed;
     private final String color;
     private final Integer age;
     private final String shelterName;
 
 
-    public AdvertisementSummaryDTO(Long adId, String petName, String species, String color, Integer age, String shelterName, String username) {
+    public AdvertisementSummaryDTO(Long adId, String petName, String species,String breed, String color, Integer age, String shelterName, String username) {
         this.adId = adId;
         this.petName = petName;
         this.username = username;
         this.species = species;
+        this.breed = breed;
         this.color = color;
         this.age = age;
         this.shelterName = shelterName;
@@ -50,5 +52,9 @@ public class AdvertisementSummaryDTO {
 
     public String getShelterName() {
         return shelterName;
+    }
+
+    public String getBreed() {
+        return breed;
     }
 }
