@@ -27,15 +27,18 @@ public class MapsSummaryDTO {
                         .getFirst()
                         .getLong_name();
                 this.place = tmp.getAddress_components().stream()
-                        .filter(addressComponent -> addressComponent.getTypes().contains("route"))
+                        .filter(addressComponent -> addressComponent.getTypes().contains("locality") && addressComponent.getTypes().contains("political"))
                         .toList()
                         .getFirst()
                         .getLong_name();
-                this.county = tmp.getAddress_components().stream()
-                        .filter(addressComponent -> addressComponent.getTypes().contains("administrative_area_level_1"))
-                        .toList()
-                        .getFirst()
-                        .getLong_name();
+                if (this.place.equals("Zagreb"))
+                    this.county = "Grad Zagreb";
+                else
+                    this.county = tmp.getAddress_components().stream()
+                            .filter(addressComponent -> addressComponent.getTypes().contains("administrative_area_level_1"))
+                            .toList()
+                            .getFirst()
+                            .getLong_name();
             } catch (Exception e) {
                 i++;
                 continue;
