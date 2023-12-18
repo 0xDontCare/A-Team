@@ -62,7 +62,7 @@ function App() {
                         }
                     />
                     <Route path="/addAd" element={<AddAd/>} userData={userData}/>
-                    <Route path="/changeAd/:id" element={<ChangeAd/>} userData={userData}/>
+                    <Route path="/changeAd/:id" element={<ChangeAd/>}/>
                     <Route path="/:id" element={<OglasDetalj/>}/>
                 </Routes>
             </BrowserRouter>

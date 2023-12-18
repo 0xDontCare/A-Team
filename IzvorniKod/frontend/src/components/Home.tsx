@@ -5,8 +5,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Oglas from "./Oglas.tsx";
 import "./Home.css";
-import {Simulate} from "react-dom/test-utils";
-import change = Simulate.change;
 
 interface Advertisement {
     adId: number;

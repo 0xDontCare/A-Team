@@ -27,7 +27,7 @@ function NavbarElement({isLoggedIn, userData, setLoginStatus}) {
                     className="d-flex align-items-center"
                 >
                     <img
-                        src="src/icons/logo.png"
+                        src="/src/icons/logo.png"
                         alt="logo"
                         className="logo d-inline-block align-top"
                     />

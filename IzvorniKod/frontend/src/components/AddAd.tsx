@@ -8,8 +8,8 @@ function AddAd() {
     document.title = "Dodajte oglas";
     const navigate = useNavigate();
 
-    const [adPet, setAdPet] = useState("");
     const [adSpecies, setAdSpecies] = useState("");
+    const [adBreed, setAdBreed] = useState("");
     const [adName, setAdName] = useState("");
     const [adLocation, setAdLocation] = useState("");
     const [adDateTime, setAdDateTime] = useState("");
@@ -25,8 +25,8 @@ function AddAd() {
 
     const errorRef = useRef<HTMLDivElement | null>(null);
 
-    const handlePetChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdPet(e.target.value);
     const handleSpeciesChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdSpecies(e.target.value);
+    const handleBreedChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdBreed(e.target.value);
     const handleNameChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdName(e.target.value);
     const handleLocationChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdLocation(e.target.value);
     const handleDateTimeChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdDateTime(e.target.value);
@@ -40,8 +40,8 @@ function AddAd() {
     const handlePhoto3Change = (e: { target: { files: SetStateAction<null>[]; }; }) => setAdPhoto3(e.target.files[0]);
 
     const resetFormFields = () => {
-        setAdPet("");
         setAdSpecies("");
+        setAdBreed("");
         setAdName("");
         setAdLocation("");
         setAdDateTime("");
@@ -56,7 +56,7 @@ function AddAd() {
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
 
-        const requiredFields = [adPet, adSpecies, adName, adLocation, adDateTime, adColor, adAge, adDescription];
+        const requiredFields = [adSpecies, adBreed, adName, adLocation, adDateTime, adColor, adAge, adDescription];
         if (requiredFields.some(field => !field)) {
             setFormError("Niste upisali podatke u sva zadana polja!");
 
@@ -100,6 +100,7 @@ function AddAd() {
         try {
             const formData = new FormData();
             formData.append("species", adSpecies);
+            formData.append("breed", adBreed);
             formData.append("petName", adName);
             formData.append("disappearanceDateTime", adDateTime);
             formData.append("disappearanceLocation", adLocation);
@@ -132,6 +133,10 @@ function AddAd() {
         }
     };
 
+    const handleCancel = () => {
+        navigate('/');
+    };
+
     return (
         <Container>
             <div className="card p-5 mt-4" style={{border: "1px solid #ccc", borderRadius: "5px"}}>
@@ -143,13 +148,13 @@ function AddAd() {
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3" controlId="adPet">
                         <Form.Label>Ljubimac</Form.Label>
-                        <Form.Control type="text" placeholder="Upišite ljubimca" onChange={handlePetChange}
-                                      value={adPet}/>
+                        <Form.Control type="text" placeholder="Upišite ljubimca" onChange={handleSpeciesChange}
+                                      value={adSpecies}/>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="adSpecies">
                         <Form.Label>Vrsta ljubimca</Form.Label>
-                        <Form.Control type="text" placeholder="Upišite vrstu ljubimca" onChange={handleSpeciesChange}
-                                      value={adSpecies}/>
+                        <Form.Control type="text" placeholder="Upišite vrstu ljubimca" onChange={handleBreedChange}
+                                      value={adBreed}/>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="adName">
                         <Form.Label>Ime ljubimca</Form.Label>
@@ -201,6 +206,9 @@ function AddAd() {
                     </Form.Group>
                     <Button variant="success" type="submit">
                         Dodajte oglas
+                    </Button>
+                    <Button variant="secondary" className="ms-2" onClick={handleCancel}>
+                        Odustanite
                     </Button>
                 </Form>
             </div>

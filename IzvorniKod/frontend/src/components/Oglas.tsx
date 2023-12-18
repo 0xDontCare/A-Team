@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link , useNavigate } from "react-router-dom";
+import React, {useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
 import "./Oglas.css";
 
 interface CardProps {
@@ -57,25 +57,9 @@ const Oglas: React.FC<CardProps> = ({
         }
     };
 
-    const handleChangeClick = async () => {
-        try {
-            const response = await fetch(`/api/advertisements/${id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            if (response.ok) {
-                setIsChanging(true);
-                onChange(id);
+    const handleChangeClick = () => {
+        navigate(`/changeAd/${id}`);
 
-                navigate('/changeAd/${id}');
-            } else {
-                console.error("Failed to change advertisement");
-            }
-        } catch (error) {
-            console.error("Error changing advertisement:", error);
-        }
     };
 
     const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -129,7 +113,7 @@ const Oglas: React.FC<CardProps> = ({
                         onClick={handleChangeClick}
                         disabled={isChanging}
                     >
-                        {isChanging ? "Završite izmjenu" : "Izmjenite oglas"}
+                        {isChanging ? "Završite izmjenu" : "Izmijenite oglas"}
                     </button>
                 </div>
             )}
