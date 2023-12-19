@@ -31,6 +31,8 @@ function Home({isLoggedIn, userData}: HomeProps) {
     const [searchTerm, setSearchTerm] = useState("");
     const [searchCategory, setSearchCategory] = useState("option1");
 
+    const [showCheckboxes, setShowCheckboxes] = useState(false);
+
     document.title = "Nestali ljubimci";
 
     useEffect(() => {
@@ -103,86 +105,175 @@ function Home({isLoggedIn, userData}: HomeProps) {
         );
     };
 
+    const handleAdTypeChange = (e) => {
+        if (e.target.value === 'tipOglas2') {
+            if (isLoggedIn) {
+                setShowCheckboxes(true);
+            } else {
+                setShowCheckboxes(false);
+                alert('Morate se registrirati i prijaviti kako biste mogli koristiti ovu kategoriju!');
+                window.location.reload();
+            }
+        } else {
+            setShowCheckboxes(false);
+        }
+    };
+
     return (
         <Container>
-            <Row className="mb-3">
-                <Col className="text-dg-end d-flex align-items-center">
-                    <div className="me-2 mt-3">
-                        <input
-                            type="text"
-                            placeholder="Pretražite oglase"
-                            id="searchBarByCategories"
-                            value={searchTerm}
-                            onChange={(e) => handleSearch(e.target.value)}
-                            className="form-control-lg my-2"
-                        />
-                    </div>
-                    <div className="container-fluid no-right-margin">
-                        <div className="row">
-                            <div className="col-12">
-                                <div
-                                    className="btnContainer mt-3 p-3 rounded border border-dark border-2 d-flex justify-content-between">
-                                    {['option1', 'option2', 'option3', 'option4', 'option5'].map((option) => (
-                                        <div className="form-check form-check-inline" key={option}>
-                                            <input
-                                                className="form-check-input"
-                                                type="radio"
-                                                name="exampleRadios"
-                                                id={`exampleRadio${option}`}
-                                                value={option}
-                                                checked={searchCategory === option}
-                                                onChange={() => setSearchCategory(option)}
-                                            />
-                                            <label className="form-check-label" htmlFor={`exampleRadio${option}`}>
-                                                {option === 'option1' ? 'Naziv ljubimca' :
-                                                    option === 'option2' ? 'Vrsta' :
-                                                        option === 'option3' ? 'Boja' :
-                                                            option === 'option4' ? 'Starost' :
-                                                                option === 'option5' ? 'Naziv skloništa' : ''}
-                                            </label>
-                                        </div>
-                                    ))}
+            <Row>
+                <Col xs={12} md={2}>
+                    <div
+                        className="btnContainer mt-3 p-4 rounded border border-dark border-2 d-flex flex-column align-items-start">
+                        <h2 className="mb-3 fs-5 fs-md-3">Odaberite tip oglasa:</h2>
+                        <div className="form-check mb-3 fs-md-3">
+                            <input
+                                className="form-check-input"
+                                type="radio"
+                                name="adType"
+                                id="adType1"
+                                value="tipOglas1"
+                                defaultChecked
+                                onChange={handleAdTypeChange}
+                            />
+                            <label className="form-check-label" htmlFor="adType1">
+                                Aktivni oglasi
+                            </label>
+                        </div>
+                        <div className="form-check mb-3 fs-md-3">
+                            <input
+                                className="form-check-input"
+                                type="radio"
+                                name="adType"
+                                id="adType2"
+                                value="tipOglas2"
+                                onChange={handleAdTypeChange}
+                            />
+                            <label className="form-check-label" htmlFor="adType2">
+                                Neaktivni oglasi
+                            </label>
+                        </div>
+                        {showCheckboxes && (
+                            <div>
+                                <div className="form-check">
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id="checkbox1"
+                                        value="checkbox1"
+                                    />
+                                    <label className="form-check-label" htmlFor="checkbox1">
+                                        Ljubimac je sretno pronađen
+                                    </label>
+                                </div>
+                                <div className="form-check">
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id="checkbox2"
+                                        value="checkbox2"
+                                    />
+                                    <label className="form-check-label" htmlFor="checkbox2">
+                                        Ljubimac nije pronađen, ali se za njim više aktivno ne traga
+                                    </label>
+                                </div>
+                                <div className="form-check">
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id="checkbox3"
+                                        value="checkbox3"
+                                    />
+                                    <label className="form-check-label" htmlFor="checkbox3">
+                                        Ljubimac je pronađen uz nesretne okolnosti
+                                    </label>
                                 </div>
                             </div>
-                        </div>
+                        )}
                     </div>
                 </Col>
-            </Row>
-            {isLoggedIn && (
-                <Row className="mb-3">
-                    <Col className="text-center">
-                        <div className="btnContainer mt-3 p-3 rounded border border-dark border-2">
-                            <Link to="/addAd" className="oglasBtn btn me-2">
-                                Dodajte oglas
-                            </Link>
-                            <button className="oglasBtn btn me-2"
-                                    onClick={toggleChangeMode}>{changeMode ? "Završite izmjenu" : "Izmijenite oglas"}</button>
-                            <button className="oglasBtn btn me-2" onClick={toggleDeleteMode}>
-                                {deleteMode ? "Završite brisanje" : "Izbrišite oglas"}
-                            </button>
-                        </div>
-                    </Col>
-                </Row>
-            )}
-            <Row xs={1} md={2} lg={4} className="g-4">
-                {advertisements.map((advertisement) => (
-                    <Col key={advertisement.adId}>
-                        <Oglas
-                            id={advertisement.adId}
-                            title={advertisement.petName}
-                            species={advertisement.species}
-                            color={advertisement.color}
-                            age={advertisement.age}
-                            shelterName={advertisement.shelterName}
-                            loggedInUsername={userData?.username || ""}
-                            username={advertisement.username}
-                            showDeleteButton={deleteMode}
-                            onDelete={handleDelete}
-                            showChangeButton={changeMode}
-                            onChange={handleChange}
-                        />
-                    </Col>
-                ))}
+                <Col xs={12} md={10}>
+                    <Row className="mb-3">
+                        <Col className="text-dg-end d-flex align-items-center">
+                            <div className="me-2 mt-3">
+                                <input
+                                    type="text"
+                                    placeholder="Pretražite oglase"
+                                    id="searchBarByCategories"
+                                    value={searchTerm}
+                                    onChange={(e) => handleSearch(e.target.value)}
+                                    className="form-control-lg my-2"
+                                />
+                            </div>
+                            <div className="container-fluid no-right-margin">
+                                <div className="row">
+                                    <div className="col-12">
+                                        <div
+                                            className="btnContainer mt-3 p-3 rounded border border-dark border-2 d-flex flex-column flex-md-row justify-content-between">
+                                            {['option1', 'option2', 'option3', 'option4', 'option5'].map((option) => (
+                                                <div className="form-check form-check-inline mb-2" key={option}>
+                                                    <input
+                                                        className="form-check-input"
+                                                        type="radio"
+                                                        name="exampleRadios"
+                                                        id={`exampleRadio${option}`}
+                                                        value={option}
+                                                        checked={searchCategory === option}
+                                                        onChange={() => setSearchCategory(option)}
+                                                    />
+                                                    <label className="form-check-label"
+                                                           htmlFor={`exampleRadio${option}`}>
+                                                        {option === 'option1' ? 'Naziv ljubimca' :
+                                                            option === 'option2' ? 'Vrsta' :
+                                                                option === 'option3' ? 'Boja' :
+                                                                    option === 'option4' ? 'Starost' :
+                                                                        option === 'option5' ? 'Naziv skloništa' : ''}
+                                                    </label>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </Col>
+                    </Row>
+                    {isLoggedIn && (
+                        <Row className="mb-3">
+                            <Col className="text-center">
+                                <div className="btnContainer mt-3 p-3 rounded border border-dark border-2">
+                                    <Link to="/addAd" className="oglasBtn btn me-2">
+                                        Dodajte oglas
+                                    </Link>
+                                    <button className="oglasBtn btn me-2"
+                                            onClick={toggleChangeMode}>{changeMode ? "Završite izmjenu" : "Izmijenite oglas"}</button>
+                                    <button className="oglasBtn btn me-2" onClick={toggleDeleteMode}>
+                                        {deleteMode ? "Završite brisanje" : "Izbrišite oglas"}
+                                    </button>
+                                </div>
+                            </Col>
+                        </Row>
+                    )}
+                    <Row xs={1} md={2} lg={3} className="g-4">
+                        {advertisements.map((advertisement) => (
+                            <Col key={advertisement.adId}>
+                                <Oglas
+                                    id={advertisement.adId}
+                                    title={advertisement.petName}
+                                    species={advertisement.species}
+                                    color={advertisement.color}
+                                    age={advertisement.age}
+                                    shelterName={advertisement.shelterName}
+                                    loggedInUsername={userData?.username || ""}
+                                    username={advertisement.username}
+                                    showDeleteButton={deleteMode}
+                                    onDelete={handleDelete}
+                                    showChangeButton={changeMode}
+                                    onChange={handleChange}
+                                />
+                            </Col>
+                        ))}
+                    </Row>
+                </Col>
             </Row>
         </Container>
     );

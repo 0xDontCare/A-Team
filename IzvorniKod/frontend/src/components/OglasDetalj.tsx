@@ -107,10 +107,18 @@ function OglasDetalj() {
                             </p>
                         </div>
                         <div className="mb-3">
-                            <MapContainer center={[card.disappearanceLocationLat, card.disappearanceLocationLng]}
-                                          zoom={9} minZoom={7} style={{height: "400px"}}>
+                            <MapContainer
+                                center={[card.disappearanceLocationLat, card.disappearanceLocationLng]}
+                                zoom={9}
+                                style={{height: "400px"}}
+                                dragging={false}
+                                doubleClickZoom={false}
+                                scrollWheelZoom={false}
+                                touchZoom={false}
+                            >
                                 <Marker
-                                    position={[card.disappearanceLocationLat, card.disappearanceLocationLng]}></Marker>
+                                    position={[card.disappearanceLocationLat, card.disappearanceLocationLng]}
+                                ></Marker>
                                 <TileLayer
                                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                                     url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
