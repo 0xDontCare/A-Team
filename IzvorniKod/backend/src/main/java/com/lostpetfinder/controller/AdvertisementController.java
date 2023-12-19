@@ -3,6 +3,7 @@ package com.lostpetfinder.controller;
 import com.lostpetfinder.dto.AddAdvertisementDTO;
 import com.lostpetfinder.dto.AdvertisementDetailsDTO;
 import com.lostpetfinder.dto.AdvertisementSummaryDTO;
+import com.lostpetfinder.entity.CategoryEnum;
 import com.lostpetfinder.service.AdvertisementService;
 import com.lostpetfinder.service.UserService;
 import org.springframework.http.MediaType;
@@ -26,8 +27,8 @@ public class AdvertisementController {
     }
 
     @GetMapping
-    public List<AdvertisementSummaryDTO> getAllAdvertisements() {
-        return advertisementService.getAllAdvertisements();
+    public List<AdvertisementSummaryDTO> getAllAdvertisements(@RequestParam("category") CategoryEnum category) {
+        return advertisementService.getAllAdvertisements(category);
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

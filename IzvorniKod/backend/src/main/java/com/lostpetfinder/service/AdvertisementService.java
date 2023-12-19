@@ -45,11 +45,11 @@ public class AdvertisementService {
     }
 
     // adjust later so it only returns active ads
-    public List<AdvertisementSummaryDTO> getAllAdvertisements() {
+    public List<AdvertisementSummaryDTO> getAllAdvertisements(CategoryEnum category) {
         return advertisementRepository
                 .findAll()
                 .stream()
-                .filter(ad -> ad.getAdState() == AdStateEnum.ACTIVE)
+                .filter(ad -> ad.getAdState() == AdStateEnum.ACTIVE && ad.getCategory() == category)
                 .map(ad -> new AdvertisementSummaryDTO(
                         ad.getAdvertisementId(),
                         ad.getPet().getName(),
