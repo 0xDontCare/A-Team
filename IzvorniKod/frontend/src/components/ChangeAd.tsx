@@ -6,12 +6,14 @@ import {useNavigate, useParams} from "react-router-dom";
 import "./AddAdChangeAd.css";
 import "leaflet/dist/leaflet.css";
 import {MapContainer, Marker, TileLayer, useMapEvents} from "react-leaflet";
+import {Dropdown} from 'react-bootstrap';
 
 function ChangeAd() {
     document.title = 'Izmijenite oglas';
     const navigate = useNavigate();
     const {id} = useParams();
 
+    const [selectedCategoryChange, setSelectedCategoryChange] = useState("");
     const [changeSpecies, setChangeSpecies] = useState("");
     const [changeBreed, setChangeBreed] = useState("");
     const [changeName, setChangeName] = useState("");
@@ -35,6 +37,25 @@ function ChangeAd() {
 
     const [mapCenter, setMapCenter] = useState<[number, number]>([44.5, 16.0]);
     const [markerPosition, setMarkerPosition] = useState<[number, number] | null>(null);
+
+    const handleCategoryChange = (eventKey: string | null) => {
+        if (eventKey !== null) {
+            let newCategory;
+
+            if (eventKey === 'category1') {
+                newCategory = "LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA";
+            } else if (eventKey === 'category2') {
+                newCategory = "LJUBIMAC_JE_SRETNO_PRONAĐEN";
+            } else if (eventKey === 'category3') {
+                newCategory = "LJUBIMAC_NIJE_PRONAĐEN_I_ZA_NJIM_SE_VIŠE_AKTIVNO_NE_TRAGA";
+            } else if (eventKey === 'category4') {
+                newCategory = "LJUBIMAC_JE_PRONAĐEN_U_NESRETNIM_OKOLNOSTIMA";
+            }
+
+            setSelectedCategoryChange(newCategory);
+        }
+
+    };
 
     const handleSpeciesChange = (e: {
         target: { value: SetStateAction<string>; };
@@ -69,6 +90,7 @@ function ChangeAd() {
 
                 setCard(data);
 
+                setSelectedCategoryChange(data.categoryDescription);
                 setChangeSpecies(data.species);
                 setChangeBreed(data.breed);
                 setChangeName(data.petName);
@@ -180,6 +202,7 @@ function ChangeAd() {
 
         try {
             const formData = new FormData();
+            formData.append("category", selectedCategoryChange);
             formData.append("species", changeSpecies);
             formData.append("breed", changeBreed);
             formData.append("petName", changeName);
@@ -222,7 +245,6 @@ function ChangeAd() {
         }
     };
 
-
     const handleCancel = () => {
         navigate('/');
     };
@@ -253,6 +275,26 @@ function ChangeAd() {
                     </div>
                 )}
                 <Form onSubmit={handleSubmit}>
+                    <Form.Group className="mb-3" controlId="adPetCategory">
+                        Kategorija oglasa
+                        <Dropdown onSelect={(eventKey) => handleCategoryChange(eventKey)}>
+                            <Dropdown.Toggle variant="light" id="dropdown-category">
+                                {selectedCategoryChange === 'LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA' && 'Ljubimac je nestao i za njim se traga'}
+                                {selectedCategoryChange === 'LJUBIMAC_JE_SRETNO_PRONAĐEN' && 'Ljubimac je sretno pronađen'}
+                                {selectedCategoryChange === 'LJUBIMAC_NIJE_PRONAĐEN_I_ZA_NJIM_SE_VIŠE_AKTIVNO_NE_TRAGA' && 'Ljubimac nije pronađen i za njim se više aktivno ne traga'}
+                                {selectedCategoryChange === 'LJUBIMAC_JE_PRONAĐEN_U_NESRETNIM_OKOLNOSTIMA' && 'Ljubimac je pronađen uz nesretne okolnosti'}
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                <Dropdown.Item eventKey="category1">Ljubimac je nestao i za njim se
+                                    traga</Dropdown.Item>
+                                <Dropdown.Item eventKey="category2">Ljubimac je sretno pronađen</Dropdown.Item>
+                                <Dropdown.Item eventKey="category3">Ljubimac nije pronađen i za njim se više aktivno ne
+                                    traga</Dropdown.Item>
+                                <Dropdown.Item eventKey="category4">Ljubimac je pronađen uz nesretne
+                                    okolnosti</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </Form.Group>
                     <Form.Group className="mb-3" controlId="adPet">
                         <Form.Label>Ljubimac</Form.Label>
                         <Form.Control type="text" placeholder="Upišite ljubimca" onChange={handleSpeciesChange}

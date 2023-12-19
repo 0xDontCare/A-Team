@@ -110,6 +110,7 @@ function OglasDetalj() {
                             <MapContainer
                                 center={[card.disappearanceLocationLat, card.disappearanceLocationLng]}
                                 zoom={9}
+                                minZoom={6}
                                 style={{height: "400px"}}
                                 dragging={false}
                                 doubleClickZoom={false}

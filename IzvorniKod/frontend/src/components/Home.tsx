@@ -32,11 +32,12 @@ function Home({isLoggedIn, userData}: HomeProps) {
     const [searchCategory, setSearchCategory] = useState("option1");
 
     const [showCheckboxes, setShowCheckboxes] = useState(false);
+    const [selectedCheckboxes, setSelectedCheckboxes] = useState<string[]>([]);
 
     document.title = "Nestali ljubimci";
 
     useEffect(() => {
-        fetch("/api/advertisements")
+        fetch("/api/advertisements?category=LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA")
             .then((response) => response.json())
             .then((data) => {
                 setOriginalAdvertisements(data);
@@ -105,19 +106,49 @@ function Home({isLoggedIn, userData}: HomeProps) {
         );
     };
 
-    const handleAdTypeChange = (e) => {
-        if (e.target.value === 'tipOglas2') {
-            if (isLoggedIn) {
-                setShowCheckboxes(true);
-            } else {
-                setShowCheckboxes(false);
-                alert('Morate se registrirati i prijaviti kako biste mogli koristiti ovu kategoriju!');
-                window.location.reload();
+    const handleAdTypeChange = async (e) => {
+        if (e.target.value === 'tipOglas1') {
+            setShowCheckboxes(false);
+            try {
+                setOriginalAdvertisements([]);
+                setAdvertisements([]);
+                const response = await fetch("/api/advertisements?category=LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA");
+                const data = await response.json();
+                setOriginalAdvertisements(data);
+                setAdvertisements(data);
+            } catch (error) {
+                console.error("Error fetching advertisement data:", error);
+            }
+        } else if (e.target.value === 'tipOglas2') {
+            setShowCheckboxes(false);
+
+            const allCheckboxValues = [
+                "LJUBIMAC_JE_SRETNO_PRONAĐEN",
+                "LJUBIMAC_NIJE_PRONAĐEN_I_ZA_NJIM_SE_VIŠE_AKTIVNO_NE_TRAGA",
+                "LJUBIMAC_JE_PRONAĐEN_U_NESRETNIM_OKOLNOSTIMA",
+            ];
+
+            setSelectedCheckboxes(allCheckboxValues);
+
+            try {
+                const data1 = await fetch("/api/advertisements?category=LJUBIMAC_JE_SRETNO_PRONAĐEN").then(response => response.json());
+                const data2 = await fetch("/api/advertisements?category=LJUBIMAC_NIJE_PRONAĐEN_I_ZA_NJIM_SE_VIŠE_AKTIVNO_NE_TRAGA").then(response => response.json());
+                const data3 = await fetch("/api/advertisements?category=LJUBIMAC_JE_PRONAĐEN_U_NESRETNIM_OKOLNOSTIMA").then(response => response.json());
+
+                const allData = [...data1, ...data2, ...data3];
+
+                setOriginalAdvertisements(allData);
+                setAdvertisements(allData);
+            } catch (error) {
+                console.error("Error fetching advertisement data:", error);
             }
         } else {
             setShowCheckboxes(false);
+            alert('Morate se registrirati i prijaviti kako biste mogli koristiti ovu kategoriju!');
+            window.location.reload();
         }
     };
+
 
     return (
         <Container>
@@ -160,7 +191,9 @@ function Home({isLoggedIn, userData}: HomeProps) {
                                         className="form-check-input"
                                         type="checkbox"
                                         id="checkbox1"
-                                        value="checkbox1"
+                                        value="LJUBIMAC_JE_SRETNO_PRONAĐEN"
+                                        defaultChecked
+                                        onChange={handleAdTypeChange}
                                     />
                                     <label className="form-check-label" htmlFor="checkbox1">
                                         Ljubimac je sretno pronađen
@@ -171,7 +204,9 @@ function Home({isLoggedIn, userData}: HomeProps) {
                                         className="form-check-input"
                                         type="checkbox"
                                         id="checkbox2"
-                                        value="checkbox2"
+                                        value="LJUBIMAC_NIJE_PRONAĐEN_I_ZA_NJIM_SE_VIŠE_AKTIVNO_NE_TRAGA"
+                                        defaultChecked
+                                        onChange={handleAdTypeChange}
                                     />
                                     <label className="form-check-label" htmlFor="checkbox2">
                                         Ljubimac nije pronađen, ali se za njim više aktivno ne traga
@@ -182,7 +217,9 @@ function Home({isLoggedIn, userData}: HomeProps) {
                                         className="form-check-input"
                                         type="checkbox"
                                         id="checkbox3"
-                                        value="checkbox3"
+                                        value="LJUBIMAC_JE_PRONAĐEN_U_NESRETNIM_OKOLNOSTIMA"
+                                        defaultChecked
+                                        onChange={handleAdTypeChange}
                                     />
                                     <label className="form-check-label" htmlFor="checkbox3">
                                         Ljubimac je pronađen uz nesretne okolnosti
