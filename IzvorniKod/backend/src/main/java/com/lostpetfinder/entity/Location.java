@@ -18,20 +18,25 @@ public class Location {
     @Column(nullable = false, unique = true)
     private CoordinatesPK coordinates;
 
+    @Column(nullable = false)
+    private String locationName;
+
     @ManyToOne
     @JoinColumn(name = "zipCode",nullable = false)
     private Place place;
 
     public Location() {}
 
-    public Location(CoordinatesPK coordinates, Place place) {
+    public Location(CoordinatesPK coordinates, String locationName, Place place) {
+        this.locationName = locationName;
         this.coordinates = coordinates;
         this.place = place;
     }
 
-    public Location(Double latitude, Double longitude, Place place) {
+    public Location(Double latitude, Double longitude,String locationName, Place place) {
         this.coordinates = new CoordinatesPK(latitude, longitude);
         this.place = place;
+        this.locationName = locationName;
     }
 
     public CoordinatesPK getCoordinates() {
@@ -56,6 +61,14 @@ public class Location {
 
     public void setLocationId(Long locationId) {
         this.locationId = locationId;
+    }
+
+    public String getLocationName() {
+        return locationName;
+    }
+
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
     }
 
 }

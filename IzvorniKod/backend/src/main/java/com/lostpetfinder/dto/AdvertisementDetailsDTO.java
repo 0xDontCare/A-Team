@@ -52,7 +52,8 @@ public class AdvertisementDetailsDTO {
         this.age = advertisement.getPet().getAge();
         this.petDescription = advertisement.getPet().getDescription();
         this.disappearanceDateTime = advertisement.getDisappearanceDateTime();
-        this.disappearanceLocation = advertisement.getLocation().getPlace().getName() + ", " +
+        this.disappearanceLocation = advertisement.getLocation().getLocationName() + ", " +
+                                     advertisement.getLocation().getPlace().getName() + ", " +
                                      advertisement.getLocation().getPlace().getZipCode() + ", " +
                                      advertisement.getLocation().getPlace().getCounty().getName() + ", " +
                                      "Hrvatska"; // NEED TO ADD toString METHOD

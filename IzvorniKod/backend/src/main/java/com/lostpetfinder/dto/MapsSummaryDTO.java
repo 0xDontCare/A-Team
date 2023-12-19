@@ -3,6 +3,7 @@ package com.lostpetfinder.dto;
 import java.util.stream.Collectors;
 
 public class MapsSummaryDTO {
+    private String locationName;
     private String place;
     private String postalCode;
     private String county;
@@ -21,6 +22,12 @@ public class MapsSummaryDTO {
             }
 
             try {
+                this.locationName = tmp.getAddress_components().stream()
+                        .filter(addressComponent -> addressComponent.getTypes().contains("route"))
+                        .toList()
+                        .getFirst()
+                        .getLong_name();
+
                 this.postalCode = tmp.getAddress_components().stream()
                         .filter(addressComponent -> addressComponent.getTypes().contains("postal_code"))
                         .toList()
@@ -57,5 +64,9 @@ public class MapsSummaryDTO {
 
     public String getCounty() {
         return county;
+    }
+
+    public String getLocationName() {
+        return locationName;
     }
 }

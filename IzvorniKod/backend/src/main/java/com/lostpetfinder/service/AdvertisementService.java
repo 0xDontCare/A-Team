@@ -85,18 +85,34 @@ public class AdvertisementService {
 
         MapsSummaryDTO mapsSummaryDTO = new MapsSummaryDTO(mapsApiResponse.getBody());
 
-        County newCounty = countyRepository.save(new County(mapsSummaryDTO.getCounty()));
-        Place newPlace = placeRepository.save(new Place(
+
+        County newCounty = new County(mapsSummaryDTO.getCounty());
+        if (!countyRepository.existsByName(newCounty.getName())) {
+            newCounty = countyRepository.save(newCounty);
+        } else {
+            newCounty = countyRepository.findByName(newCounty.getName()).orElseThrow();
+        }
+
+        Place newPlace = new Place(
                 Long.parseLong(mapsSummaryDTO.getPostalCode())
                 ,mapsSummaryDTO.getPlace(),
                 newCounty
-        ));
+        );
 
-        Location newLocation = locationRepository.save(new Location(
+        if (!placeRepository.existsByZipCode(newPlace.getZipCode())) {
+            newPlace = placeRepository.save(newPlace);
+        } else {
+            newPlace = placeRepository.findByZipCode(newPlace.getZipCode()).orElseThrow();
+        }
+
+        Location newLocation = new Location(
                 dto.getDisappearanceLocationLat(),
                 dto.getDisappearanceLocationLng(),
+                mapsSummaryDTO.getLocationName(),
                 newPlace
-        ));
+        );
+
+        newLocation = locationRepository.save(newLocation);
 
         User user = userService.LoggedUser().orElseThrow();
         CategoryEnum category = CategoryEnum.LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA;
@@ -137,18 +153,35 @@ public class AdvertisementService {
 
             MapsSummaryDTO mapsSummaryDTO = new MapsSummaryDTO(mapsApiResponse.getBody());
 
-            County newCounty = countyRepository.save(new County(mapsSummaryDTO.getCounty()));
-            Place newPlace = placeRepository.save(new Place(
+
+            County newCounty = new County(mapsSummaryDTO.getCounty());
+            if (!countyRepository.existsByName(newCounty.getName())) {
+                newCounty = countyRepository.save(newCounty);
+            } else {
+                newCounty = countyRepository.findByName(newCounty.getName()).orElseThrow();
+            }
+
+            Place newPlace = new Place(
                     Long.parseLong(mapsSummaryDTO.getPostalCode())
                     ,mapsSummaryDTO.getPlace(),
                     newCounty
-            ));
+            );
 
-            newLocation = locationRepository.save(new Location(
+            if (!placeRepository.existsByZipCode(newPlace.getZipCode())) {
+                newPlace = placeRepository.save(newPlace);
+            } else {
+                newPlace = placeRepository.findByZipCode(newPlace.getZipCode()).orElseThrow();
+            }
+
+            newLocation = new Location(
                     dto.getDisappearanceLocationLat(),
                     dto.getDisappearanceLocationLng(),
+                    mapsSummaryDTO.getLocationName(),
                     newPlace
-            ));
+            );
+
+            newLocation = locationRepository.save(newLocation);
+
         }
 
         Advertisement changedAdvertisement = advertisementRepository.findByAdvertisementId(adId).orElseThrow();
