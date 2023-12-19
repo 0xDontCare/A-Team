@@ -119,7 +119,7 @@ function Home({isLoggedIn, userData}: HomeProps) {
             } catch (error) {
                 console.error("Error fetching advertisement data:", error);
             }
-        } else if (e.target.value === 'tipOglas2') {
+        } else if (e.target.value === 'tipOglas2' && isLoggedIn) {
             setShowCheckboxes(false);
 
             const allCheckboxValues = [
