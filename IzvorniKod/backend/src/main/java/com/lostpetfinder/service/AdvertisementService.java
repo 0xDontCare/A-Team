@@ -79,7 +79,7 @@ public class AdvertisementService {
         RestTemplate restTemplate = new RestTemplate();
         String apiKey = "AIzaSyDXFHTxz_VlUm8TRSq9D_6xsiIuLiUf3vs";
 
-        int radius = 5000;
+        int radius = 10000;
 
         ResponseEntity<MapsApiResponseDTO> mapsApiResponse = restTemplate.exchange(
                 "https://maps.googleapis.com/maps/api/geocode/json?key=" +
@@ -92,7 +92,7 @@ public class AdvertisementService {
                         "&language=hr",
                 HttpMethod.GET, null, MapsApiResponseDTO.class);
 
-        MapsSummaryDTO mapsSummaryDTO = new MapsSummaryDTO(mapsApiResponse.getBody());
+        MapsSummaryDTO mapsSummaryDTO = new MapsSummaryDTO(dto.getDisappearanceLocationLat(), dto.getDisappearanceLocationLng(), mapsApiResponse.getBody());
 
 
         County newCounty = new County(mapsSummaryDTO.getCounty());
@@ -156,7 +156,7 @@ public class AdvertisementService {
             RestTemplate restTemplate = new RestTemplate();
             String apiKey = "AIzaSyDXFHTxz_VlUm8TRSq9D_6xsiIuLiUf3vs";
 
-            int radius = 5000;
+            int radius = 10000;
 
             ResponseEntity<MapsApiResponseDTO> mapsApiResponse = restTemplate.exchange(
                     "https://maps.googleapis.com/maps/api/geocode/json?key=" +
@@ -169,7 +169,7 @@ public class AdvertisementService {
                             "&language=hr",
                     HttpMethod.GET, null, MapsApiResponseDTO.class);
 
-            MapsSummaryDTO mapsSummaryDTO = new MapsSummaryDTO(mapsApiResponse.getBody());
+            MapsSummaryDTO mapsSummaryDTO = new MapsSummaryDTO(dto.getDisappearanceLocationLat(), dto.getDisappearanceLocationLng(), mapsApiResponse.getBody());
 
 
             County newCounty = new County(mapsSummaryDTO.getCounty());

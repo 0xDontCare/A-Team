@@ -18,7 +18,7 @@ public class Location {
     @Column(nullable = false, unique = true)
     private CoordinatesPK coordinates;
 
-    @Column(nullable = false)
+    @Column()
     private String locationName;
 
     @ManyToOne

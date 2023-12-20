@@ -1,5 +1,7 @@
 package com.lostpetfinder.dto;
 
+import com.lostpetfinder.utils.SortLocationByDistance;
+
 import java.util.stream.Collectors;
 
 public class MapsSummaryDTO {
@@ -10,11 +12,13 @@ public class MapsSummaryDTO {
 
     public MapsSummaryDTO() {}
 
-    public MapsSummaryDTO(MapsApiResponseDTO mapsApiResponseDTO) {
+    public MapsSummaryDTO(Double lat, Double lng, MapsApiResponseDTO mapsApiResponseDTO) {
 
         int i = 0;
 
         this.locationName = this.postalCode = this.place = this.county = null;
+
+        SortLocationByDistance.sortLocationByDistance(lat, lng, mapsApiResponseDTO);
 
         while (true) {
             MapsApiResponseDTO.Result tmp;
@@ -32,7 +36,9 @@ public class MapsSummaryDTO {
                             .toList()
                             .getFirst()
                             .getLong_name();
+            } catch (Exception e) {}
 
+            try {
                 if(this.postalCode == null)
                     this.postalCode = tmp.getAddress_components().stream()
                             .filter(addressComponent -> addressComponent.getTypes().contains("postal_code"))
@@ -56,7 +62,6 @@ public class MapsSummaryDTO {
                                 .getFirst()
                                 .getLong_name();
                 }
-
             } catch (Exception e) {
                 i++;
                 continue;
