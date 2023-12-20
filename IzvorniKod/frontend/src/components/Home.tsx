@@ -32,7 +32,8 @@ function Home({isLoggedIn, userData}: HomeProps) {
     const [searchCategory, setSearchCategory] = useState("option1");
 
     const [showCheckboxes, setShowCheckboxes] = useState(false);
-    const [selectedCheckboxes, setSelectedCheckboxes] = useState<string[]>([]);
+    const [selectedCheckboxesData, setSelectedCheckboxesData] = useState<Array<Advertisement[]>>([]);
+    const [checkboxesCount, setCheckboxesCount] = useState(0);
 
     document.title = "Nestali ljubimci";
 
@@ -79,12 +80,26 @@ function Home({isLoggedIn, userData}: HomeProps) {
                 return false;
             }
 
-            return String(propertyValue).toLowerCase().includes(searchLower);
+            const matchesSearch = String(propertyValue).toLowerCase().includes(searchLower);
+
+            if (!matchesSearch) {
+                return false;
+            }
+
+            if (showCheckboxes && selectedCheckboxesData.length > 0) {
+                return selectedCheckboxesData.some((checkboxData) => {
+                    if (Array.isArray(checkboxData)) {
+                        return checkboxData.some((checkboxAd) => checkboxAd.adId === advertisement.adId);
+                    }
+                    return false;
+                });
+            }
+
+            return true;
         });
 
         setAdvertisements(filteredAdvertisements);
-    }, [searchCategory, originalAdvertisements, searchTerm]);
-
+    }, [searchCategory, originalAdvertisements, searchTerm, showCheckboxes, selectedCheckboxesData]);
 
     const toggleDeleteMode = () => {
         setDeleteMode(!deleteMode);
@@ -109,6 +124,7 @@ function Home({isLoggedIn, userData}: HomeProps) {
     const handleAdTypeChange = async (e) => {
         if (e.target.value === 'tipOglas1') {
             setShowCheckboxes(false);
+
             try {
                 setOriginalAdvertisements([]);
                 setAdvertisements([]);
@@ -120,27 +136,26 @@ function Home({isLoggedIn, userData}: HomeProps) {
                 console.error("Error fetching advertisement data:", error);
             }
         } else if (e.target.value === 'tipOglas2' && isLoggedIn) {
-            setShowCheckboxes(false);
+            setShowCheckboxes(true);
 
-            const allCheckboxValues = [
-                "LJUBIMAC_JE_SRETNO_PRONAĐEN",
-                "LJUBIMAC_NIJE_PRONAĐEN_I_ZA_NJIM_SE_VIŠE_AKTIVNO_NE_TRAGA",
-                "LJUBIMAC_JE_PRONAĐEN_U_NESRETNIM_OKOLNOSTIMA",
-            ];
+            if (checkboxesCount === 0) {
+                try {
+                    const data1 = await fetch("/api/advertisements?category=LJUBIMAC_JE_SRETNO_PRONAĐEN").then((response) =>
+                        response.json()
+                    );
+                    const data2 = await fetch("/api/advertisements?category=LJUBIMAC_NIJE_PRONAĐEN_I_ZA_NJIM_SE_VIŠE_AKTIVNO_NE_TRAGA").then((response) =>
+                        response.json()
+                    );
+                    const data3 = await fetch("/api/advertisements?category=LJUBIMAC_JE_PRONAĐEN_U_NESRETNIM_OKOLNOSTIMA").then((response) =>
+                        response.json()
+                    );
 
-            setSelectedCheckboxes(allCheckboxValues);
-
-            try {
-                const data1 = await fetch("/api/advertisements?category=LJUBIMAC_JE_SRETNO_PRONAĐEN").then(response => response.json());
-                const data2 = await fetch("/api/advertisements?category=LJUBIMAC_NIJE_PRONAĐEN_I_ZA_NJIM_SE_VIŠE_AKTIVNO_NE_TRAGA").then(response => response.json());
-                const data3 = await fetch("/api/advertisements?category=LJUBIMAC_JE_PRONAĐEN_U_NESRETNIM_OKOLNOSTIMA").then(response => response.json());
-
-                const allData = [...data1, ...data2, ...data3];
-
-                setOriginalAdvertisements(allData);
-                setAdvertisements(allData);
-            } catch (error) {
-                console.error("Error fetching advertisement data:", error);
+                    const allData = [...data1, ...data2, ...data3];
+                    setOriginalAdvertisements(allData);
+                    setAdvertisements(allData);
+                } catch (error) {
+                    console.error("Error fetching advertisement data:", error);
+                }
             }
         } else {
             setShowCheckboxes(false);
@@ -148,6 +163,97 @@ function Home({isLoggedIn, userData}: HomeProps) {
             window.location.reload();
         }
     };
+
+    const handleAdTypeChangeCheckbox = async (e, index) => {
+        const checkboxValue = e.target.value;
+        const isCheckboxChecked = e.target.checked;
+
+        setCheckboxesCount((prevCount) => (isCheckboxChecked ? prevCount + 1 : prevCount - 1));
+
+        try {
+            const data = await fetch(`/api/advertisements?category=${checkboxValue}`).then((response) => response.json());
+
+            setSelectedCheckboxesData((prevData) => {
+                const newData = [...prevData];
+                newData[index] = isCheckboxChecked ? data : [];
+
+                const allData = newData.flatMap((checkboxData) => (checkboxData ? [...checkboxData] : []));
+
+                const filteredData = applySearchFilter(allData, searchTerm);
+
+                setAdvertisements(filteredData);
+                return newData;
+            });
+        } catch (error) {
+            console.error(`Error fetching data for checkbox ${checkboxValue}:`, error);
+        }
+    };
+
+    const applySearchFilter = (data, searchTerm) => {
+        const category = categoryMapping[searchCategory];
+        if (!category) {
+            console.error("Invalid search category");
+            return data;
+        }
+
+        return data.filter((advertisement) => {
+            if (searchCategory === "option5" && advertisement.shelterName === null) {
+                return false;
+            }
+
+            const propertyValue = advertisement[category];
+            const searchLower = searchTerm.toLowerCase();
+
+            if (propertyValue === null) {
+                return false;
+            }
+
+            return String(propertyValue).toLowerCase().includes(searchLower);
+        });
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch("/api/advertisements?category=LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA");
+                const data = await response.json();
+                setOriginalAdvertisements(data);
+                setAdvertisements(data);
+            } catch (error) {
+                console.error("Error fetching advertisement data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        const fetchAllData = async () => {
+
+            if (showCheckboxes && checkboxesCount === 0) {
+                try {
+                    const data1 = await fetch("/api/advertisements?category=LJUBIMAC_JE_SRETNO_PRONAĐEN").then((response) =>
+                        response.json()
+                    );
+                    const data2 = await fetch("/api/advertisements?category=LJUBIMAC_NIJE_PRONAĐEN_I_ZA_NJIM_SE_VIŠE_AKTIVNO_NE_TRAGA").then((response) =>
+                        response.json()
+                    );
+                    const data3 = await fetch("/api/advertisements?category=LJUBIMAC_JE_PRONAĐEN_U_NESRETNIM_OKOLNOSTIMA").then((response) =>
+                        response.json()
+                    );
+
+                    const allData = [...data1, ...data2, ...data3];
+
+                    setOriginalAdvertisements(allData);
+                    setAdvertisements(allData);
+                } catch (error) {
+                    console.error("Error fetching advertisement data:", error);
+                }
+            }
+        };
+
+        fetchAllData();
+    }, [checkboxesCount, showCheckboxes]);
 
 
     return (
@@ -192,8 +298,7 @@ function Home({isLoggedIn, userData}: HomeProps) {
                                         type="checkbox"
                                         id="checkbox1"
                                         value="LJUBIMAC_JE_SRETNO_PRONAĐEN"
-                                        defaultChecked
-                                        onChange={handleAdTypeChange}
+                                        onChange={(e) => handleAdTypeChangeCheckbox(e, 1)}
                                     />
                                     <label className="form-check-label" htmlFor="checkbox1">
                                         Ljubimac je sretno pronađen
@@ -205,8 +310,7 @@ function Home({isLoggedIn, userData}: HomeProps) {
                                         type="checkbox"
                                         id="checkbox2"
                                         value="LJUBIMAC_NIJE_PRONAĐEN_I_ZA_NJIM_SE_VIŠE_AKTIVNO_NE_TRAGA"
-                                        defaultChecked
-                                        onChange={handleAdTypeChange}
+                                        onChange={(e) => handleAdTypeChangeCheckbox(e, 2)}
                                     />
                                     <label className="form-check-label" htmlFor="checkbox2">
                                         Ljubimac nije pronađen, ali se za njim više aktivno ne traga
@@ -218,8 +322,7 @@ function Home({isLoggedIn, userData}: HomeProps) {
                                         type="checkbox"
                                         id="checkbox3"
                                         value="LJUBIMAC_JE_PRONAĐEN_U_NESRETNIM_OKOLNOSTIMA"
-                                        defaultChecked
-                                        onChange={handleAdTypeChange}
+                                        onChange={(e) => handleAdTypeChangeCheckbox(e, 3)}
                                     />
                                     <label className="form-check-label" htmlFor="checkbox3">
                                         Ljubimac je pronađen uz nesretne okolnosti
