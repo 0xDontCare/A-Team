@@ -139,23 +139,8 @@ function Home({isLoggedIn, userData}: HomeProps) {
             setShowCheckboxes(true);
 
             if (checkboxesCount === 0) {
-                try {
-                    const data1 = await fetch("/api/advertisements?category=LJUBIMAC_JE_SRETNO_PRONAĐEN").then((response) =>
-                        response.json()
-                    );
-                    const data2 = await fetch("/api/advertisements?category=LJUBIMAC_NIJE_PRONAĐEN_I_ZA_NJIM_SE_VIŠE_AKTIVNO_NE_TRAGA").then((response) =>
-                        response.json()
-                    );
-                    const data3 = await fetch("/api/advertisements?category=LJUBIMAC_JE_PRONAĐEN_U_NESRETNIM_OKOLNOSTIMA").then((response) =>
-                        response.json()
-                    );
-
-                    const allData = [...data1, ...data2, ...data3];
-                    setOriginalAdvertisements(allData);
-                    setAdvertisements(allData);
-                } catch (error) {
-                    console.error("Error fetching advertisement data:", error);
-                }
+                setOriginalAdvertisements([]);
+                setAdvertisements([]);
             }
         } else {
             setShowCheckboxes(false);
@@ -181,6 +166,7 @@ function Home({isLoggedIn, userData}: HomeProps) {
 
                 const filteredData = applySearchFilter(allData, searchTerm);
 
+                setOriginalAdvertisements(filteredData);
                 setAdvertisements(filteredData);
                 return newData;
             });
@@ -226,35 +212,6 @@ function Home({isLoggedIn, userData}: HomeProps) {
 
         fetchData();
     }, []);
-
-    useEffect(() => {
-        const fetchAllData = async () => {
-
-            if (showCheckboxes && checkboxesCount === 0) {
-                try {
-                    const data1 = await fetch("/api/advertisements?category=LJUBIMAC_JE_SRETNO_PRONAĐEN").then((response) =>
-                        response.json()
-                    );
-                    const data2 = await fetch("/api/advertisements?category=LJUBIMAC_NIJE_PRONAĐEN_I_ZA_NJIM_SE_VIŠE_AKTIVNO_NE_TRAGA").then((response) =>
-                        response.json()
-                    );
-                    const data3 = await fetch("/api/advertisements?category=LJUBIMAC_JE_PRONAĐEN_U_NESRETNIM_OKOLNOSTIMA").then((response) =>
-                        response.json()
-                    );
-
-                    const allData = [...data1, ...data2, ...data3];
-
-                    setOriginalAdvertisements(allData);
-                    setAdvertisements(allData);
-                } catch (error) {
-                    console.error("Error fetching advertisement data:", error);
-                }
-            }
-        };
-
-        fetchAllData();
-    }, [checkboxesCount, showCheckboxes]);
-
 
     return (
         <Container>
