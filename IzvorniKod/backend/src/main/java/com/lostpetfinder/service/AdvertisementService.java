@@ -59,7 +59,7 @@ public class AdvertisementService {
                         ad.getPet().getAge(),
                         ad.getUser() instanceof Registered ? null : ((Shelter) ad.getUser()).getName(),
                         ad.getUser().getUsername()))
-                        .toList();
+                .toList();
     }
 
     public ResponseEntity<Object> addNewAdvertisement(AddAdvertisementDTO dto) {
@@ -79,9 +79,18 @@ public class AdvertisementService {
         RestTemplate restTemplate = new RestTemplate();
         String apiKey = "AIzaSyDXFHTxz_VlUm8TRSq9D_6xsiIuLiUf3vs";
 
+        int radius = 100;
+
         ResponseEntity<MapsApiResponseDTO> mapsApiResponse = restTemplate.exchange(
-                "https://maps.googleapis.com/maps/api/geocode/json?key="+apiKey+"&latlng="+dto.getDisappearanceLocationLat()+","+dto.getDisappearanceLocationLng(),
-                HttpMethod.GET, null, MapsApiResponseDTO.class );
+                "https://maps.googleapis.com/maps/api/geocode/json?key=" +
+                        apiKey +
+                        "&latlng=" +
+                        dto.getDisappearanceLocationLat() +
+                        "," +
+                        dto.getDisappearanceLocationLng() +
+                        "&radius=" + radius +
+                        "&language=hr",
+                HttpMethod.GET, null, MapsApiResponseDTO.class);
 
         MapsSummaryDTO mapsSummaryDTO = new MapsSummaryDTO(mapsApiResponse.getBody());
 
@@ -95,7 +104,7 @@ public class AdvertisementService {
 
         Place newPlace = new Place(
                 Long.parseLong(mapsSummaryDTO.getPostalCode())
-                ,mapsSummaryDTO.getPlace(),
+                , mapsSummaryDTO.getPlace(),
                 newCounty
         );
 
@@ -147,9 +156,18 @@ public class AdvertisementService {
             RestTemplate restTemplate = new RestTemplate();
             String apiKey = "AIzaSyDXFHTxz_VlUm8TRSq9D_6xsiIuLiUf3vs";
 
+            int radius = 100;
+
             ResponseEntity<MapsApiResponseDTO> mapsApiResponse = restTemplate.exchange(
-                    "https://maps.googleapis.com/maps/api/geocode/json?key="+apiKey+"&latlng="+dto.getDisappearanceLocationLat()+","+dto.getDisappearanceLocationLng(),
-                    HttpMethod.GET, null, MapsApiResponseDTO.class );
+                    "https://maps.googleapis.com/maps/api/geocode/json?key=" +
+                            apiKey +
+                            "&latlng=" +
+                            dto.getDisappearanceLocationLat() +
+                            "," +
+                            dto.getDisappearanceLocationLng() +
+                            "&radius=" + radius +
+                            "&language=hr",
+                    HttpMethod.GET, null, MapsApiResponseDTO.class);
 
             MapsSummaryDTO mapsSummaryDTO = new MapsSummaryDTO(mapsApiResponse.getBody());
 
@@ -163,7 +181,7 @@ public class AdvertisementService {
 
             Place newPlace = new Place(
                     Long.parseLong(mapsSummaryDTO.getPostalCode())
-                    ,mapsSummaryDTO.getPlace(),
+                    , mapsSummaryDTO.getPlace(),
                     newCounty
             );
 
