@@ -79,7 +79,7 @@ public class AdvertisementService {
         RestTemplate restTemplate = new RestTemplate();
         String apiKey = "AIzaSyDXFHTxz_VlUm8TRSq9D_6xsiIuLiUf3vs";
 
-        int radius = 100;
+        int radius = 5000;
 
         ResponseEntity<MapsApiResponseDTO> mapsApiResponse = restTemplate.exchange(
                 "https://maps.googleapis.com/maps/api/geocode/json?key=" +
@@ -156,7 +156,7 @@ public class AdvertisementService {
             RestTemplate restTemplate = new RestTemplate();
             String apiKey = "AIzaSyDXFHTxz_VlUm8TRSq9D_6xsiIuLiUf3vs";
 
-            int radius = 100;
+            int radius = 5000;
 
             ResponseEntity<MapsApiResponseDTO> mapsApiResponse = restTemplate.exchange(
                     "https://maps.googleapis.com/maps/api/geocode/json?key=" +
