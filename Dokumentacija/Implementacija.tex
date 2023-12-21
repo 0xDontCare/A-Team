@@ -39,10 +39,14 @@
 		
 		\section{Dijagram razmještaja}
 			
-			\textbf{\textit{dio 2. revizije}}
-			
-			 \textit{Potrebno je umetnuti \textbf{specifikacijski} dijagram razmještaja i opisati ga. Moguće je umjesto specifikacijskog dijagrama razmještaja umetnuti dijagram razmještaja instanci, pod uvjetom da taj dijagram bolje opisuje neki važniji dio sustava.}
-			
+                \noindent Dijagrami razmještaja opisuju kako su komponente sustava raspoređene unutar njihovog radnog okruženja, uključujući sklopovlje i softversku podršku. Na poslužiteljskom računalu nalaze se web poslužitelj i poslužitelj baze podataka. Klijenti pristupaju web aplikaciji putem web preglednika. Arhitektura sustava temelji se na modelu "klijent-poslužitelj", gdje se komunikacija između računala korisnika (korisnik, registrirani korisnik, sklonište za životinje) i poslužitelja odvija preko HTTP veze.
+
+                \begin{figure}[!htb]
+		      \centering
+		    \includegraphics[width=\textwidth]{slike/Dijagram_razmještaja}
+		      \caption{Dijagram razmještaja}
+		      \end{figure}
+        
 			\eject 
 		
 		\section{Upute za puštanje u pogon}

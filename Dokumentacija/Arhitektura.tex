@@ -1,6 +1,4 @@
 \chapter{Arhitektura i dizajn sustava}
-		
-		\textbf{\textit{dio 1. revizije}}\\
 
 		Arhitektura koju koristimo se zasniva na MVC (Model-View-Controller) konceptu, varijacije arhitekture zasnovane na događajima.
         \\
@@ -287,8 +285,6 @@
 			
 			
 		\section{Dijagram razreda}
-			
-			\textbf{\textit{dio 1. revizije}}\\
 
                 \noindent Na slikama 4.4, 4.5, 4.6 i 4.7 su prikazani razredi koji pripadaju \textit{backend} dijelu MVC arhitekture. Na slici 4.4 je vidljiv paket \textit{controller} koji dijelimo na razrede. Metode koje su implementirane u tim razredima koriste DTO-ove\textit{(Data transfer object)}, a njima pristupamo putem metoda koje su implementirane u \textit{entity} razredima. Metode unutar \textit{controller} paketa vraćaju JSON objekte s odgovarajućim HTTP status kodovima.
 			
@@ -348,10 +344,17 @@
 				\includegraphics[width=\textwidth]{slike/Dijagram_aktivnosti_-_Slanje_poruke_u_potrazi_za_ljubimcem.png}
 				\caption{Dijagram stanja - Slanje poruke u potrazi za ljubimcem}
 			\end{figure}
-			
-			\eject
+
+                \clearpage
+                \newpage
+                \eject
+   
 		\section{Dijagram komponenti}
 		
-			\textbf{\textit{dio 2. revizije}}\\
-		
-			 \textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.}
+			\noindent Dijagram komponenti, kao što je prikazano na slici 4.10, opisuje organizaciju, međuovisnost komponenti, te interne strukture i odnose prema okolini u sustavu. Sustav ima dva različita sučelja: sučelje za dohvat HTML, CSS i JS datoteka koje poslužuje \textit{frontend} dio aplikacije te sučelje za dohvat JSON podataka koje pristupa REST API komponenti. \textit{Frontend} dio sastoji se od niza JavaScript datoteka koje su grupirane u logičke cjeline prema tipovima aktora koji pristupaju aplikaciji. Sve JavaScript datoteke ovise o React biblioteci iz koje dohvaćaju gotove komponente kao što su gumbi, forme i slično. REST API poslužuje podatke koji pripadaju \textit{backend} dijelu aplikacije. Podaci se dohvaćaju putem REST API sučelja, a \textit{entity} je zadužen za dohvaćanje tablica iz baze podataka pomoću SQL upita. \textit{Backend} koristi MVC arhitekturu za slanje podataka u obliku dto \textit{(Data Transfer Object)} prema Reactview komponenti. React-view komponenta komunicira sa \textit{Nestali ljubimci} aplikacijom preko dostupnih sučelja. Ovisno o korisnikovim akcijama, osvježava prikaz, dohvaća nove podatke ili datoteke te ih prikazuje korisniku.
+
+                \begin{figure}[!htb]
+		      \centering
+		    \includegraphics[width=\textwidth]{slike/Dijagram_komponenti}
+		      \caption{Dijagram komponenti}
+		      \end{figure}
