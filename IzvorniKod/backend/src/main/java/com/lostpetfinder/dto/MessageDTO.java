@@ -7,14 +7,22 @@ public class MessageDTO {
     private String senderUsername;
     private Long advertisementId;
     private String messageText;
-    private String location; // change the data type later
+    private Double disappearanceLocationLat;
+    private Double disappearanceLocationLng;
     private MultipartFile image;
 
-    public MessageDTO(String senderUsername, Long advertisementId, String messageText, String location, MultipartFile image) {
+    public MessageDTO(String senderUsername,
+                      Long advertisementId,
+                      String messageText,
+                      Double disappearanceLocationLat,
+                      Double disappearanceLocationLng,
+                      MultipartFile image)
+    {
         this.senderUsername = senderUsername;
         this.advertisementId = advertisementId;
         this.messageText = messageText;
-        this.location = location;
+        this.disappearanceLocationLat = disappearanceLocationLat;
+        this.disappearanceLocationLng = disappearanceLocationLng;
         this.image = image;
     }
 
@@ -31,8 +39,12 @@ public class MessageDTO {
         return messageText;
     }
 
-    public String getLocation() {
-        return location;
+    public Double getDisappearanceLocationLat() {
+        return disappearanceLocationLat;
+    }
+
+    public Double getDisappearanceLocationLng() {
+        return disappearanceLocationLng;
     }
 
     public MultipartFile getImage() {

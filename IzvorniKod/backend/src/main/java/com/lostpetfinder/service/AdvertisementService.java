@@ -17,6 +17,8 @@ import java.util.List;
 
 @Service
 public class AdvertisementService {
+
+    private final LocationService locationService;
     private final LocationRepository locationRepository;
     private final PlaceRepository placeRepository;
     private final CountyRepository countyRepository;
@@ -26,14 +28,17 @@ public class AdvertisementService {
     private final PetRepository petRepository;
     private final ImageRepository imageRepository;
 
-    public AdvertisementService(ResourceService resourceService,
+    public AdvertisementService(LocationService locationService,
+                                ResourceService resourceService,
                                 UserService userService,
                                 AdvertisementRepository advertisementRepository,
                                 PetRepository petRepository,
                                 ImageRepository imageRepository,
                                 LocationRepository locationRepository,
                                 PlaceRepository placeRepository,
-                                CountyRepository countyRepository) {
+                                CountyRepository countyRepository)
+    {
+        this.locationService = locationService;
         this.resourceService = resourceService;
         this.userService = userService;
         this.advertisementRepository = advertisementRepository;
@@ -65,7 +70,7 @@ public class AdvertisementService {
     public ResponseEntity<Object> addNewAdvertisement(AddAdvertisementDTO dto) {
 
         // one Advertisement = one Pet
-        List<Image> listOfImages = new LinkedList<>();
+        // List<Image> listOfImages = new LinkedList<>();
         Pet pet = petRepository.save(new Pet(dto));
 
         try {
@@ -76,52 +81,10 @@ public class AdvertisementService {
             return ResponseEntity.status(500).body(e.getMessage());
         }
 
-        RestTemplate restTemplate = new RestTemplate();
-        String apiKey = "AIzaSyDXFHTxz_VlUm8TRSq9D_6xsiIuLiUf3vs";
-
-        int radius = 10000;
-
-        ResponseEntity<MapsApiResponseDTO> mapsApiResponse = restTemplate.exchange(
-                "https://maps.googleapis.com/maps/api/geocode/json?key=" +
-                        apiKey +
-                        "&latlng=" +
-                        dto.getDisappearanceLocationLat() +
-                        "," +
-                        dto.getDisappearanceLocationLng() +
-                        "&radius=" + radius +
-                        "&language=hr",
-                HttpMethod.GET, null, MapsApiResponseDTO.class);
-
-        MapsSummaryDTO mapsSummaryDTO = new MapsSummaryDTO(dto.getDisappearanceLocationLat(), dto.getDisappearanceLocationLng(), mapsApiResponse.getBody());
-
-
-        County newCounty = new County(mapsSummaryDTO.getCounty());
-        if (!countyRepository.existsByName(newCounty.getName())) {
-            newCounty = countyRepository.save(newCounty);
-        } else {
-            newCounty = countyRepository.findByName(newCounty.getName()).orElseThrow();
-        }
-
-        Place newPlace = new Place(
-                Long.parseLong(mapsSummaryDTO.getPostalCode())
-                , mapsSummaryDTO.getPlace(),
-                newCounty
-        );
-
-        if (!placeRepository.existsByZipCode(newPlace.getZipCode())) {
-            newPlace = placeRepository.save(newPlace);
-        } else {
-            newPlace = placeRepository.findByZipCode(newPlace.getZipCode()).orElseThrow();
-        }
-
-        Location newLocation = new Location(
+        Location newLocation = locationService.getDisappearanceLocation(
                 dto.getDisappearanceLocationLat(),
-                dto.getDisappearanceLocationLng(),
-                mapsSummaryDTO.getLocationName(),
-                newPlace
+                dto.getDisappearanceLocationLng()
         );
-
-        newLocation = locationRepository.save(newLocation);
 
         User user = userService.LoggedUser().orElseThrow();
         CategoryEnum category = CategoryEnum.LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA;
@@ -133,6 +96,7 @@ public class AdvertisementService {
                 newLocation
         );
         newAdvertisement = advertisementRepository.save(newAdvertisement);
+
         return ResponseEntity.ok().header(HttpHeaders.LOCATION, "/api/advertisements/" + newAdvertisement.getAdvertisementId()).body("Advertisement added successfully!");
     }
 

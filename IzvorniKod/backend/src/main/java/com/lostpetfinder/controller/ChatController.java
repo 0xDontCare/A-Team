@@ -23,7 +23,7 @@ public class ChatController {
     @MessageMapping("/new_message")
     public MessageDTO forwardNewMessage(@Payload MessageDTO messageDTO) {
         messageService.saveMessage(messageDTO);
-        String destination = "/chatroom" + messageDTO.getAdvertisementId();
+        String destination = "/chatroom/" + messageDTO.getAdvertisementId();
         simpMessagingTemplate.convertAndSend(destination, messageDTO);
         return messageDTO;
     }

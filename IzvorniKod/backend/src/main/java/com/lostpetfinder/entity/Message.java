@@ -18,15 +18,15 @@ public class Message {
     @Size(max = 1000)
     private String messageText;
 
-    /*
     @ManyToOne
     @JoinColumn(name = "coordinates")
-    private String location;
+    private Location location;
 
+    /*
     @ManyToOne
     @JoinColumn(name = "linkToImage")
     private Image image;
-     */
+    */
 
     @ManyToOne
     @JoinColumn(name = "advertisementId", nullable = false)
@@ -34,11 +34,11 @@ public class Message {
 
     public Message() {}
 
-    public Message(User senderUsername, String messageText, Advertisement advertisement) {
+    public Message(User senderUsername, String messageText, Location location, Advertisement advertisement) {
         this.pk = new MessagePK(senderUsername, LocalDateTime.now(ZoneOffset.UTC));
         this.messageText = messageText;
-        /*
         this.location = location;
+        /*
         this.image = image;
          */
         this.advertisement = advertisement;
@@ -61,14 +61,15 @@ public class Message {
         this.messageText = messageText;
     }
 
-    /*
-    public String getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
+
+    /*
 
     public Image getImage() {
         return image;
