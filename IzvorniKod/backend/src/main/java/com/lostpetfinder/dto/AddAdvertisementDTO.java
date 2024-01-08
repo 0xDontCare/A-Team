@@ -1,12 +1,8 @@
 package com.lostpetfinder.dto;
 
-import com.lostpetfinder.entity.Advertisement;
 import com.lostpetfinder.entity.CategoryEnum;
 import com.lostpetfinder.entity.Image;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.xml.crypto.Data;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 

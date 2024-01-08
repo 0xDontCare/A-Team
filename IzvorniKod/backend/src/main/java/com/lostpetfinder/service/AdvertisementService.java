@@ -6,11 +6,8 @@ import com.lostpetfinder.entity.*;
 import com.lostpetfinder.exception.ImageNotSelectedException;
 import com.lostpetfinder.exception.FileUploadFailedException;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 import java.util.List;
@@ -22,14 +19,14 @@ public class AdvertisementService {
     private final LocationRepository locationRepository;
     private final PlaceRepository placeRepository;
     private final CountyRepository countyRepository;
-    private final ResourceService resourceService;
+    private final ImageService imageService;
     private final UserService userService;
     private final AdvertisementRepository advertisementRepository;
     private final PetRepository petRepository;
     private final ImageRepository imageRepository;
 
     public AdvertisementService(LocationService locationService,
-                                ResourceService resourceService,
+                                ImageService imageService,
                                 UserService userService,
                                 AdvertisementRepository advertisementRepository,
                                 PetRepository petRepository,
@@ -39,7 +36,7 @@ public class AdvertisementService {
                                 CountyRepository countyRepository)
     {
         this.locationService = locationService;
-        this.resourceService = resourceService;
+        this.imageService = imageService;
         this.userService = userService;
         this.advertisementRepository = advertisementRepository;
         this.petRepository = petRepository;
@@ -74,14 +71,14 @@ public class AdvertisementService {
         Pet pet = petRepository.save(new Pet(dto));
 
         try {
-            resourceService.addImages(dto.getImages(), pet);
+            imageService.addImages(dto.getImages(), pet);
         } catch (ImageNotSelectedException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (FileUploadFailedException e) {
             return ResponseEntity.status(500).body(e.getMessage());
         }
 
-        Location newLocation = locationService.getDisappearanceLocation(
+        Location newLocation = locationService.getLocation(
                 dto.getDisappearanceLocationLat(),
                 dto.getDisappearanceLocationLng()
         );
@@ -117,53 +114,10 @@ public class AdvertisementService {
         }
         Location newLocation = null;
         if (dto.getDisappearanceLocationLng() != null && dto.getDisappearanceLocationLat() != null) {
-            RestTemplate restTemplate = new RestTemplate();
-            String apiKey = "AIzaSyDXFHTxz_VlUm8TRSq9D_6xsiIuLiUf3vs";
-
-            int radius = 10000;
-
-            ResponseEntity<MapsApiResponseDTO> mapsApiResponse = restTemplate.exchange(
-                    "https://maps.googleapis.com/maps/api/geocode/json?key=" +
-                            apiKey +
-                            "&latlng=" +
-                            dto.getDisappearanceLocationLat() +
-                            "," +
-                            dto.getDisappearanceLocationLng() +
-                            "&radius=" + radius +
-                            "&language=hr",
-                    HttpMethod.GET, null, MapsApiResponseDTO.class);
-
-            MapsSummaryDTO mapsSummaryDTO = new MapsSummaryDTO(dto.getDisappearanceLocationLat(), dto.getDisappearanceLocationLng(), mapsApiResponse.getBody());
-
-
-            County newCounty = new County(mapsSummaryDTO.getCounty());
-            if (!countyRepository.existsByName(newCounty.getName())) {
-                newCounty = countyRepository.save(newCounty);
-            } else {
-                newCounty = countyRepository.findByName(newCounty.getName()).orElseThrow();
-            }
-
-            Place newPlace = new Place(
-                    Long.parseLong(mapsSummaryDTO.getPostalCode())
-                    , mapsSummaryDTO.getPlace(),
-                    newCounty
-            );
-
-            if (!placeRepository.existsByZipCode(newPlace.getZipCode())) {
-                newPlace = placeRepository.save(newPlace);
-            } else {
-                newPlace = placeRepository.findByZipCode(newPlace.getZipCode()).orElseThrow();
-            }
-
-            newLocation = new Location(
+            newLocation = locationService.getLocation(
                     dto.getDisappearanceLocationLat(),
-                    dto.getDisappearanceLocationLng(),
-                    mapsSummaryDTO.getLocationName(),
-                    newPlace
+                    dto.getDisappearanceLocationLng()
             );
-
-            newLocation = locationRepository.save(newLocation);
-
         }
 
         Advertisement changedAdvertisement = advertisementRepository.findByAdvertisementId(adId).orElseThrow();
@@ -177,7 +131,7 @@ public class AdvertisementService {
             imageRepository.deleteAll(dto.getImagesToDelete().stream().filter(Objects::nonNull).toList());
 
         try {
-            if (dto.getImages() != null) resourceService.addImages(dto.getImages(), changedPet);
+            if (dto.getImages() != null) imageService.addImages(dto.getImages(), changedPet);
         } catch (ImageNotSelectedException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (FileUploadFailedException e) {

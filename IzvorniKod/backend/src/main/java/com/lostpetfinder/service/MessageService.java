@@ -1,17 +1,11 @@
 package com.lostpetfinder.service;
 
-import com.lostpetfinder.dao.AdvertisementRepository;
-import com.lostpetfinder.dao.LocationRepository;
-import com.lostpetfinder.dao.MessageRepository;
-import com.lostpetfinder.dao.UserRepository;
+import com.lostpetfinder.dao.*;
 import com.lostpetfinder.dto.MessageDTO;
-import com.lostpetfinder.entity.Advertisement;
-import com.lostpetfinder.entity.Location;
-import com.lostpetfinder.entity.Message;
-import com.lostpetfinder.entity.User;
+import com.lostpetfinder.entity.*;
 import com.lostpetfinder.entity.pkeys.CoordinatesPK;
 import org.springframework.stereotype.Service;
-
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,23 +18,29 @@ public class MessageService {
     private final AdvertisementRepository advertisementRepository;
     private final LocationRepository locationRepository;
     private final LocationService locationService;
+    private final ImageRepository imageRepository;
+    private final ImageService imageService;
 
     public MessageService(MessageRepository messageRepository,
                           UserRepository<User> userRepository,
                           AdvertisementRepository advertisementRepository,
                           LocationRepository locationRepository,
-                          LocationService locationService)
+                          LocationService locationService,
+                          ImageRepository imageRepository,
+                          ImageService imageService)
     {
         this.messageRepository = messageRepository;
         this.userRepository = userRepository;
         this.advertisementRepository = advertisementRepository;
         this.locationRepository = locationRepository;
         this.locationService = locationService;
+        this.imageRepository = imageRepository;
+        this.imageService = imageService;
     }
 
-    // figure out where to save the images sent to the chat
     public void saveMessage(MessageDTO dto) {
         User user = userRepository.findByUsername(dto.getSenderUsername()).orElseThrow();
+
         Advertisement advertisement = advertisementRepository
                 .findByAdvertisementId(dto.getAdvertisementId())
                 .orElseThrow();
@@ -53,17 +53,32 @@ public class MessageService {
         if (locationRepository.existsByCoordinates(coordinatesPK)) {
             location = locationRepository.findByCoordinates(coordinatesPK).orElseThrow();
         } else {
-            location = locationRepository.save(locationService.getDisappearanceLocation(
+            location = locationRepository.save(locationService.getLocation(
                     dto.getDisappearanceLocationLat(),
                     dto.getDisappearanceLocationLng())
             );
         }
 
+        String linkToImage = imageService.generateLinkToImage(dto.getImage());
+        Image image;
+        try {
+            image = new Image(
+                    linkToImage,
+                    dto.getImage().getBytes(),
+                    dto.getImage().getContentType(),
+                    null
+            );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        imageRepository.save(image);
+
         Message message = new Message(
                 user,
                 dto.getMessageText(),
                 location,
-                advertisement
+                advertisement,
+                image
         );
 
         messageRepository.save(message);
@@ -74,7 +89,7 @@ public class MessageService {
                 .findAllByAdvertisementAdvertisementId(advertisementId)
                 .stream()
                 .sorted(Comparator
-                        .comparing(message -> ((Message) message).getPk().getSendingDateTime())
+                        .comparing(message -> ((Message) message).getId().getSendingDateTime())
                         .reversed())
                 .map(MessageService::convertToMessageDTO)
                 .collect(Collectors.toList());
@@ -84,12 +99,13 @@ public class MessageService {
     private static MessageDTO convertToMessageDTO(Message message) {
 
         return new MessageDTO(
-                message.getPk().getUser().getUsername(),
+                message.getId().getUser().getUsername(),
                 message.getAdvertisement().getAdvertisementId(),
-                message.getMessageText(),
+                message.getText(),
                 message.getLocation().getCoordinates().getLatitude(),
                 message.getLocation().getCoordinates().getLongitude(),
-                null
+                null,
+                message.getImage().getLinkToImage()
         );
 
     }

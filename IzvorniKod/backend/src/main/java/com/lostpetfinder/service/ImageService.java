@@ -5,32 +5,32 @@ import com.lostpetfinder.entity.Image;
 import com.lostpetfinder.entity.Pet;
 import com.lostpetfinder.exception.FileUploadFailedException;
 import com.lostpetfinder.exception.ImageNotSelectedException;
-import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.nio.file.Paths;
 import java.util.Optional;
 
 @Service
-public class ResourceService {
+public class ImageService {
 
     private final ImageRepository imageRepository;
 
-    public ResourceService(ImageRepository imageRepository) {
+    public ImageService(ImageRepository imageRepository) {
         this.imageRepository = imageRepository;
     }
 
-    private String generateFileName() {
+    public String generateLinkToImage(MultipartFile file) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd-HHmmssSSS");
-        return dateFormat.format(new Date());
+        String date = dateFormat.format(new Date());
+
+        String originalFileName = file.getOriginalFilename();
+        String extension = originalFileName.substring(originalFileName.lastIndexOf('.'));
+        return date + extension;
     }
 
     public void addImages(List<MultipartFile> files, Pet pet) throws ImageNotSelectedException, FileUploadFailedException {
@@ -45,10 +45,7 @@ public class ResourceService {
                     throw new ImageNotSelectedException("Please select an image to upload.");
                 }
 
-                String originalFileName = file.getOriginalFilename();
-                String extension = originalFileName.substring(originalFileName.lastIndexOf('.'));
-                String newFileName = generateFileName() + extension;
-
+                String newFileName = generateLinkToImage(file);
 
                 Image image = new Image();
                 image.setPet(pet);
@@ -64,6 +61,7 @@ public class ResourceService {
             throw new FileUploadFailedException("File upload failed.");
         }
     }
+
     public Optional<Image> getFile(String linkToImage) {
         return imageRepository.findByLinkToImage(linkToImage);
     }

@@ -12,21 +12,18 @@ import java.time.ZoneOffset;
 public class Message {
 
     @EmbeddedId
-    private MessagePK pk;
+    private MessagePK id;
 
     @Column
     @Size(max = 1000)
-    private String messageText;
+    private String text;
 
     @ManyToOne
     @JoinColumn(name = "coordinates")
     private Location location;
 
-    /*
-    @ManyToOne
-    @JoinColumn(name = "linkToImage")
+    @OneToOne
     private Image image;
-    */
 
     @ManyToOne
     @JoinColumn(name = "advertisementId", nullable = false)
@@ -34,31 +31,34 @@ public class Message {
 
     public Message() {}
 
-    public Message(User senderUsername, String messageText, Location location, Advertisement advertisement) {
-        this.pk = new MessagePK(senderUsername, LocalDateTime.now(ZoneOffset.UTC));
-        this.messageText = messageText;
+    public Message(User messageSender,
+                   String text,
+                   Location location,
+                   Advertisement advertisement,
+                   Image image)
+    {
+        this.id = new MessagePK(messageSender, LocalDateTime.now(ZoneOffset.UTC));
+        this.text = text;
         this.location = location;
-        /*
         this.image = image;
-         */
         this.advertisement = advertisement;
     }
 
 
-    public MessagePK getPk() {
-        return pk;
+    public MessagePK getId() {
+        return id;
     }
 
-    public void setPk(MessagePK pk) {
-        this.pk = pk;
+    public void setId(MessagePK id) {
+        this.id = id;
     }
 
-    public String getMessageText() {
-        return messageText;
+    public String getText() {
+        return text;
     }
 
-    public void setMessageText(String messageText) {
-        this.messageText = messageText;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public Location getLocation() {
@@ -69,8 +69,6 @@ public class Message {
         this.location = location;
     }
 
-    /*
-
     public Image getImage() {
         return image;
     }
@@ -78,7 +76,6 @@ public class Message {
     public void setImage(Image image) {
         this.image = image;
     }
-     */
 
     public Advertisement getAdvertisement() {
         return advertisement;

@@ -51,7 +51,7 @@ public class LocationService {
 
     }
 
-    public Location getDisappearanceLocation(double latitude, double longitude) {
+    public Location getLocation(double latitude, double longitude) {
 
         MapsSummaryDTO mapsSummaryDTO = getLocInfoFromAPI(latitude, longitude);
 

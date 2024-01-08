@@ -13,19 +13,21 @@ public class Image {
     @Size(max = 500)
     private String linkToImage;
 
-    private String contentType;
-
     @Lob
     private byte[] data;
 
+    private String contentType;
+
     @ManyToOne
-    @JoinColumn(name = "petId",nullable = false)
+    @JoinColumn(name = "petId")
     private Pet pet;
 
     public Image() {}
 
-    public Image(String linkToImage, Pet pet) {
+    public Image(String linkToImage, byte[] data, String contentType, Pet pet) {
         this.linkToImage = linkToImage;
+        this.data = data;
+        this.contentType = contentType;
         this.pet = pet;
     }
 

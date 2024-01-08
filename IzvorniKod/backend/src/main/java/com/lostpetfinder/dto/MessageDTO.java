@@ -10,13 +10,15 @@ public class MessageDTO {
     private Double disappearanceLocationLat;
     private Double disappearanceLocationLng;
     private MultipartFile image;
+    private String linkToImage;
 
     public MessageDTO(String senderUsername,
                       Long advertisementId,
                       String messageText,
                       Double disappearanceLocationLat,
                       Double disappearanceLocationLng,
-                      MultipartFile image)
+                      MultipartFile image,
+                      String linkToImage)
     {
         this.senderUsername = senderUsername;
         this.advertisementId = advertisementId;
@@ -24,6 +26,7 @@ public class MessageDTO {
         this.disappearanceLocationLat = disappearanceLocationLat;
         this.disappearanceLocationLng = disappearanceLocationLng;
         this.image = image;
+        this.linkToImage = linkToImage;
     }
 
 
@@ -50,4 +53,11 @@ public class MessageDTO {
     public MultipartFile getImage() {
         return image;
     }
+
+    public String getLinkToImage() {
+        return linkToImage;
+    }
+
 }
+
+
