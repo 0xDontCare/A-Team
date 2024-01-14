@@ -2,10 +2,10 @@ import {useParams} from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Carousel from "react-bootstrap/Carousel";
 import {useEffect, useState} from "react";
-import "./OglasDetalj.css";
+import "./AdDetail.css";
 import {MapContainer, Marker, TileLayer} from "react-leaflet";
 
-function OglasDetalj() {
+function AdDetail() {
     const {id} = useParams();
     const [card, setCard] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -192,4 +192,4 @@ function OglasDetalj() {
     );
 }
 
-export default OglasDetalj;
+export default AdDetail;

@@ -1,16 +1,16 @@
 import {useEffect, useState} from "react";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import Register from "./components/Register";
+import axios from "axios";
+import Registration from "./components/Registration.tsx";
 import Login from "./components/Login";
 import Home from "./components/Home";
 import NavbarElement from "./components/NavbarElement";
-import OglasDetalj from "./components/OglasDetalj.tsx";
+import AdDetail from "./components/AdDetail.tsx";
 import AddAd from "./components/AddAd";
-import axios from "axios";
 import ChangeAd from "./components/ChangeAd.tsx";
 
 function App() {
-    const [isLoggedIn, setLoginStatus] = useState(false);
+    const [loginStatus, setLoginStatus] = useState(false);
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
@@ -33,14 +33,14 @@ function App() {
             }
         };
 
-        checkLoginStatus();
+        void checkLoginStatus();
     }, []);
 
-    const prijaviUser = () => {
+    const loginUser = () => {
         setLoginStatus(true);
     };
 
-    const odjaviUser = () => {
+    const logoutUser = () => {
         setLoginStatus(false);
     };
 
@@ -48,22 +48,22 @@ function App() {
         <div>
             <BrowserRouter>
                 <NavbarElement
-                    isLoggedIn={isLoggedIn}
+                    isLoggedIn={loginStatus}
                     userData={userData}
-                    setLoginStatus={odjaviUser}
+                    setLoginStatus={logoutUser}
                 />
                 <Routes>
-                    <Route path="/" element={<Home isLoggedIn={isLoggedIn} userData={userData}/>}/>
-                    <Route path="/register" element={<Register/>}/>
+                    <Route path="/" element={<Home isLoggedIn={loginStatus} userData={userData}/>}/>
+                    <Route path="/register" element={<Registration/>}/>
                     <Route
                         path="/login"
                         element={
-                            <Login setLoginStatus={prijaviUser} setUserData={setUserData}/>
+                            <Login setLoginStatus={loginUser} setUserData={setUserData}/>
                         }
                     />
-                    <Route path="/addAd" element={<AddAd/>} userData={userData}/>
+                    <Route path="/addAd" element={<AddAd/>}/>
                     <Route path="/changeAd/:id" element={<ChangeAd/>}/>
-                    <Route path="/:id" element={<OglasDetalj/>}/>
+                    <Route path="/:id" element={<AdDetail/>}/>
                 </Routes>
             </BrowserRouter>
         </div>

@@ -6,7 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="e8bea504-cbb3-43ca-a949-d67d77c7a9b7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/service/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/backend/src/main/java/com/lostpetfinder/service/AuthenticationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/ChangeAd.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/ChangeAd.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Home.css" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Home.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Home.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/NavbarElement.css" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/NavbarElement.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/NavbarElement.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/NavbarElement.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Oglas.css" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Ad.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Oglas.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Ad.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/OglasDetalj.css" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/AdDetail.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/OglasDetalj.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/AdDetail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Registration.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/tsconfig.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +129,12 @@
       <workItem from="1703023486059" duration="154000" />
       <workItem from="1703067484119" duration="15000" />
       <workItem from="1703067503931" duration="7677000" />
-      <workItem from="1703093624567" duration="3282000" />
+      <workItem from="1703093624567" duration="3755000" />
+      <workItem from="1703105331147" duration="268000" />
+      <workItem from="1705148793894" duration="26000" />
+      <workItem from="1705148873486" duration="26000" />
+      <workItem from="1705148928873" duration="6538000" />
+      <workItem from="1705248362549" duration="8590000" />
     </task>
     <servers />
   </component>

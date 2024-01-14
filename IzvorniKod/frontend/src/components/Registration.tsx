@@ -1,26 +1,28 @@
 import {useState} from "react";
-import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
-function Register() {
+function Registration() {
     document.title = "Registracija";
-    const [userType, setUserType] = useState("regular");
+
     const navigate = useNavigate();
+    
+    const [userType, setUserType] = useState("regular");
 
-    const [ime, setIme] = useState("");
-    const [prezime, setPrezime] = useState("");
-    const [email, setEmail] = useState("");
-    const [brojTelefona, setBrojTelefona] = useState("");
-    const [username, setUsername] = useState("");
-    const [lozinkaKorisnika, setLozinkaKorisnika] = useState("");
-    const [error, setError] = useState("");
+    const [userName, setUserName] = useState("");
+    const [userSurname, setUserSurname] = useState("");
+    const [userEmail, setUserEmail] = useState("");
+    const [userPhoneNumber, setUserPhoneNumber] = useState("");
+    const [userUsername, setUserUsername] = useState("");
+    const [userPassword, setUserPassword] = useState("");
+    const [userError, setUserError] = useState("");
 
-    const [imeSklonista, setImeSklonista] = useState("");
-    const [emailSklonista, setEmailSklonista] = useState("");
-    const [brojTelefonaSklonista, setBrojTelefonaSklonista] = useState("");
-    const [usernameSklonista, setUsernameSklonista] = useState("");
-    const [lozinkaSklonista, setLozinkaSklonista] = useState("");
-    const [errorSklonista, setErrorSklonista] = useState("");
+    const [shelterName, setShelterName] = useState("");
+    const [shelterEmail, setShelterEmail] = useState("");
+    const [shelterPhoneNumber, setShelterPhoneNumber] = useState("");
+    const [shelterUsername, setShelterUsername] = useState("");
+    const [shelterPassword, setShelterPassword] = useState("");
+    const [shelterError, setShelterError] = useState("");
 
     const [showPasswordUser, setShowPasswordUser] = useState(false);
     const [showPasswordShelter, setShowPasswordShelter] = useState(false);
@@ -39,29 +41,29 @@ function Register() {
     const saveRegularUser = async (event: { preventDefault: () => void; }) => {
         event.preventDefault();
 
-        if (!ime || !prezime || !email || !brojTelefona || !lozinkaKorisnika) {
-            setError("Niste upisali podatke u sva zadana polja!");
+        if (!userName || !userSurname || !userEmail || !userPhoneNumber || !userPassword) {
+            setUserError("Niste upisali podatke u sva zadana polja!");
             return;
         }
 
-        if (!validateEmail(email)) {
-            setError("E-pošta nije u dobrom formatu!");
+        if (!validateEmail(userEmail)) {
+            setUserError("E-pošta nije u dobrom formatu!");
             return;
         }
 
-        if (!validatePhoneNumber(brojTelefona)) {
-            setError("Broj telefona mora sadržavati samo 10 brojeva bez slova!");
+        if (!validatePhoneNumber(userPhoneNumber)) {
+            setUserError("Broj telefona mora sadržavati samo 10 brojeva bez slova!");
             return;
         }
 
         try {
             await axios.post("/api/register", {
-                firstName: ime,
-                lastName: prezime,
-                email: email,
-                phoneNumber: brojTelefona,
-                username: username,
-                password: lozinkaKorisnika,
+                firstName: userName,
+                lastName: userSurname,
+                email: userEmail,
+                phoneNumber: userPhoneNumber,
+                username: userUsername,
+                password: userPassword,
             });
 
             alert("Uspješno ste se registrirali!");
@@ -76,22 +78,22 @@ function Register() {
         event.preventDefault();
 
         if (
-            !imeSklonista ||
-            !emailSklonista ||
-            !brojTelefonaSklonista ||
-            !lozinkaSklonista
+            !shelterName ||
+            !shelterEmail ||
+            !shelterPhoneNumber ||
+            !shelterPassword
         ) {
-            setErrorSklonista("Niste upisali podatke u sva zadana polja!");
+            setShelterError("Niste upisali podatke u sva zadana polja!");
             return;
         }
 
-        if (!validateEmail(emailSklonista)) {
-            setErrorSklonista("E-pošta nije u dobrom formatu!");
+        if (!validateEmail(shelterEmail)) {
+            setShelterError("E-pošta nije u dobrom formatu!");
             return;
         }
 
-        if (!validatePhoneNumber(brojTelefonaSklonista)) {
-            setErrorSklonista(
+        if (!validatePhoneNumber(shelterPhoneNumber)) {
+            setShelterError(
                 "Broj telefona mora sadržavati samo 10 brojeva bez slova!"
             );
             return;
@@ -99,11 +101,11 @@ function Register() {
 
         try {
             await axios.post("/api/register", {
-                shelterName: imeSklonista,
-                email: emailSklonista,
-                phoneNumber: brojTelefonaSklonista,
-                username: usernameSklonista,
-                password: lozinkaSklonista,
+                shelterName: shelterName,
+                email: shelterEmail,
+                phoneNumber: shelterPhoneNumber,
+                username: shelterUsername,
+                password: shelterPassword,
             });
 
             alert("Uspješno ste se registrirali kao sklonište!");
@@ -115,20 +117,20 @@ function Register() {
     };
 
     const resetFormFields = () => {
-        setIme("");
-        setPrezime("");
-        setEmail("");
-        setBrojTelefona("");
-        setUsername("");
-        setLozinkaKorisnika("");
-        setError("");
+        setUserName("");
+        setUserSurname("");
+        setUserEmail("");
+        setUserPhoneNumber("");
+        setUserUsername("");
+        setUserPassword("");
+        setUserError("");
 
-        setImeSklonista("");
-        setEmailSklonista("");
-        setBrojTelefonaSklonista("");
-        setUsernameSklonista("");
-        setLozinkaSklonista("");
-        setErrorSklonista("");
+        setShelterName("");
+        setShelterEmail("");
+        setShelterPhoneNumber("");
+        setShelterUsername("");
+        setShelterPassword("");
+        setShelterError("");
     };
 
     const handleCancel = () => {
@@ -141,12 +143,12 @@ function Register() {
                 <div className="card p-5">
                     {userType === "regular" ? (
                         <div>
-                            {error && <div className="alert alert-danger">{error}</div>}
+                            {userError && <div className="alert alert-danger">{userError}</div>}
                         </div>
                     ) : (
                         <div>
-                            {errorSklonista && (
-                                <div className="alert alert-danger">{errorSklonista}</div>
+                            {shelterError && (
+                                <div className="alert alert-danger">{shelterError}</div>
                             )}
                         </div>
                     )}
@@ -202,9 +204,9 @@ function Register() {
                                     className="form-control"
                                     id="ime"
                                     placeholder="Upišite ime"
-                                    value={ime}
+                                    value={userName}
                                     onChange={(event) => {
-                                        setIme(event.target.value);
+                                        setUserName(event.target.value);
                                     }}
                                 />
                             </div>
@@ -216,9 +218,9 @@ function Register() {
                                     className="form-control"
                                     id="prezime"
                                     placeholder="Upišite prezime"
-                                    value={prezime}
+                                    value={userSurname}
                                     onChange={(event) => {
-                                        setPrezime(event.target.value);
+                                        setUserSurname(event.target.value);
                                     }}
                                 />
                             </div>
@@ -231,9 +233,9 @@ function Register() {
                                     className="form-control"
                                     id="email"
                                     placeholder="Upišite e-poštu"
-                                    value={email}
+                                    value={userEmail}
                                     onChange={(event) => {
-                                        setEmail(event.target.value);
+                                        setUserEmail(event.target.value);
                                     }}
                                 />
                             </div>
@@ -245,9 +247,9 @@ function Register() {
                                     className="form-control"
                                     id="brojTelefona"
                                     placeholder="Upišite broj telefona"
-                                    value={brojTelefona}
+                                    value={userPhoneNumber}
                                     onChange={(event) => {
-                                        setBrojTelefona(event.target.value);
+                                        setUserPhoneNumber(event.target.value);
                                     }}
                                 />
                             </div>
@@ -260,9 +262,9 @@ function Register() {
                                     className="form-control"
                                     id="username"
                                     placeholder="Kreirajte korisničko ime"
-                                    value={username}
+                                    value={userUsername}
                                     onChange={(event) => {
-                                        setUsername(event.target.value);
+                                        setUserUsername(event.target.value);
                                     }}
                                 />
                             </div>
@@ -274,9 +276,9 @@ function Register() {
                                     className="form-control"
                                     id="lozinkaKorisnika"
                                     placeholder="Kreirajte lozinku"
-                                    value={lozinkaKorisnika}
+                                    value={userPassword}
                                     onChange={(event) => {
-                                        setLozinkaKorisnika(event.target.value);
+                                        setUserPassword(event.target.value);
                                     }}
                                 />
                             </div>
@@ -316,9 +318,9 @@ function Register() {
                                     className="form-control"
                                     id="imeSklonista"
                                     placeholder="Upišite ime skloništa"
-                                    value={imeSklonista}
+                                    value={shelterName}
                                     onChange={(event) => {
-                                        setImeSklonista(event.target.value);
+                                        setShelterName(event.target.value);
                                     }}
                                 />
                             </div>
@@ -330,9 +332,9 @@ function Register() {
                                     className="form-control"
                                     id="emailSklonista"
                                     placeholder="Upišite e-poštu"
-                                    value={emailSklonista}
+                                    value={shelterEmail}
                                     onChange={(event) => {
-                                        setEmailSklonista(event.target.value);
+                                        setShelterEmail(event.target.value);
                                     }}
                                 />
                             </div>
@@ -344,9 +346,9 @@ function Register() {
                                     className="form-control"
                                     id="brojTelefonaSklonista"
                                     placeholder="Upišite broj telefona"
-                                    value={brojTelefonaSklonista}
+                                    value={shelterPhoneNumber}
                                     onChange={(event) => {
-                                        setBrojTelefonaSklonista(event.target.value);
+                                        setShelterPhoneNumber(event.target.value);
                                     }}
                                 />
                             </div>
@@ -358,9 +360,9 @@ function Register() {
                                     className="form-control"
                                     id="usernameSklonista"
                                     placeholder="Kreirajte korisničko ime"
-                                    value={usernameSklonista}
+                                    value={shelterUsername}
                                     onChange={(event) => {
-                                        setUsernameSklonista(event.target.value);
+                                        setShelterUsername(event.target.value);
                                     }}
                                 />
                             </div>
@@ -372,9 +374,9 @@ function Register() {
                                     className="form-control"
                                     id="lozinkaSklonista"
                                     placeholder="Kreirajte lozinku"
-                                    value={lozinkaSklonista}
+                                    value={shelterPassword}
                                     onChange={(event) => {
-                                        setLozinkaSklonista(event.target.value);
+                                        setShelterPassword(event.target.value);
                                     }}
                                 />
                             </div>
@@ -410,4 +412,4 @@ function Register() {
     );
 }
 
-export default Register;
+export default Registration;

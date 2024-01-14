@@ -75,7 +75,7 @@ public class AuthenticationService {
             return new ResponseEntity<>("User with this username already exists!", HttpStatus.BAD_REQUEST);
         }
         if (userRepository.existsByEmail(dto.getEmail())) {
-            return new ResponseEntity<>("User with this email already exists", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("User with this email already exists!", HttpStatus.BAD_REQUEST);
         }
 
         User user = new User();

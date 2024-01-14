@@ -1,9 +1,9 @@
-import {useEffect, useState} from "react";
+import {ChangeEvent, useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Oglas from "./Oglas.tsx";
+import Ad from "./Ad.tsx";
 import "./Home.css";
 
 interface Advertisement {
@@ -20,10 +20,16 @@ interface HomeProps {
     isLoggedIn: boolean;
     userData: {
         username: string;
-    };
+        email: string;
+        firstName: string;
+        lastName: string;
+        shelterName: string;
+    } | null;
 }
 
 function Home({isLoggedIn, userData}: HomeProps) {
+    document.title = "Nestali ljubimci";
+
     const [originalAdvertisements, setOriginalAdvertisements] = useState<Advertisement[]>([]);
     const [advertisements, setAdvertisements] = useState<Advertisement[]>([]);
     const [deleteMode, setDeleteMode] = useState(false);
@@ -34,8 +40,6 @@ function Home({isLoggedIn, userData}: HomeProps) {
     const [showCheckboxes, setShowCheckboxes] = useState(false);
     const [selectedCheckboxesData, setSelectedCheckboxesData] = useState<Array<Advertisement[]>>([]);
     const [checkboxesCount, setCheckboxesCount] = useState(0);
-
-    document.title = "Nestali ljubimci";
 
     useEffect(() => {
         fetch("/api/advertisements?category=LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA")
@@ -121,7 +125,7 @@ function Home({isLoggedIn, userData}: HomeProps) {
         );
     };
 
-    const handleAdTypeChange = async (e) => {
+    const handleAdTypeChange = async (e: { target: { value: string; }; }) => {
         if (e.target.value === 'tipOglas1') {
             setShowCheckboxes(false);
 
@@ -149,7 +153,7 @@ function Home({isLoggedIn, userData}: HomeProps) {
         }
     };
 
-    const handleAdTypeChangeCheckbox = async (e, index) => {
+    const handleAdTypeChangeCheckbox = async (e: ChangeEvent<HTMLInputElement>, index: number) => {
         const checkboxValue = e.target.value;
         const isCheckboxChecked = e.target.checked;
 
@@ -338,12 +342,12 @@ function Home({isLoggedIn, userData}: HomeProps) {
                         <Row className="mb-3">
                             <Col className="text-center">
                                 <div className="btnContainer mt-3 p-3 rounded border border-dark border-2">
-                                    <Link to="/addAd" className="oglasBtn btn me-2">
+                                    <Link to="/addAd" className="adButton btn me-2">
                                         Dodajte oglas
                                     </Link>
-                                    <button className="oglasBtn btn me-2"
+                                    <button className="adButton btn me-2"
                                             onClick={toggleChangeMode}>{changeMode ? "Završite izmjenu" : "Izmijenite oglas"}</button>
-                                    <button className="oglasBtn btn me-2" onClick={toggleDeleteMode}>
+                                    <button className="adButton btn me-2" onClick={toggleDeleteMode}>
                                         {deleteMode ? "Završite brisanje" : "Izbrišite oglas"}
                                     </button>
                                 </div>
@@ -353,7 +357,7 @@ function Home({isLoggedIn, userData}: HomeProps) {
                     <Row xs={1} md={2} lg={3} className="g-4">
                         {advertisements.map((advertisement) => (
                             <Col key={advertisement.adId}>
-                                <Oglas
+                                <Ad
                                     id={advertisement.adId}
                                     title={advertisement.petName}
                                     species={advertisement.species}

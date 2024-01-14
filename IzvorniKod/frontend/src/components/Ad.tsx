@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import "./Oglas.css";
+import "./Ad.css";
 
 interface CardProps {
     id: number;
@@ -17,22 +17,21 @@ interface CardProps {
     onChange: (id: number) => void;
 }
 
-const Oglas: React.FC<CardProps> = ({
-                                        id,
-                                        title,
-                                        species,
-                                        color,
-                                        age,
-                                        shelterName,
-                                        loggedInUsername,
-                                        username,
-                                        showDeleteButton,
-                                        onDelete,
-                                        showChangeButton,
-                                        onChange,
-                                    }) => {
+const Ad: React.FC<CardProps> = ({
+                                     id,
+                                     title,
+                                     species,
+                                     color,
+                                     age,
+                                     shelterName,
+                                     loggedInUsername,
+                                     username,
+                                     showDeleteButton,
+                                     onDelete,
+                                     showChangeButton
+                                 }) => {
     const [isDeleting, setIsDeleting] = useState(false);
-    const [isChanging, setIsChanging] = useState(false);
+    const [isChanging] = useState(false);
     const [isCardFlipped, setIsCardFlipped] = useState(false);
 
     const navigate = useNavigate();
@@ -120,4 +119,4 @@ const Oglas: React.FC<CardProps> = ({
     );
 };
 
-export default Oglas;
+export default Ad;

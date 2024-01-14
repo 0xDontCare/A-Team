@@ -3,10 +3,10 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import {useNavigate, useParams} from "react-router-dom";
-import "./AddAdChangeAd.css";
-import "leaflet/dist/leaflet.css";
 import {MapContainer, Marker, TileLayer, useMapEvents} from "react-leaflet";
 import {Dropdown} from 'react-bootstrap';
+import "./AddAdChangeAd.css";
+import "leaflet/dist/leaflet.css";
 
 function ChangeAd() {
     document.title = 'Izmijenite oglas';
