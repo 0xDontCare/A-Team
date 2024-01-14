@@ -3,6 +3,7 @@ package com.lostpetfinder.controller;
 import com.lostpetfinder.dto.AddAdvertisementDTO;
 import com.lostpetfinder.dto.AdvertisementDetailsDTO;
 import com.lostpetfinder.dto.AdvertisementSummaryDTO;
+import com.lostpetfinder.dto.HomeUserDTO;
 import com.lostpetfinder.entity.CategoryEnum;
 import com.lostpetfinder.service.AdvertisementService;
 import com.lostpetfinder.service.UserService;
@@ -51,6 +52,8 @@ public class AdvertisementController {
 
         if (userService.getLoggedUser().getStatusCode() != ResponseEntity.ok().build().getStatusCode())
             return ResponseEntity.badRequest().body("You must be logged in to change an advertisement!");
+        if (advertisementService.seeAdvertisementInfo(adId).getUsername() != ((HomeUserDTO) userService.getLoggedUser().getBody()).getUsername())
+            return ResponseEntity.badRequest().body("You must be the owner of the advertisement to change it!");
 
         return advertisementService.changeAdvertisement(adId, dto);
     }
@@ -60,6 +63,8 @@ public class AdvertisementController {
     public ResponseEntity<Object> deleteAdvertisement(@PathVariable("adId") Long adId) {
         if (userService.getLoggedUser().getStatusCode() != ResponseEntity.ok().build().getStatusCode())
             return ResponseEntity.badRequest().body("You must be logged in to delete an advertisement!");
+        if (advertisementService.seeAdvertisementInfo(adId).getUsername() != ((HomeUserDTO) userService.getLoggedUser().getBody()).getUsername())
+            return ResponseEntity.badRequest().body("You must be the owner of the advertisement to delete it!");
         advertisementService.deleteAdvertisement(adId);
         return ResponseEntity.ok().body("Advertisement deleted successfully!");
     }

@@ -84,7 +84,15 @@ public class AdvertisementService {
         );
 
         User user = userService.LoggedUser().orElseThrow();
-        CategoryEnum category = CategoryEnum.LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA;
+
+        CategoryEnum category = null;
+        if (dto.getCategory() == CategoryEnum.U_SKLONISTU) {
+            if (!(user instanceof Shelter)) {
+                return ResponseEntity.badRequest().body("You must be a shelter to add an advertisement in this category!");
+            }
+        } else {
+            category = CategoryEnum.LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA;
+        }
         Advertisement newAdvertisement = new Advertisement(
                 pet,
                 user,
@@ -121,6 +129,12 @@ public class AdvertisementService {
         }
 
         Advertisement changedAdvertisement = advertisementRepository.findByAdvertisementId(adId).orElseThrow();
+
+        if (dto.getCategory() == CategoryEnum.U_SKLONISTU) {
+            if (!(changedAdvertisement.getUser() instanceof Shelter)) {
+                return ResponseEntity.badRequest().body("You must be a shelter to change an advertisement to this category!");
+            }
+        }
         changedAdvertisement.updateAdvertisement(dto, newLocation);
         advertisementRepository.save(changedAdvertisement);
 
