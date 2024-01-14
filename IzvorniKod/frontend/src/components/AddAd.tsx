@@ -1,4 +1,4 @@
-import {SetStateAction, useState, useRef} from 'react';
+import {SetStateAction, useState, useRef, useEffect} from 'react';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -6,11 +6,23 @@ import {useNavigate} from "react-router-dom";
 import {MapContainer, TileLayer, Marker, useMapEvents} from 'react-leaflet';
 import "./AddAdChangeAd.css";
 import "leaflet/dist/leaflet.css";
+import {Dropdown} from "react-bootstrap";
 
-function AddAd() {
+interface HomeProps {
+    userData: {
+        username: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        shelterName: string;
+    } | null;
+}
+
+function AddAd({userData}: HomeProps) {
     document.title = "Dodajte oglas";
     const navigate = useNavigate();
 
+    const [adCategory, setAdCategory] = useState("LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA");
     const [adSpecies, setAdSpecies] = useState("");
     const [adBreed, setAdBreed] = useState("");
     const [adName, setAdName] = useState("");
@@ -30,6 +42,23 @@ function AddAd() {
 
     const [mapCenter, setMapCenter] = useState<[number, number]>([44.5, 16.0]);
     const [markerPosition, setMarkerPosition] = useState<[number, number] | null>(null);
+
+    const handleCategoryChange = (eventKey: string | null) => {
+        if (eventKey !== null) {
+            let newCategory;
+
+            if (eventKey === 'category1') {
+                newCategory = "LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA";
+            } else if (eventKey === 'category2') {
+                newCategory = "U_SKLONISTU";
+            }
+
+            setAdCategory(newCategory);
+        }
+    };
+
+    useEffect(() => {
+    }, [adCategory]);
 
     const handleSpeciesChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdSpecies(e.target.value);
     const handleBreedChange = (e: { target: { value: SetStateAction<string>; }; }) => setAdBreed(e.target.value);
@@ -124,6 +153,7 @@ function AddAd() {
 
         try {
             const formData = new FormData();
+            formData.append("category", adCategory);
             formData.append("species", adSpecies);
             formData.append("breed", adBreed);
             formData.append("petName", adName);
@@ -189,6 +219,22 @@ function AddAd() {
                     </div>
                 )}
                 <Form onSubmit={handleSubmit}>
+                    {userData?.shelterName !== null && (
+                        <Form.Group className="mb-3" controlId="adPetCategory">
+                            Kategorija oglasa
+                            <Dropdown onSelect={(eventKey) => handleCategoryChange(eventKey)}>
+                                <Dropdown.Toggle variant="light" id="dropdown-category">
+                                    {adCategory === 'LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA' && 'Ljubimac je nestao i za njim se traga'}
+                                    {adCategory === 'U_SKLONISTU' && 'U skloništu'}
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item eventKey="category1">Ljubimac je nestao i za njim se
+                                        traga</Dropdown.Item>
+                                    <Dropdown.Item eventKey="category2">U skloništu</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </Form.Group>
+                    )}
                     <Form.Group className="mb-3" controlId="adPet">
                         <Form.Label>Ljubimac</Form.Label>
                         <Form.Control type="text" placeholder="Upišite ljubimca" onChange={handleSpeciesChange}

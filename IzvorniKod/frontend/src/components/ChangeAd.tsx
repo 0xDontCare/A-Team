@@ -50,12 +50,16 @@ function ChangeAd() {
                 newCategory = "LJUBIMAC_NIJE_PRONAĐEN_I_ZA_NJIM_SE_VIŠE_AKTIVNO_NE_TRAGA";
             } else if (eventKey === 'category4') {
                 newCategory = "LJUBIMAC_JE_PRONAĐEN_U_NESRETNIM_OKOLNOSTIMA";
+            } else if (eventKey === 'category5') {
+                newCategory = "U_SKLONISTU";
             }
 
             setSelectedCategoryChange(newCategory);
         }
 
     };
+
+    console.log(card);
 
     const handleSpeciesChange = (e: {
         target: { value: SetStateAction<string>; };
@@ -283,15 +287,31 @@ function ChangeAd() {
                                 {selectedCategoryChange === 'LJUBIMAC_JE_SRETNO_PRONAĐEN' && 'Ljubimac je sretno pronađen'}
                                 {selectedCategoryChange === 'LJUBIMAC_NIJE_PRONAĐEN_I_ZA_NJIM_SE_VIŠE_AKTIVNO_NE_TRAGA' && 'Ljubimac nije pronađen i za njim se više aktivno ne traga'}
                                 {selectedCategoryChange === 'LJUBIMAC_JE_PRONAĐEN_U_NESRETNIM_OKOLNOSTIMA' && 'Ljubimac je pronađen uz nesretne okolnosti'}
+                                {selectedCategoryChange === 'U_SKLONISTU' && 'U skloništu'}
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item eventKey="category1">Ljubimac je nestao i za njim se
-                                    traga</Dropdown.Item>
-                                <Dropdown.Item eventKey="category2">Ljubimac je sretno pronađen</Dropdown.Item>
-                                <Dropdown.Item eventKey="category3">Ljubimac nije pronađen i za njim se više aktivno ne
-                                    traga</Dropdown.Item>
-                                <Dropdown.Item eventKey="category4">Ljubimac je pronađen uz nesretne
-                                    okolnosti</Dropdown.Item>
+                                {card && card.shelterName === null ? (
+                                    <>
+                                        <Dropdown.Item eventKey="category1">Ljubimac je nestao i za njim se
+                                            traga</Dropdown.Item>
+                                        <Dropdown.Item eventKey="category2">Ljubimac je sretno pronađen</Dropdown.Item>
+                                        <Dropdown.Item eventKey="category3">Ljubimac nije pronađen i za njim se više
+                                            aktivno ne traga</Dropdown.Item>
+                                        <Dropdown.Item eventKey="category4">Ljubimac je pronađen uz nesretne
+                                            okolnosti</Dropdown.Item>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Dropdown.Item eventKey="category1">Ljubimac je nestao i za njim se
+                                            traga</Dropdown.Item>
+                                        <Dropdown.Item eventKey="category2">Ljubimac je sretno pronađen</Dropdown.Item>
+                                        <Dropdown.Item eventKey="category3">Ljubimac nije pronađen i za njim se više
+                                            aktivno ne traga</Dropdown.Item>
+                                        <Dropdown.Item eventKey="category4">Ljubimac je pronađen uz nesretne
+                                            okolnosti</Dropdown.Item>
+                                        <Dropdown.Item eventKey="category5">U skloništu</Dropdown.Item>
+                                    </>
+                                )}
                             </Dropdown.Menu>
                         </Dropdown>
                     </Form.Group>

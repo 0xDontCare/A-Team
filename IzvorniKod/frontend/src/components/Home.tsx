@@ -37,21 +37,12 @@ function Home({isLoggedIn, userData}: HomeProps) {
     const [searchTerm, setSearchTerm] = useState("");
     const [searchCategory, setSearchCategory] = useState("option1");
 
-    const [showCheckboxes, setShowCheckboxes] = useState(false);
-    const [selectedCheckboxesData, setSelectedCheckboxesData] = useState<Array<Advertisement[]>>([]);
-    const [checkboxesCount, setCheckboxesCount] = useState(0);
-
-    useEffect(() => {
-        fetch("/api/advertisements?category=LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA")
-            .then((response) => response.json())
-            .then((data) => {
-                setOriginalAdvertisements(data);
-                setAdvertisements(data);
-            })
-            .catch((error) => {
-                console.error("Error fetching advertisement data:", error);
-            });
-    }, []);
+    const [showCheckboxes1, setShowCheckboxes1] = useState(true);
+    const [showCheckboxes2, setShowCheckboxes2] = useState(false);
+    const [selectedCheckboxesData1, setSelectedCheckboxesData1] = useState<Array<Advertisement[]>>([]);
+    const [selectedCheckboxesData2, setSelectedCheckboxesData2] = useState<Array<Advertisement[]>>([]);
+    const [checkboxesCount1, setCheckboxesCount1] = useState(0);
+    const [checkboxesCount2, setCheckboxesCount2] = useState(0);
 
     const categoryMapping: Record<string, keyof Advertisement> = {
         option1: "petName",
@@ -90,8 +81,17 @@ function Home({isLoggedIn, userData}: HomeProps) {
                 return false;
             }
 
-            if (showCheckboxes && selectedCheckboxesData.length > 0) {
-                return selectedCheckboxesData.some((checkboxData) => {
+            if (showCheckboxes1 && selectedCheckboxesData1.length > 0) {
+                return selectedCheckboxesData1.some((checkboxData) => {
+                    if (Array.isArray(checkboxData)) {
+                        return checkboxData.some((checkboxAd) => checkboxAd.adId === advertisement.adId);
+                    }
+                    return false;
+                });
+            }
+
+            if (showCheckboxes2 && selectedCheckboxesData2.length > 0) {
+                return selectedCheckboxesData2.some((checkboxData) => {
                     if (Array.isArray(checkboxData)) {
                         return checkboxData.some((checkboxAd) => checkboxAd.adId === advertisement.adId);
                     }
@@ -103,7 +103,7 @@ function Home({isLoggedIn, userData}: HomeProps) {
         });
 
         setAdvertisements(filteredAdvertisements);
-    }, [searchCategory, originalAdvertisements, searchTerm, showCheckboxes, selectedCheckboxesData]);
+    }, [searchCategory, originalAdvertisements, searchTerm, showCheckboxes1, showCheckboxes2, selectedCheckboxesData1, selectedCheckboxesData2]);
 
     const toggleDeleteMode = () => {
         setDeleteMode(!deleteMode);
@@ -126,43 +126,74 @@ function Home({isLoggedIn, userData}: HomeProps) {
     };
 
     const handleAdTypeChange = async (e: { target: { value: string; }; }) => {
-        if (e.target.value === 'tipOglas1') {
-            setShowCheckboxes(false);
 
-            try {
+        setOriginalAdvertisements([]);
+        setAdvertisements([]);
+        setCheckboxesCount1(0);
+        setCheckboxesCount2(0);
+        setSelectedCheckboxesData1([]);
+        setSelectedCheckboxesData2([]);
+
+        if (e.target.value === 'tipOglas1') {
+            setShowCheckboxes1(true);
+            setShowCheckboxes2(false);
+
+            if (checkboxesCount1 === 0) {
                 setOriginalAdvertisements([]);
                 setAdvertisements([]);
-                const response = await fetch("/api/advertisements?category=LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA");
-                const data = await response.json();
-                setOriginalAdvertisements(data);
-                setAdvertisements(data);
-            } catch (error) {
-                console.error("Error fetching advertisement data:", error);
             }
-        } else if (e.target.value === 'tipOglas2' && isLoggedIn) {
-            setShowCheckboxes(true);
 
-            if (checkboxesCount === 0) {
+        } else if (e.target.value === 'tipOglas2' && isLoggedIn) {
+            setShowCheckboxes1(false);
+            setShowCheckboxes2(true);
+
+            if (checkboxesCount2 === 0) {
                 setOriginalAdvertisements([]);
                 setAdvertisements([]);
             }
         } else {
-            setShowCheckboxes(false);
+            setShowCheckboxes2(false);
             alert('Morate se registrirati i prijaviti kako biste mogli koristiti ovu kategoriju!');
             window.location.reload();
         }
     };
 
-    const handleAdTypeChangeCheckbox = async (e: ChangeEvent<HTMLInputElement>, index: number) => {
+    const handleAdTypeChangeCheckbox1 = async (e: ChangeEvent<HTMLInputElement>, index: number) => {
         const checkboxValue = e.target.value;
         const isCheckboxChecked = e.target.checked;
 
-        setCheckboxesCount((prevCount) => (isCheckboxChecked ? prevCount + 1 : prevCount - 1));
+        setCheckboxesCount1((prevCount) => (isCheckboxChecked ? prevCount + 1 : prevCount - 1));
 
         try {
             const data = await fetch(`/api/advertisements?category=${checkboxValue}`).then((response) => response.json());
 
-            setSelectedCheckboxesData((prevData) => {
+            setSelectedCheckboxesData1((prevData) => {
+                const newData = [...prevData];
+                newData[index] = isCheckboxChecked ? data : [];
+
+                const allData = newData.flatMap((checkboxData) => (checkboxData ? [...checkboxData] : []));
+
+                const filteredData = applySearchFilter(allData, searchTerm);
+
+                setOriginalAdvertisements(filteredData);
+                setAdvertisements(filteredData);
+                return newData;
+            });
+        } catch (error) {
+            console.error(`Error fetching data for checkbox ${checkboxValue}:`, error);
+        }
+    };
+
+    const handleAdTypeChangeCheckbox2 = async (e: ChangeEvent<HTMLInputElement>, index: number) => {
+        const checkboxValue = e.target.value;
+        const isCheckboxChecked = e.target.checked;
+
+        setCheckboxesCount2((prevCount) => (isCheckboxChecked ? prevCount + 1 : prevCount - 1));
+
+        try {
+            const data = await fetch(`/api/advertisements?category=${checkboxValue}`).then((response) => response.json());
+
+            setSelectedCheckboxesData2((prevData) => {
                 const newData = [...prevData];
                 newData[index] = isCheckboxChecked ? data : [];
 
@@ -202,21 +233,6 @@ function Home({isLoggedIn, userData}: HomeProps) {
         });
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch("/api/advertisements?category=LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA");
-                const data = await response.json();
-                setOriginalAdvertisements(data);
-                setAdvertisements(data);
-            } catch (error) {
-                console.error("Error fetching advertisement data:", error);
-            }
-        };
-
-        fetchData();
-    }, []);
-
     return (
         <Container>
             <Row>
@@ -238,6 +254,34 @@ function Home({isLoggedIn, userData}: HomeProps) {
                                 Aktivni oglasi
                             </label>
                         </div>
+                        {showCheckboxes1 && (
+                            <div>
+                                <div className="form-check">
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id="checkbox4"
+                                        value="LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA"
+                                        onChange={(e) => handleAdTypeChangeCheckbox1(e, 4)}
+                                    />
+                                    <label className="form-check-label" htmlFor="checkbox4">
+                                        Ljubimac je nestao i za njim se traga
+                                    </label>
+                                </div>
+                                <div className="form-check">
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id="checkbox5"
+                                        value="U_SKLONISTU"
+                                        onChange={(e) => handleAdTypeChangeCheckbox1(e, 5)}
+                                    />
+                                    <label className="form-check-label" htmlFor="checkbox5">
+                                        U skloništu
+                                    </label>
+                                </div>
+                            </div>
+                        )}
                         <div className="form-check mb-3 fs-md-3">
                             <input
                                 className="form-check-input"
@@ -251,7 +295,7 @@ function Home({isLoggedIn, userData}: HomeProps) {
                                 Neaktivni oglasi
                             </label>
                         </div>
-                        {showCheckboxes && (
+                        {showCheckboxes2 && (
                             <div>
                                 <div className="form-check">
                                     <input
@@ -259,7 +303,7 @@ function Home({isLoggedIn, userData}: HomeProps) {
                                         type="checkbox"
                                         id="checkbox1"
                                         value="LJUBIMAC_JE_SRETNO_PRONAĐEN"
-                                        onChange={(e) => handleAdTypeChangeCheckbox(e, 1)}
+                                        onChange={(e) => handleAdTypeChangeCheckbox2(e, 1)}
                                     />
                                     <label className="form-check-label" htmlFor="checkbox1">
                                         Ljubimac je sretno pronađen
@@ -271,7 +315,7 @@ function Home({isLoggedIn, userData}: HomeProps) {
                                         type="checkbox"
                                         id="checkbox2"
                                         value="LJUBIMAC_NIJE_PRONAĐEN_I_ZA_NJIM_SE_VIŠE_AKTIVNO_NE_TRAGA"
-                                        onChange={(e) => handleAdTypeChangeCheckbox(e, 2)}
+                                        onChange={(e) => handleAdTypeChangeCheckbox2(e, 2)}
                                     />
                                     <label className="form-check-label" htmlFor="checkbox2">
                                         Ljubimac nije pronađen, ali se za njim više aktivno ne traga
@@ -283,7 +327,7 @@ function Home({isLoggedIn, userData}: HomeProps) {
                                         type="checkbox"
                                         id="checkbox3"
                                         value="LJUBIMAC_JE_PRONAĐEN_U_NESRETNIM_OKOLNOSTIMA"
-                                        onChange={(e) => handleAdTypeChangeCheckbox(e, 3)}
+                                        onChange={(e) => handleAdTypeChangeCheckbox2(e, 3)}
                                     />
                                     <label className="form-check-label" htmlFor="checkbox3">
                                         Ljubimac je pronađen uz nesretne okolnosti

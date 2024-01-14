@@ -10,6 +10,8 @@ function AdDetail() {
     const [card, setCard] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    console.log(card);
+
     const options = {
         day: "numeric",
         month: "numeric",

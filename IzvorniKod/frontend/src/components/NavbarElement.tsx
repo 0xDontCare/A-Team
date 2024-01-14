@@ -21,6 +21,7 @@ function NavbarElement({isLoggedIn, userData, setLoginStatus}: HomeProps) {
     async function handleLogout() {
         await axios.get("/api/logout");
         setLoginStatus(false);
+        window.location.reload();
     }
 
     return (

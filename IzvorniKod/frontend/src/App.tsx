@@ -61,7 +61,7 @@ function App() {
                             <Login setLoginStatus={loginUser} setUserData={setUserData}/>
                         }
                     />
-                    <Route path="/addAd" element={<AddAd/>}/>
+                    <Route path="/addAd" element={<AddAd userData={userData}/>}/>
                     <Route path="/changeAd/:id" element={<ChangeAd/>}/>
                     <Route path="/:id" element={<AdDetail/>}/>
                 </Routes>
