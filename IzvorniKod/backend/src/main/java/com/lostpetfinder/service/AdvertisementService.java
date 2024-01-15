@@ -90,6 +90,7 @@ public class AdvertisementService {
             if (!(user instanceof Shelter)) {
                 return ResponseEntity.badRequest().body("You must be a shelter to add an advertisement in this category!");
             }
+            category = CategoryEnum.U_SKLONISTU;
         } else {
             category = CategoryEnum.LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA;
         }
