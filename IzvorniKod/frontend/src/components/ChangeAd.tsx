@@ -59,8 +59,6 @@ function ChangeAd() {
 
     };
 
-    console.log(card);
-
     const handleSpeciesChange = (e: {
         target: { value: SetStateAction<string>; };
     }) => setChangeSpecies(e.target.value);
@@ -331,10 +329,10 @@ function ChangeAd() {
                                       value={changeName}/>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="adDateTime">
-                        <Form.Label>Odaberite datum i vrijeme nestanka ljubimca</Form.Label>
+                        <Form.Label>{selectedCategoryChange === "U_SKLONISTU" ? 'Odaberite datum i vrijeme pronalaska ljubimca' : 'Odaberite datum i vrijeme nestanka ljubimca'}</Form.Label>
                         <Form.Control type="datetime-local" onChange={handleDateTimeChange} value={changeDateTime}/>
                     </Form.Group>
-                    Lokacija nestanka ljubimca
+                    {selectedCategoryChange === "U_SKLONISTU" ? 'Lokacija skloništa' : 'Lokacija nestanka ljubimca'}
                     <Form.Group className="mb-3" controlId="adLocation">
                         <MapContainer center={mapCenter} zoom={7} minZoom={7}>
                             <MapClickHandler/>

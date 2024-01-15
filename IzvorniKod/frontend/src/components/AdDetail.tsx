@@ -10,8 +10,6 @@ function AdDetail() {
     const [card, setCard] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    console.log(card);
-
     const options = {
         day: "numeric",
         month: "numeric",
@@ -90,11 +88,11 @@ function AdDetail() {
                                 <strong>Vrsta :</strong> {card.species}
                             </p>
                             <p className="mb-2">
-                                <strong>Datum i vrijeme nestanka :</strong>{" "}
+                                <strong>{card.categoryDescription === "U_SKLONISTU" ? 'Datum i vrijeme pronalaska :' : 'Datum i vrijeme nestanka :'}</strong>{" "}
                                 {formattedDateTimeWithU}
                             </p>
                             <p className="mb-2">
-                                <strong>Mjesto nestanka :</strong> {card.disappearanceLocation}
+                                <strong>{card.categoryDescription === "U_SKLONISTU" ? 'Lokacija skloništa :' : 'Mjesto nestanka :'}</strong> {card.disappearanceLocation}
                             </p>
                         </div>
                         <div className="col-md-6">

@@ -265,7 +265,7 @@ function Home({isLoggedIn, userData}: HomeProps) {
                                         onChange={(e) => handleAdTypeChangeCheckbox1(e, 4)}
                                     />
                                     <label className="form-check-label" htmlFor="checkbox4">
-                                        Ljubimac je nestao i za njim se traga
+                                        Nestali ljubimci
                                     </label>
                                 </div>
                                 <div className="form-check">
