@@ -102,6 +102,17 @@ function Home({isLoggedIn, userData}: HomeProps) {
             return true;
         });
 
+        if (showCheckboxes1 && selectedCheckboxesData1.length === 0) {
+            // Set the checkbox as checked
+            const checkbox = document.getElementById('checkbox4') as HTMLInputElement;
+            if (checkbox) {
+                checkbox.checked = true;
+
+                // Fetch the corresponding category data
+                handleAdTypeChangeCheckbox1({target: {value: checkbox.value, checked: true}}, 4);
+            }
+        }
+
         setAdvertisements(filteredAdvertisements);
     }, [searchCategory, originalAdvertisements, searchTerm, showCheckboxes1, showCheckboxes2, selectedCheckboxesData1, selectedCheckboxesData2]);
 

@@ -405,7 +405,8 @@ function ChangeAd() {
                             </div>
                         )}
                     </Form.Group>
-                    Odaberite slike koje želite dodati:
+                    Odaberite slike koje želite dodati(ako već postoje slike, dodane slike će biti prikazane nakon već
+                    postojećih slika):
                     <Form.Group className="mb-3" controlId="adPhoto1">
                         <Form.Label>1. slika ljubimca</Form.Label>
                         <Form.Control type="file" onChange={handlePhoto1Change}/>
