@@ -56,7 +56,7 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
         senderUsername: userData.username,
         email: userData.email,
         phoneNumber: userData.phoneNumber,
-        advertisementId: newMessage?.advertisementId,
+        advertisementId: advertisementId,
         messageText: newMessage?.messageText,
         disappearanceLocationLat: newMessage?.disappearanceLocationLat,
         disappearanceLocationLng: newMessage?.disappearanceLocationLng,
