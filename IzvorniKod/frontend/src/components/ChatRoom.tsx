@@ -44,7 +44,6 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
     if (stompClient) {
       var chatMessage = {
         senderUsername: userData.username,
-        advertisementId: advertisementId,
         email: userData.email,
         phoneNumber: userData.phoneNumber,
         advertisementId: newMessage?.advertisementId,
