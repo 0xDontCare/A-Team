@@ -58,6 +58,10 @@ function ChatRoom({ advertisementId, loginStatus }: ChatRoomProps) {
   };
 
   useEffect(() => {
+    registerUser();
+  }, []);
+
+  useEffect(() => {
     const fetchMessages = async () => {
       try {
         const response = await fetch(`/api/messages/${advertisementId}`);
@@ -70,10 +74,6 @@ function ChatRoom({ advertisementId, loginStatus }: ChatRoomProps) {
 
     fetchMessages();
   }, [advertisementId]);
-
-  useEffect(() => {
-    registerUser();
-  }, []);
 
   return (
     <div className="chatContainer">
@@ -114,6 +114,8 @@ function ChatRoom({ advertisementId, loginStatus }: ChatRoomProps) {
                   </div>
                 </div>
               ))}
+
+
             </div>
           </div>
         </div>
@@ -123,3 +125,4 @@ function ChatRoom({ advertisementId, loginStatus }: ChatRoomProps) {
 }
 
 export default ChatRoom;
+
