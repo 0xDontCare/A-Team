@@ -66,7 +66,10 @@ function App() {
           />
           <Route path="/addAd" element={<AddAd userData={userData} />} />
           <Route path="/changeAd/:id" element={<ChangeAd />} />
-          <Route path="/:id" element={<AdDetail loginStatus={loginStatus} />} />
+          <Route
+            path="/:id"
+            element={<AdDetail loginStatus={loginStatus} userData={userData} />}
+          />
         </Routes>
       </BrowserRouter>
     </div>

@@ -9,9 +9,17 @@ import ChatRoomA from "./ChatRoomA.tsx";
 
 interface AdDetailProps {
   loginStatus: boolean | undefined;
+  userData: {
+    username: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    shelterName: string;
+    phoneNumber: string; // ovo treba dodati u backend
+  } | null;
 }
 
-function AdDetail({ loginStatus }: AdDetailProps) {
+function AdDetail({ loginStatus, userData }: AdDetailProps) {
   const { id } = useParams();
   const [card, setCard] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -207,7 +215,11 @@ function AdDetail({ loginStatus }: AdDetailProps) {
               </div>
             </div>
           )}
-          {/* <ChatRoom advertisementId={id} loginStatus={loginStatus} /> */}
+          <ChatRoom
+            advertisementId={id}
+            loginStatus={loginStatus}
+            userData={userData}
+          />
           {/* <ChatRoomA /> */}
         </Card.Body>
       </Card>
