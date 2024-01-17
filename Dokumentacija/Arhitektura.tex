@@ -68,7 +68,7 @@
 			\subsection{Opis tablica}
 			
 
-				\noindent \textbf{Korisnik} Entitet sadržava sve važne informacije o korisniku web-aplikacije. Atributi su sljedeći: korisnickoIme, lozinka, email, telefon, postBr. Primarni ključ ovog entiteta je atribut korisnickoIme. Entitet je povezan s entitetom Mjesto pomoću atributa postBr kroz vezu \textit{Many-to-One}, a s entitetima Registrirani i Skloniste, kao specijalizacije, pomoću atributa korisnickoIme. Postoji i povezanost vezom \textit{One-to-Many} s identifikacijskim slabim entitetom Poruka pomoću atributa korisnickoIme.
+				\noindent \textbf{Korisnik} Entitet sadržava sve važne informacije o korisniku web-aplikacije. Atributi su sljedeći: sifKorisnik, korisnickoIme, lozinka, email, telefon, postBr. Primarni ključ ovog entiteta je atribut sifKorisnik. Entitet je povezan s entitetom Mjesto pomoću atributa postBr kroz vezu \textit{Many-to-One}, a s entitetima Registrirani i Skloniste, kao specijalizacije, pomoću atributa korisnickoIme. Postoji i povezanost vezom \textit{One-to-Many} s identifikacijskim slabim entitetom Poruka pomoću atributa korisnickoIme.
 				
 				
 				\begin{longtblr}[
@@ -80,7 +80,7 @@
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \SetCell[c=3]{c}{\textbf{Korisnik }}	 \\ \hline[3pt]
-					\SetCell{LightGreen}korisnickoIme & VARCHAR	&  	jedinstveno korisničko ime  	\\ \hline
+					\SetCell{LightGreen}sifKorisnik & VARCHAR	&  	jedinstvena šifra korisnika  	\\ \hline korisnickoIme & VARCHAR	&  	korisničko ime  	\\ \hline
 					lozinka	& VARCHAR & hash lozinke  	\\ \hline 
 					email & VARCHAR & e-mail adresa korisnika  \\ \hline 
 					telefon & VARCHAR	& telefonski broj korisnika 		\\ \hline 
@@ -166,7 +166,7 @@
 				\end{longtblr}
 				
 				
-				\noindent \textbf{Lokacija} Entitet sadržava podatke o lokaciji. Atributi entiteta su koordinate i postBr, gdje je primarni ključ atribut koordinate. Postoji veza \textit{Many-to-One} s entitetom Mjesto kroz atribut postBr.
+				\noindent \textbf{Lokacija} Entitet sadržava podatke o lokaciji. Atributi entiteta su sifLokacija, geografskaSirina, geografskaDuzina, imeLokacije i postBr, gdje je primarni ključ atribut sifLokacija. Postoji veza \textit{Many-to-One} s entitetom Mjesto kroz atribut postBr.
 				
 				
 				\begin{longtblr}[
@@ -174,11 +174,11 @@
 					entry=none
 					]{
 						width = \textwidth,
-						colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+						colspec={|X[8,l]|X[6, l]|X[18, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 					\hline \SetCell[c=3]{c}{\textbf{Lokacija }}	 \\ \hline[3pt]
-					\SetCell{LightGreen}koordinate & VARCHAR	&  	jedinstvene koordinate lokacije  	\\ \hline
+					\SetCell{LightGreen}sifLokacija & VARCHAR	&  	jedinstvena šifra lokacija  	\\ \hline geografskaSirina & VARCHAR	&  	geografska širina  	\\ \hline geografskaDuzina & VARCHAR	&  	geografska dužina  	\\ \hline imeLokacija & VARCHAR	&  	ime lokacije  	\\ \hline koordinate & VARCHAR	&  	jedinstvene koordinate lokacije  	\\ \hline
 					\SetCell{LightBlue} postBr	& INT & poštanski broj mjesta	\\ \hline 
 				\end{longtblr}
 				
