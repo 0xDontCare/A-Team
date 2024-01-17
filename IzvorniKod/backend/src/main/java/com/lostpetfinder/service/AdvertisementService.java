@@ -49,6 +49,7 @@ public class AdvertisementService {
     // adjust later so it only returns active ads
     public List<AdvertisementSummaryDTO> getAllAdvertisements(CategoryEnum category) {
         return advertisementRepository
+                // return all advertisements if ad.getCategory() == null
                 .findAll()
                 .stream()
                 .filter(ad -> ad.getAdState() == AdStateEnum.ACTIVE && ad.getCategory() == category)

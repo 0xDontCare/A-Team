@@ -55,6 +55,7 @@ function NavbarElement({isLoggedIn, userData, setLoginStatus}: HomeProps) {
                         {isLoggedIn && (
                             <>
                                 <Nav.Link
+                                    id="logoutButton"
                                     as={Link}
                                     to="/"
                                     className="navButtons"
