@@ -5,7 +5,7 @@ import SockJS from "sockjs-client";
 
 interface ChatRoomProps {
   advertisementId: string;
-  loginStatus: boolean | undefined;
+  loginStatus: boolean;
   userData: {
     username: string;
     email: string;
@@ -116,20 +116,6 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
             style={{ backgroundColor: "f0f2f5" }}
           >
             <div className="card-body p-4">
-              {loginStatus && (
-                <div className="form-outline mb-4">
-                  <label className="form-label" htmlFor="addANote">
-                    + Add a note
-                  </label>
-                  <input
-                    type="text"
-                    id="newMessage"
-                    className="form-control"
-                    placeholder="Napišite poruku..."
-                  />
-                </div>
-              )}
-
               {messages.map((message) => (
                 <div key={message.advertisementId} className="card mb-4">
                   <div className="card-body">
@@ -171,72 +157,74 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
                   ))}
                 </ul>
 
-                <div className="send-message">
-                  <input
-                    type="text"
-                    className="input-message"
-                    placeholder="Message Text"
-                    value={newMessage?.messageText || ""}
-                    onChange={(e) =>
-                      setNewMessage({
-                        ...newMessage,
-                        messageText: e.target.value,
-                      })
-                    }
-                  />
-                  <input
-                    type="text"
-                    className="input-message"
-                    placeholder="Disappearance Location Lat"
-                    value={newMessage?.disappearanceLocationLat || ""}
-                    onChange={(e) =>
-                      setNewMessage({
-                        ...newMessage,
-                        disappearanceLocationLat: e.target.value,
-                      })
-                    }
-                  />
-                  <input
-                    type="text"
-                    className="input-message"
-                    placeholder="Disappearance Location Lng"
-                    value={newMessage?.disappearanceLocationLng || ""}
-                    onChange={(e) =>
-                      setNewMessage({
-                        ...newMessage,
-                        disappearanceLocationLng: e.target.value,
-                      })
-                    }
-                  />
-                  <input
-                    type="text"
-                    className="input-message"
-                    placeholder="Image"
-                    value={newMessage?.image || ""}
-                    onChange={(e) =>
-                      setNewMessage({ ...newMessage, image: e.target.value })
-                    }
-                  />
-                  <input
-                    type="text"
-                    className="input-message"
-                    placeholder="Link To Image"
-                    value={newMessage?.linkToImage || ""}
-                    onChange={(e) =>
-                      setNewMessage({
-                        ...newMessage,
-                        linkToImage: e.target.value,
-                      })
-                    }
-                  />
-                  <button
-                    type="button"
-                    className="send-button"
-                    onClick={sendValue}
-                  >
-                    send
-                  </button>
-                </div>
+                {loginStatus && (
+                  <div className="send-message">
+                    <input
+                      type="text"
+                      className="input-message"
+                      placeholder="Message Text"
+                      value={newMessage?.messageText || ""}
+                      onChange={(e) =>
+                        setNewMessage({
+                          ...newMessage,
+                          messageText: e.target.value,
+                        })
+                      }
+                    />
+                    <input
+                      type="text"
+                      className="input-message"
+                      placeholder="Disappearance Location Lat"
+                      value={newMessage?.disappearanceLocationLat || ""}
+                      onChange={(e) =>
+                        setNewMessage({
+                          ...newMessage,
+                          disappearanceLocationLat: e.target.value,
+                        })
+                      }
+                    />
+                    <input
+                      type="text"
+                      className="input-message"
+                      placeholder="Disappearance Location Lng"
+                      value={newMessage?.disappearanceLocationLng || ""}
+                      onChange={(e) =>
+                        setNewMessage({
+                          ...newMessage,
+                          disappearanceLocationLng: e.target.value,
+                        })
+                      }
+                    />
+                    <input
+                      type="text"
+                      className="input-message"
+                      placeholder="Image"
+                      value={newMessage?.image || ""}
+                      onChange={(e) =>
+                        setNewMessage({ ...newMessage, image: e.target.value })
+                      }
+                    />
+                    <input
+                      type="text"
+                      className="input-message"
+                      placeholder="Link To Image"
+                      value={newMessage?.linkToImage || ""}
+                      onChange={(e) =>
+                        setNewMessage({
+                          ...newMessage,
+                          linkToImage: e.target.value,
+                        })
+                      }
+                    />
+                    <button
+                      type="button"
+                      className="send-button"
+                      onClick={sendValue}
+                    >
+                      send
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>

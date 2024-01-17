@@ -8,7 +8,7 @@ import ChatRoom from "./ChatRoom.tsx";
 import ChatRoomA from "./ChatRoomA.tsx";
 
 interface AdDetailProps {
-  loginStatus: boolean | undefined;
+  loginStatus: boolean;
   userData: {
     username: string;
     email: string;
@@ -16,7 +16,7 @@ interface AdDetailProps {
     lastName: string;
     shelterName: string;
     phoneNumber: string; // ovo treba dodati u backend
-  } | null;
+  };
 }
 
 function AdDetail({ loginStatus, userData }: AdDetailProps) {
