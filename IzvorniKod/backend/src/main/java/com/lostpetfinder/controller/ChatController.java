@@ -20,10 +20,10 @@ public class ChatController {
         this.messageService = messageService;
     }
 
-    @MessageMapping("/new_message")
+    @MessageMapping("/message") // /app/message
     public MessageDTO forwardNewMessage(@Payload MessageDTO messageDTO) {
         messageService.saveMessage(messageDTO);
-        String destination = "/chatroom/" + messageDTO.getAdvertisementId();
+        String destination = "/chatroom/" + messageDTO.getAdvertisementId(); // /chatroom/{advertisementId}
         simpMessagingTemplate.convertAndSend(destination, messageDTO);
         return messageDTO;
     }
