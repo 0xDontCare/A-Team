@@ -14,30 +14,156 @@
 			\eject
 		
 	
-		\section{Ispitivanje programskog rješenja}
-			
+			\section{Ispitivanje programskog rješenja}
+
 			\textbf{\textit{dio 2. revizije}}\\
 			
-			 \textit{U ovom poglavlju je potrebno opisati provedbu ispitivanja implementiranih funkcionalnosti na razini komponenti i na razini cijelog sustava s prikazom odabranih ispitnih slučajeva. Studenti trebaju ispitati temeljnu funkcionalnost i rubne uvjete.}
-	
+			\textit{U ovom poglavlju je potrebno opisati provedbu ispitivanja implementiranih funkcionalnosti na razini komponenti i na razini cijelog sustava s prikazom odabranih ispitnih slučajeva. Studenti trebaju ispitati temeljnu funkcionalnost i rubne uvjete.}
 			
 			\subsection{Ispitivanje komponenti}
 			\textit{Potrebno je provesti ispitivanje jedinica (engl. unit testing) nad razredima koji implementiraju temeljne funkcionalnosti. Razraditi \textbf{minimalno 6 ispitnih slučajeva} u kojima će se ispitati redovni slučajevi, rubni uvjeti te izazivanje pogreške (engl. exception throwing). Poželjno je stvoriti i ispitni slučaj koji koristi funkcionalnosti koje nisu implementirane. Potrebno je priložiti izvorni kôd svih ispitnih slučajeva te prikaz rezultata izvođenja ispita u razvojnom okruženju (prolaz/pad ispita). }
 			
-			
-			
 			\subsection{Ispitivanje sustava}
 			
-			 \textit{Potrebno je provesti i opisati ispitivanje sustava koristeći radni okvir Selenium\footnote{\url{https://www.seleniumhq.org/}}. Razraditi \textbf{minimalno 4 ispitna slučaja} u kojima će se ispitati redovni slučajevi, rubni uvjeti te poziv funkcionalnosti koja nije implementirana/izaziva pogrešku kako bi se vidjelo na koji način sustav reagira kada nešto nije u potpunosti ostvareno. Ispitni slučaj se treba sastojati od ulaza (npr. korisničko ime i lozinka), očekivanog izlaza ili rezultata, koraka ispitivanja i dobivenog izlaza ili rezultata.\\ }
-			 
-			 \textit{Izradu ispitnih slučajeva pomoću radnog okvira Selenium moguće je provesti pomoću jednog od sljedeća dva alata:}
-			 \begin{itemize}
-			 	\item \textit{dodatak za preglednik \textbf{Selenium IDE} - snimanje korisnikovih akcija radi automatskog ponavljanja ispita	}
-			 	\item \textit{\textbf{Selenium WebDriver} - podrška za pisanje ispita u jezicima Java, C\#, PHP koristeći posebno programsko sučelje.}
-			 \end{itemize}
-		 	\textit{Detalji o korištenju alata Selenium bit će prikazani na posebnom predavanju tijekom semestra.}
+			Ispitivanje sustava proveli smo pomoću dodatka za preglednik
+			\underline{Selenium IDE} \footnote{https://www.selenium.dev/documentation/ide/}
+			te koristeći \underline{Selenium WebDriver}
+			\footnote{https://www.selenium.dev/documentation/webdriver/} unutar JUnit
+			testova.
 			
-			\eject 
+			\text{Ispitivanje pomoću Selenium WebDrivera prikazana su na slikama * i *}
+			\renewcommand{\lstlistingname}{Kod}
+			\begin{lstlisting}[
+				language=Java,
+				frame=single,
+				label={lst:testLoginGoodCreds},
+				basicstyle = \small,
+				tabsize=2,
+				showspaces=false,
+				showstringspaces=false,
+				commentstyle = \color{red}, %% set comment color
+				keywordstyle = \color{blue}, %% set keyword color
+				stringstyle = \color{applegreen}, %% set string color
+				rulecolor = \color{black},
+				caption={Test testLoginGoodCreds},
+				breaklines=true]
+@Test
+public void testLoginGoodCreds() {
+	WebDriver driver = new ChromeDriver();
+	System.setProperty(
+	"webdriver.chrome.driver", 
+	"C:\\Users\\akrkl\\AppData\\Local\\Microsoft\\WindowsApps\\chromedriver.exe"
+	);
+	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+	driver.get("http://localhost:5173/login");
+
+	WebElement element = driver.findElement(By.id("email"));
+	element.sendKeys("testadmin");
+
+	element = driver.findElement(By.id("lozinka"));
+	element.sendKeys("123");
+
+	driver.findElement(By.cssSelector("button[type='submit']")).click();
+
+	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+	try {
+	wait.until(
+		ExpectedConditions.presenceOfElementLocated(By.id("searchBarByCategories"))
+	);
+
+	String redirectUrl = driver.getCurrentUrl();
+
+	Assertions.assertEquals(
+		"http://localhost:5173/", redirectUrl
+	);
+	}
+	finally {
+	driver.quit();
+	}
+}	
+			\end{lstlisting}
+			
+			U Kodu \ref{lst:testLoginGoodCreds} testira se uspješan login korisnika. WebDriver otvara stranicu za login, pronalazi elemente za unos korisničkog imena i lozinke te unosi podatke. Nakon toga klikne na gumb za prijavu i čeka da se pojavi element za pretraživanje po kategorijama. Na kraju provjerava je li korisnik preusmjeren na početnu stranicu. 
+			
+			\pagebreak
+			
+			\begin{lstlisting}[
+				language=Java,
+				frame=single,
+				label={lst:testLoginBadCreds},
+				basicstyle = \small,
+				tabsize=2,
+				showspaces=false,
+				showstringspaces=false,
+				commentstyle = \color{red}, %% set comment color
+				keywordstyle = \color{blue}, %% set keyword color
+				stringstyle = \color{applegreen}, %% set string color
+				rulecolor = \color{black},
+				caption={Test testLoginBadCreds},
+				breaklines=true]
+@Test
+public void testLoginBadCreds() {
+	WebDriver driver = new ChromeDriver();
+	System.setProperty(
+		"webdriver.chrome.driver",
+		"C:\\Users\\akrkl\\AppData\\Local\\Microsoft\\WindowsApps\\chromedriver.exe"
+	);
+	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	driver.get("http://localhost:5173/login");
+
+	WebElement element = driver.findElement(By.id("email"));
+	element.sendKeys("testadmin");
+
+	element = driver.findElement(By.id("lozinka"));
+	element.sendKeys("wrongPassword");
+
+	driver.findElement(By.cssSelector("button[type='submit']")).click();
+
+	try {
+		String redirectUrl = driver.getCurrentUrl();
+
+		Assertions.assertNotEquals(
+			"http://localhost:5173/", redirectUrl
+		);
+	}
+	finally {
+		driver.quit();
+	}
+}
+			\end{lstlisting}
+			
+			U Kodu \ref{lst:testLoginBadCreds} testira se neuspješan login korisnika. WebDriver otvara stranicu za login, pronalazi elemente za unos korisničkog imena i lozinke te unosi podatke. Nakon toga klikne na gumb za prijavu i provjerava je li korisnik preusmjeren na početnu stranicu.
+			
+			\pagebreak
+			
+			\begin{figure}[!htb]
+				\centering
+				\includegraphics[width=\textwidth]{slike/test_passed.png}
+				\caption{Testovi prolaze}
+			\end{figure}
+			
+			\par\noindent\rule{\textwidth}{0.5pt}
+			
+			\begin{figure}[!htb]
+				\centering
+				\includegraphics[width=\textwidth]{slike/selenium_test_1.png}
+				\caption{Test: neulogirani korisnik pristupa neaktivnim oglasima}
+			\end{figure}
+			
+			U ovom testu pomoću Selenium IDE-a provjerava se može li neulogirani korisnik pristupiti neaktivnim oglasima klikom na pripadajući radio button. Prvo se provjerava je li korisnik ulogiran, u tom slučaju se odjavljuje. Nakon toga se otvara stranica za prikaz oglasa, klikne se na radio button za prikaz neaktivnih oglasa i provjerava se je li se pojavio checkbox za filtriranje neaktivnih oglasa. Ako nije, test prolazi. Iz priloženog se vidi da aplikacija prolazi test.  
+			
+			\par\noindent\rule{\textwidth}{0.5pt}
+			
+			\begin{figure}[!htb]
+				\centering
+				\includegraphics[width=\textwidth]{slike/selenium_test_2.png}
+				\caption{Test: registracija s već postojećim podacima korisnika}
+			\end{figure}
+			
+			U ovom testu pomoću Selenium IDE-a provjerava se kako aplikacija reagira na pokušaj registracije korisnika s podacima već postojećeg korisnika. Nakon unosa klikne se na gumb koji šalje formu i provjerava se je li se pojavio element za pretraživanje po kategorijama, odnosno je li se dogodio redirect na početnu stranicu. Ako nije, registracija nije uspjela i test prolazi. Iz priloženog se vidi da aplikacija prolazi test. 
+			
+			\eject
 		
 		
 		\section{Dijagram razmještaja}
