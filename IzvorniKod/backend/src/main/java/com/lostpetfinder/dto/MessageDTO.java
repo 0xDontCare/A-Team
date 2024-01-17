@@ -5,6 +5,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class MessageDTO {
 
     private String senderUsername;
+    private String senderEmail;
+    private String senderPhoneNumber;
     private Long advertisementId;
     private String messageText;
     private Double disappearanceLocationLat;
@@ -13,6 +15,8 @@ public class MessageDTO {
     private String linkToImage;
 
     public MessageDTO(String senderUsername,
+                      String senderEmail,
+                      String senderPhoneNumber,
                       Long advertisementId,
                       String messageText,
                       Double disappearanceLocationLat,
@@ -21,6 +25,8 @@ public class MessageDTO {
                       String linkToImage)
     {
         this.senderUsername = senderUsername;
+        this.senderEmail = senderEmail;
+        this.senderPhoneNumber = senderPhoneNumber;
         this.advertisementId = advertisementId;
         this.messageText = messageText;
         this.disappearanceLocationLat = disappearanceLocationLat;
@@ -36,6 +42,22 @@ public class MessageDTO {
 
     public Long getAdvertisementId() {
         return advertisementId;
+    }
+
+    public String getSenderEmail() {
+        return senderEmail;
+    }
+
+    public void setSenderEmail(String senderEmail) {
+        this.senderEmail = senderEmail;
+    }
+
+    public String getSenderPhoneNumber() {
+        return senderPhoneNumber;
+    }
+
+    public void setSenderPhoneNumber(String senderPhoneNumber) {
+        this.senderPhoneNumber = senderPhoneNumber;
     }
 
     public String getMessageText() {

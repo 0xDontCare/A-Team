@@ -100,6 +100,8 @@ public class MessageService {
 
         return new MessageDTO(
                 message.getId().getUser().getUsername(),
+                message.getId().getUser().getEmail(),
+                message.getId().getUser().getPhoneNumber(),
                 message.getAdvertisement().getAdvertisementId(),
                 message.getText(),
                 message.getLocation().getCoordinates().getLatitude(),
