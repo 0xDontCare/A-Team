@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import "./AdDetail.css";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import ChatRoom from "./ChatRoom.tsx";
-import ChatRoomA from "./ChatRoomA.tsx";
 
 interface AdDetailProps {
   loginStatus: boolean;
@@ -220,7 +219,6 @@ function AdDetail({ loginStatus, userData }: AdDetailProps) {
             loginStatus={loginStatus}
             userData={userData}
           />
-          {/* <ChatRoomA /> */}
         </Card.Body>
       </Card>
     </div>
