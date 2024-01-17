@@ -36,7 +36,17 @@ var stompClient: Stomp.Client | null = null;
 
 function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
   const [messages, setMessages] = useState<ChatMessage[]>(() => []);
-  const [newMessage, setNewMessage] = useState<ChatMessage>();
+  const [newMessage, setNewMessage] = useState<ChatMessage>({
+    senderUsername: "",
+    advertisementId: "",
+    messageText: "",
+    disappearanceLocationLat: "",
+    disappearanceLocationLng: "",
+    image: "",
+    linkToImage: "",
+    phoneNumber: "",
+    email: "",
+  });
 
   const [publicChats, setPublicChats] = useState([]);
 
@@ -54,7 +64,9 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
         linkToImage: newMessage?.linkToImage,
       };
 
+      console.log("---------------------start");
       console.log(chatMessage);
+      console.log("---------------------end");
       stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
       setNewMessage({ ...newMessage, messageText: "" });
     }
