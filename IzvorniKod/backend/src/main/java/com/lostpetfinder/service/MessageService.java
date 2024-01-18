@@ -45,33 +45,37 @@ public class MessageService {
                 .findByAdvertisementId(dto.getAdvertisementId())
                 .orElseThrow();
 
-        Location location;
-        CoordinatesPK coordinatesPK = new CoordinatesPK(
-                dto.getDisappearanceLocationLat(),
-                dto.getDisappearanceLocationLng()
-        );
-        if (locationRepository.existsByCoordinates(coordinatesPK)) {
-            location = locationRepository.findByCoordinates(coordinatesPK).orElseThrow();
-        } else {
-            location = locationRepository.save(locationService.getLocation(
+        Location location = null;
+        if (dto.getDisappearanceLocationLat() != null && dto.getDisappearanceLocationLng() != null) {
+            CoordinatesPK coordinatesPK = new CoordinatesPK(
                     dto.getDisappearanceLocationLat(),
-                    dto.getDisappearanceLocationLng())
+                    dto.getDisappearanceLocationLng()
             );
+            if (locationRepository.existsByCoordinates(coordinatesPK)) {
+                location = locationRepository.findByCoordinates(coordinatesPK).orElseThrow();
+            } else {
+                location = locationRepository.save(locationService.getLocation(
+                        dto.getDisappearanceLocationLat(),
+                        dto.getDisappearanceLocationLng())
+                );
+            }
         }
 
-        String linkToImage = imageService.generateLinkToImage(dto.getImage());
-        Image image;
-        try {
-            image = new Image(
-                    linkToImage,
-                    dto.getImage().getBytes(),
-                    dto.getImage().getContentType(),
-                    null
-            );
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        Image image = null;
+        if (dto.getImage() != null) {
+            String linkToImage = imageService.generateLinkToImage(dto.getImage());
+            try {
+                image = new Image(
+                        linkToImage,
+                        dto.getImage().getBytes(),
+                        dto.getImage().getContentType(),
+                        null
+                );
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            imageRepository.save(image);
         }
-        imageRepository.save(image);
 
         Message message = new Message(
                 user,
@@ -104,10 +108,10 @@ public class MessageService {
                 message.getId().getUser().getPhoneNumber(),
                 message.getAdvertisement().getAdvertisementId(),
                 message.getText(),
-                message.getLocation().getCoordinates().getLatitude(),
-                message.getLocation().getCoordinates().getLongitude(),
+                message.getLocation() == null ? null : message.getLocation().getCoordinates().getLatitude(),
+                message.getLocation() == null ? null : message.getLocation().getCoordinates().getLongitude(),
                 null,
-                message.getImage().getLinkToImage()
+                message.getImage() == null ? null : message.getImage().getLinkToImage()
         );
 
     }
