@@ -4,9 +4,9 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import {useNavigate} from "react-router-dom";
 import {MapContainer, TileLayer, Marker, useMapEvents} from 'react-leaflet';
+import {Dropdown} from "react-bootstrap";
 import "./AddAdChangeAd.css";
 import "leaflet/dist/leaflet.css";
-import {Dropdown} from "react-bootstrap";
 
 interface HomeProps {
     userData: {
@@ -221,7 +221,7 @@ function AddAd({userData}: HomeProps) {
                 <Form onSubmit={handleSubmit}>
                     {userData?.shelterName !== null && (
                         <Form.Group className="mb-3" controlId="adPetCategory">
-                            Kategorija oglasa
+                            <Form.Label className="label-addAdBigger">Kategorija oglasa</Form.Label>
                             <Dropdown onSelect={(eventKey) => handleCategoryChange(eventKey)}>
                                 <Dropdown.Toggle variant="light" id="dropdown-category">
                                     {adCategory === 'LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA' && 'Ljubimac je nestao i za njim se traga'}
@@ -236,41 +236,45 @@ function AddAd({userData}: HomeProps) {
                         </Form.Group>
                     )}
                     <Form.Group className="mb-3" controlId="adPet">
-                        <Form.Label>Ljubimac</Form.Label>
+                        <Form.Label className="label-addAdBigger">Ljubimac</Form.Label>
                         <Form.Control type="text" placeholder="Upišite ljubimca" onChange={handleSpeciesChange}
                                       value={adSpecies}/>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="adSpecies">
-                        <Form.Label>Vrsta ljubimca</Form.Label>
+                        <Form.Label className="label-addAdBigger">Vrsta ljubimca</Form.Label>
                         <Form.Control type="text" placeholder="Upišite vrstu ljubimca" onChange={handleBreedChange}
                                       value={adBreed}/>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="adName">
-                        <Form.Label>Ime ljubimca</Form.Label>
+                        <Form.Label className="label-addAdBigger">Ime ljubimca</Form.Label>
                         <Form.Control type="text" placeholder="Upišite ime ljubimca" onChange={handleNameChange}
                                       value={adName}/>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="adDateTime">
-                        <Form.Label>{adCategory==="U_SKLONISTU" ? 'Odaberite datum i vrijeme pronalaska ljubimca' : 'Odaberite datum i vrijeme nestanka ljubimca'}</Form.Label>
+                        <Form.Label
+                            className="label-addAdBigger">{adCategory === "U_SKLONISTU" ? 'Odaberite datum i vrijeme pronalaska ljubimca' : 'Odaberite datum i vrijeme nestanka ljubimca'}</Form.Label>
                         <Form.Control type="datetime-local" onChange={handleDateTimeChange} value={adDateTime}/>
                     </Form.Group>
-                    {adCategory==="U_SKLONISTU" ? 'Lokacija skloništa' : 'Lokacija nestanka ljubimca'}
-                    <Form.Group className="mb-3" controlId="adLocation">
-                        <MapContainer center={mapCenter} zoom={7} minZoom={7}>
-                            <MapClickHandler/>
-                            <TileLayer
-                                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                                url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-                            />
-                        </MapContainer>
+                    <span
+                        className="label-addAdBigger">{adCategory === "U_SKLONISTU" ? 'Lokacija skloništa' : 'Lokacija nestanka ljubimca'}</span>
+                    <Form.Group className="mb-3 rounded-border" controlId="adLocation">
+                        <div style={{border: '2px solid black', borderRadius: '10px', overflow: 'hidden'}}>
+                            <MapContainer center={mapCenter} zoom={7} minZoom={7}>
+                                <MapClickHandler/>
+                                <TileLayer
+                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                                    url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                />
+                            </MapContainer>
+                        </div>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="adColor">
-                        <Form.Label>Boja ljubimca</Form.Label>
+                        <Form.Label className="label-addAdBigger">Boja ljubimca</Form.Label>
                         <Form.Control type="text" placeholder="Upišite boju ljubimca" onChange={handleColorChange}
                                       value={adColor}/>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="adAge">
-                        <Form.Label>Starost ljubimca</Form.Label>
+                        <Form.Label className="label-addAdBigger">Starost ljubimca</Form.Label>
                         <Form.Control
                             type="text"
                             placeholder="Upišite starost ljubimca"
@@ -281,21 +285,21 @@ function AddAd({userData}: HomeProps) {
                         <Form.Control.Feedback type="invalid">{ageError}</Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="adDescription">
-                        <Form.Label>Opis ljubimca</Form.Label>
+                        <Form.Label className="label-addAdBigger">Opis ljubimca</Form.Label>
                         <Form.Control as="textarea" rows={3} placeholder="Opišite ljubimca"
                                       onChange={handleDescriptionChange} value={adDescription}/>
                     </Form.Group>
-                    Odaberite slike koje želite dodati(prva slika koju dodate u nizu će biti naslovna slika):
+                    <span className="label-addAdBigger">Odaberite slike koje želite dodati(prva slika koju dodate u nizu će biti naslovna slika):</span>
                     <Form.Group className="mb-3" controlId="adPhoto1">
-                        <Form.Label>1. slika ljubimca</Form.Label>
+                        <Form.Label className="label-addAdBigger">1. slika ljubimca</Form.Label>
                         <Form.Control type="file" onChange={handlePhoto1Change}/>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="adPhoto2">
-                        <Form.Label>2. slika ljubimca</Form.Label>
+                        <Form.Label className="label-addAdBigger">2. slika ljubimca</Form.Label>
                         <Form.Control type="file" onChange={handlePhoto2Change}/>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="adPhoto3">
-                        <Form.Label>3. slika ljubimca</Form.Label>
+                        <Form.Label className="label-addAdBigger">3. slika ljubimca</Form.Label>
                         <Form.Control type="file" onChange={handlePhoto3Change}/>
                     </Form.Group>
                     <Button variant="success" type="submit">

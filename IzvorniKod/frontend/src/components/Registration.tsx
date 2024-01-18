@@ -1,12 +1,13 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import "./Registration.css";
 
 function Registration() {
     document.title = "Registracija";
 
     const navigate = useNavigate();
-    
+
     const [userType, setUserType] = useState("regular");
 
     const [userName, setUserName] = useState("");
@@ -160,17 +161,17 @@ function Registration() {
                     </div>
                     <br/>
                     <div className="d-flex align-items-center">
-                        <div className="form-check form-check-inline">
+                        <div className="form-check form-check-inline" style={{marginLeft: 5}}>
                             <input
                                 type="radio"
                                 id="regularniKorisnik"
                                 name="userType"
                                 value="regular"
-                                className="form-check-input"
+                                className="form-check-input label-registrationBigger"
                                 defaultChecked={userType === "regular"}
                                 onChange={() => setUserType("regular")}
                             />
-                            <label htmlFor="regularniKorisnik" className="form-check-label">
+                            <label htmlFor="regularniKorisnik" className="form-check-label label-registrationBigger">
                                 Korisnik
                             </label>
                         </div>
@@ -183,11 +184,11 @@ function Registration() {
                                 id="sklonisteKorisnik"
                                 name="userType"
                                 value="premium"
-                                className="form-check-input"
+                                className="form-check-input label-registrationBigger"
                                 defaultChecked={userType !== "regular"}
                                 onChange={() => setUserType("premium")}
                             />
-                            <label htmlFor="sklonisteKorisnik" className="form-check-label">
+                            <label htmlFor="sklonisteKorisnik" className="form-check-label label-registrationBigger">
                                 Sklonište
                             </label>
                         </div>
@@ -198,7 +199,7 @@ function Registration() {
                     {userType === "regular" && (
                         <form>
                             <div className="form-group mb-2">
-                                <label htmlFor="ime">Ime</label>
+                                <label htmlFor="ime" className="label-registrationBigger">Ime</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -212,7 +213,7 @@ function Registration() {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label htmlFor="prezime">Prezime</label>
+                                <label htmlFor="prezime" className="label-registrationBigger">Prezime</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -226,7 +227,7 @@ function Registration() {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label htmlFor="email">E-pošta</label>
+                                <label htmlFor="email" className="label-registrationBigger">E-pošta</label>
                                 <input
                                     autoComplete="off"
                                     type="email"
@@ -241,7 +242,7 @@ function Registration() {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label htmlFor="brojTelefona">Broj telefona</label>
+                                <label htmlFor="brojTelefona" className="label-registrationBigger">Broj telefona</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -255,13 +256,13 @@ function Registration() {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label htmlFor="username">Korisničko ime</label>
+                                <label htmlFor="username" className="label-registrationBigger">Korisničko ime</label>
                                 <input
                                     autoComplete="off"
                                     type="text"
                                     className="form-control"
                                     id="username"
-                                    placeholder="Kreirajte korisničko ime"
+                                    placeholder="Stvorite korisničko ime"
                                     value={userUsername}
                                     onChange={(event) => {
                                         setUserUsername(event.target.value);
@@ -270,12 +271,12 @@ function Registration() {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label htmlFor="lozinkaKorisnika">Lozinka</label>
+                                <label htmlFor="lozinkaKorisnika" className="label-registrationBigger">Lozinka</label>
                                 <input
                                     type={showPasswordUser ? "text" : "password"}
                                     className="form-control"
                                     id="lozinkaKorisnika"
-                                    placeholder="Kreirajte lozinku"
+                                    placeholder="Stvorite lozinku"
                                     value={userPassword}
                                     onChange={(event) => {
                                         setUserPassword(event.target.value);
@@ -312,7 +313,7 @@ function Registration() {
                     {userType === "premium" && (
                         <form>
                             <div className="form-group mb-2">
-                                <label htmlFor="imeSklonista">Ime skloništa</label>
+                                <label htmlFor="imeSklonista" className="label-registrationBigger">Ime skloništa</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -326,7 +327,7 @@ function Registration() {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label htmlFor="emailSklonista">E-pošta</label>
+                                <label htmlFor="emailSklonista" className="label-registrationBigger">E-pošta</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -340,7 +341,8 @@ function Registration() {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label htmlFor="brojTelefonaSklonista">Broj telefona</label>
+                                <label htmlFor="brojTelefonaSklonista" className="label-registrationBigger">Broj
+                                    telefona</label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -354,12 +356,13 @@ function Registration() {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label htmlFor="usernameSklonista">Korisničko ime</label>
+                                <label htmlFor="usernameSklonista" className="label-registrationBigger">Korisničko
+                                    ime</label>
                                 <input
                                     type="text"
                                     className="form-control"
                                     id="usernameSklonista"
-                                    placeholder="Kreirajte korisničko ime"
+                                    placeholder="Stvorite korisničko ime"
                                     value={shelterUsername}
                                     onChange={(event) => {
                                         setShelterUsername(event.target.value);
@@ -368,12 +371,12 @@ function Registration() {
                             </div>
 
                             <div className="form-group mb-2">
-                                <label htmlFor="lozinkaSklonista">Lozinka</label>
+                                <label htmlFor="lozinkaSklonista" className="label-registrationBigger">Lozinka</label>
                                 <input
                                     type={showPasswordShelter ? "text" : "password"}
                                     className="form-control"
                                     id="lozinkaSklonista"
-                                    placeholder="Kreirajte lozinku"
+                                    placeholder="Stvorite lozinku"
                                     value={shelterPassword}
                                     onChange={(event) => {
                                         setShelterPassword(event.target.value);

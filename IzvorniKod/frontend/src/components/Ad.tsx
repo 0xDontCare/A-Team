@@ -75,6 +75,16 @@ const Ad: React.FC<CardProps> = ({
                         {!isCardFlipped && (
                             <div className="flip-card-front">
                                 <h5 className="card-title cardTitle">{title}</h5>
+                                <img
+                                    src={`/api/images/${imageLink}`}
+                                    alt={`Ad ${id}`}
+                                    className="card-img-top border border-dark border-2 rounded"
+                                    style={{
+                                        width: '100%',
+                                        height: '225px',
+                                        marginTop: '20px'
+                                    }}
+                                />
                             </div>
                         )}
                         {isCardFlipped && (
@@ -90,17 +100,9 @@ const Ad: React.FC<CardProps> = ({
                             </div>
                         )}
                     </div>
-                    <img
-                        src={`/api/images/${imageLink}`}
-                        alt={`Ad ${id}`}
-                        className="card-img-top border border-dark border-2 rounded"
-                        style={{
-                            width: '100%',
-                            height: '225px'
-                        }}
-                    />
                     <button
                         className="btn btn-success mt-3"
+                        style={{marginLeft: "15px", marginRight: "15px"}}
                         onClick={handleButtonClick}
                     >
                         {isCardFlipped ? "Povratak" : "Detalji"}

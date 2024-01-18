@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import "./Login.css";
 
 function Login({setLoginStatus, setUserData}) {
     document.title = "Prijava";
@@ -67,7 +68,7 @@ function Login({setLoginStatus, setUserData}) {
 
                     <form>
                         <div className="form-group mb-2">
-                            <label htmlFor="email">Korisničko ime</label>
+                            <label htmlFor="email" className="label-emailAndPassword">Korisničko ime</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -82,7 +83,7 @@ function Login({setLoginStatus, setUserData}) {
                         </div>
 
                         <div className="form-group mb-2">
-                            <label htmlFor="lozinka">Lozinka</label>
+                            <label htmlFor="lozinka" className="label-emailAndPassword">Lozinka</label>
                             <input
                                 type={showPassword ? "text" : "password"}
                                 className="form-control"
@@ -96,7 +97,7 @@ function Login({setLoginStatus, setUserData}) {
                         </div>
 
                         <div className="form-check mt-2">
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheck"
+                        <input className="form-check-input" type="checkbox" value="" id="flexCheck"
                                    onChange={() => setShowPassword(!showPassword)}/>
                             <label className="form-check-label" htmlFor="flexCheck">
                                 Prikažite lozinku
