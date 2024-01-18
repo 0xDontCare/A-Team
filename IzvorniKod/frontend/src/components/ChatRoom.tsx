@@ -174,34 +174,30 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
   // };
 
   return (
-    <div className="chatContainer">
+    <div className="chatContainer mt-3 w-705">
+      <h1 className="text-center">Chat</h1>
       <div className="row d-flex justify-content-center">
-        <div className="col-md-8 col-lg-6">
-          <div
-            className="card shadow-0 border"
-            style={{ backgroundColor: "f0f2f5" }}
-          >
-            <div className="card-body p-4">
+        <div>
+          <div className="card bg-transparent">
+            <div className="card-body p-4 ">
               {messages.map((message) => (
                 <div key={message.messageId} className="card mb-4">
-                  <div className="card-body">
-                    <div className="d-flex justify-content-between">
-                      <div className="d-flex flex-row align-items-center">
-                        <p className="small mb-0 ms-2">
-                          {message.senderUsername}
-                        </p>
-                        <p className="small mb-0 ms-2">{message.senderEmail}</p>
-                        <p className="small mb-0 ms-2">
-                          {message.senderPhoneNumber}
-                        </p>
-                      </div>
+                  <div className="card-body d-flex flex-column justify-content-between">
+                    <div className="d-flex flex-row align-items-center">
+                      <p className="small mb-0 me-3">
+                        {message.senderUsername}
+                      </p>
+                      <p className="small mb-0 me-3">{message.senderEmail}</p>
+                      <p className="small mb-0 me-3">
+                        {message.senderPhoneNumber}
+                      </p>
                     </div>
-                    <p>{message.messageText}</p>
+
+                    <p className="mt-2">{message.messageText}</p>
                     {message.disappearanceLocationLat !== null && (
                       <div>
-                        <p>
+                        <p className="mb-0">
                           <Button
-                            className="ms-2"
                             variant="primary"
                             onClick={() => handleToggle(message.messageId)}
                             aria-controls={`collapseExample-${message.messageId}`}
@@ -251,29 +247,29 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
                     <div className="d-flex justify-content-between">
                       {chat.senderUsername !== userData.username && (
                         <div className="d-flex flex-row align-items-center">
-                          <p className="small mb-0 ms-2">
+                          <p className="small mb-0 me-3">
                             {chat.senderUsername}
                           </p>
-                          <p className="small mb-0 ms-2">{chat.phoneNumber}</p>
-                          <p className="small mb-0 ms-2">{chat.email}</p>
+                          <p className="small mb-0 me-3">{chat.phoneNumber}</p>
+                          <p className="small mb-0 me-3">{chat.email}</p>
                         </div>
                       )}
                       {chat.senderUsername === userData.username && (
                         <div className="d-flex flex-row align-items-center">
-                          <p className="small mb-0 ms-2">
+                          <p className="small mb-0 me-3">
                             {chat.senderUsername}
                           </p>
-                          <p className="small mb-0 ms-2">
+                          <p className="small mb-0 me-3">
                             {userData.phoneNumber}
                           </p>
-                          <p className="small mb-0 ms-2">{userData.email}</p>
+                          <p className="small mb-0 me-3">{userData.email}</p>
                         </div>
                       )}
                     </div>
-                    <p>{chat.messageText}</p>
+                    <p className="mt-2">{chat.messageText}</p>
                     {chat.disappearanceLocationLat !== null && (
                       <div>
-                        <p>
+                        <p className="mb-0">
                           <Button
                             className="ms-2"
                             variant="primary"
@@ -318,13 +314,13 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
                   </div>
                 </div>
               ))}
-              <div className="chat-content">
+              <div className="chat-content ">
                 {loginStatus && (
-                  <div className="send-message d-flex flex-column border border-2 rounded p-3">
-                    <p className="font-weight-bold">New message</p>
+                  <div className="send-message d-flex flex-column border border-2 rounded p-3 bg-white">
+                    <h4>New message</h4>
                     <input
                       type="text"
-                      className="input-message mb-3"
+                      className="input-message my-3"
                       placeholder="Message Text"
                       value={newMessage?.messageText || ""}
                       onChange={(e) =>
