@@ -285,6 +285,7 @@ function AddAd({userData}: HomeProps) {
                         <Form.Control as="textarea" rows={3} placeholder="Opišite ljubimca"
                                       onChange={handleDescriptionChange} value={adDescription}/>
                     </Form.Group>
+                    Odaberite slike koje želite dodati(prva slika koju dodate u nizu će biti naslovna slika):
                     <Form.Group className="mb-3" controlId="adPhoto1">
                         <Form.Label>1. slika ljubimca</Form.Label>
                         <Form.Control type="file" onChange={handlePhoto1Change}/>

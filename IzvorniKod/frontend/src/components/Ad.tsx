@@ -11,6 +11,7 @@ interface CardProps {
     shelterName: string | null;
     loggedInUsername: string;
     username: string;
+    imageLink: string;
     showDeleteButton: boolean;
     onDelete: (id: number) => void;
     showChangeButton: boolean;
@@ -27,6 +28,7 @@ const Ad: React.FC<CardProps> = ({
                                      loggedInUsername,
                                      username,
                                      showDeleteButton,
+                                     imageLink,
                                      onDelete,
                                      showChangeButton
                                  }) => {
@@ -88,9 +90,22 @@ const Ad: React.FC<CardProps> = ({
                             </div>
                         )}
                     </div>
-                    <button className="btn btn-success" onClick={handleButtonClick}>
+                    <img
+                        src={`/api/images/${imageLink}`}
+                        alt={`Ad ${id}`}
+                        className="card-img-top border border-dark border-2 rounded"
+                        style={{
+                            width: '100%',
+                            height: '225px'
+                        }}
+                    />
+                    <button
+                        className="btn btn-success mt-3"
+                        onClick={handleButtonClick}
+                    >
                         {isCardFlipped ? "Povratak" : "Detalji"}
                     </button>
+
                 </div>
             </Link>
             {showDeleteButton && loggedInUsername === username && (

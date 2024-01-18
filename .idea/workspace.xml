@@ -6,8 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="e8bea504-cbb3-43ca-a949-d67d77c7a9b7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Ad.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Ad.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/AddAd.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/AddAd.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/ChangeAd.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/ChangeAd.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Home.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +84,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.1-openjdk-21.0.1-3183f394aec4-7d648f2c" />
+        <option value="jdk-21.0.2-openjdk-21.0.2-f644763e9732-c0c073db" />
       </set>
     </attachedChunks>
   </component>
@@ -132,6 +135,10 @@
       <workItem from="1705346335245" duration="61000" />
       <workItem from="1705346402560" duration="44000" />
       <workItem from="1705346452298" duration="2353000" />
+      <workItem from="1705502354187" duration="7000" />
+      <workItem from="1705502378335" duration="12000" />
+      <workItem from="1705502396824" duration="3405000" />
+      <workItem from="1705574822485" duration="3008000" />
     </task>
     <servers />
   </component>

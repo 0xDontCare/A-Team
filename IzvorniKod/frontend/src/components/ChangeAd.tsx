@@ -377,36 +377,22 @@ function ChangeAd() {
                                                 name={`${image}`}
                                                 onChange={handleImageCheckboxChange}
                                             />
-                                            <div
-                                                className="img-container"
+                                            <img
+                                                src={`/api/images/${image}`}
+                                                alt={`Image ${index + 1}`}
+                                                className="img-fluid border border-dark border-2 rounded"
                                                 style={{
-                                                    position: 'relative',
-                                                    overflow: 'hidden',
-                                                    paddingBottom: '100%',
+                                                    width: '100%',
+                                                    height: '275px'
                                                 }}
-                                            >
-                                                <img
-                                                    src={`/api/images/${image}`}
-                                                    alt={`Image ${index + 1}`}
-                                                    className="img-fluid"
-                                                    style={{
-                                                        position: 'absolute',
-                                                        top: 0,
-                                                        left: 0,
-                                                        width: '100%',
-                                                        height: '100%',
-                                                        objectFit: 'cover',
-                                                    }}
-                                                />
-                                            </div>
+                                            />
                                         </div>
                                     </div>
                                 ))}
                             </div>
                         )}
                     </Form.Group>
-                    Odaberite slike koje želite dodati(ako već postoje slike, dodane slike će biti prikazane nakon već
-                    postojećih slika):
+                    Odaberite slike koje želite dodati(ako već postoje slike, dodane slike će biti prikazane nakon postojećih slika te prva slika u nizu bit će naslovna slika):
                     <Form.Group className="mb-3" controlId="adPhoto1">
                         <Form.Label>1. slika ljubimca</Form.Label>
                         <Form.Control type="file" onChange={handlePhoto1Change}/>

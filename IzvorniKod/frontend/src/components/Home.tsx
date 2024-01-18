@@ -14,6 +14,7 @@ interface Advertisement {
     color: string;
     age: number;
     shelterName: string;
+    imageLink: string;
 }
 
 interface HomeProps {
@@ -421,6 +422,7 @@ function Home({isLoggedIn, userData}: HomeProps) {
                                     shelterName={advertisement.shelterName}
                                     loggedInUsername={userData?.username || ""}
                                     username={advertisement.username}
+                                    imageLink={advertisement.imageLink}
                                     showDeleteButton={deleteMode}
                                     onDelete={handleDelete}
                                     showChangeButton={changeMode}
