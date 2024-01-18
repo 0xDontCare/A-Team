@@ -97,7 +97,7 @@ function Login({setLoginStatus, setUserData}) {
                         </div>
 
                         <div className="form-check mt-2">
-                        <input className="form-check-input" type="checkbox" value="" id="flexCheck"
+                            <input className="form-check-input" type="checkbox" value="" id="flexCheck"
                                    onChange={() => setShowPassword(!showPassword)}/>
                             <label className="form-check-label" htmlFor="flexCheck">
                                 Prikažite lozinku
