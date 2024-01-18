@@ -22,7 +22,7 @@ interface ChatMessage {
   messageText: string;
   disappearanceLocationLat: string;
   disappearanceLocationLng: string;
-  image: string;
+  image: string | null;
   linkToImage: string;
   phoneNumber: string;
   email: string;
@@ -42,7 +42,7 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
     messageText: "",
     disappearanceLocationLat: "",
     disappearanceLocationLng: "",
-    image: "",
+    image: null,
     linkToImage: "",
     phoneNumber: "",
     email: "",
@@ -64,9 +64,9 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
         linkToImage: newMessage?.linkToImage,
       };
 
-      console.log("---------------------start");
-      console.log(chatMessage);
-      console.log("---------------------end");
+      // console.log("---------------------start");
+      // console.log(chatMessage);
+      // console.log("---------------------end");
       stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
       setNewMessage({ ...newMessage, messageText: "" });
     }
@@ -117,6 +117,18 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
 
     fetchMessages();
   }, [advertisementId]);
+
+  // const handleImageChange = (e) => {
+  //   const file = e.target.files[0];
+
+  //   const reader = new FileReader();
+  //   reader.onloadend = () => {
+  //     const previewUrl = reader.result;
+
+  //     setNewMessage({ ...newMessage, image: previewUrl });
+  //   };
+  //   reader.readAsDataURL(file);
+  // };
 
   return (
     <div className="chatContainer">
@@ -206,15 +218,11 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
                         })
                       }
                     />
-                    <input
-                      type="text"
+                    {/* <input
+                      type="file"
                       className="input-message"
-                      placeholder="Image"
-                      value={newMessage?.image || ""}
-                      onChange={(e) =>
-                        setNewMessage({ ...newMessage, image: e.target.value })
-                      }
-                    />
+                      onChange={handleImageChange}
+                    /> */}
                     <input
                       type="text"
                       className="input-message"
