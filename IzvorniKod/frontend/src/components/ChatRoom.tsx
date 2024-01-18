@@ -87,7 +87,6 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
   };
 
   const onPublicMessageReceived = (payload: Payload) => {
-    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++");
     try {
       let payloadData = JSON.parse(payload.body) as any;
       publicChats.push(payloadData);
@@ -146,8 +145,11 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
                     <div className="d-flex justify-content-between">
                       <div className="d-flex flex-row align-items-center">
                         <p className="small mb-0 ms-2">
-                          {message.senderUsername} {message.email}{" "}
-                          {message.phoneNumber}
+                          {message.senderUsername}
+                        </p>
+                        <p className="small mb-0 ms-2">{message.senderEmail}</p>
+                        <p className="small mb-0 ms-2">
+                          {message.senderPhoneNumber}
                         </p>
                       </div>
                     </div>
@@ -156,31 +158,36 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
                 </div>
               ))}
 
-              <div className="chat-content">
-                <ul className="chat-messages">
-                  {publicChats.map((chat, index) => (
-                    <li>
+              {publicChats.map((chat) => (
+                <div className="card mb-4">
+                  <div className="card-body">
+                    <div className="d-flex justify-content-between">
                       {chat.senderUsername !== userData.username && (
-                        <div>
-                          <div>{chat.senderUsername}</div>
-                          <div>{chat.phoneNumber}</div>
-                          <div>{chat.email}</div>
+                        <div className="d-flex flex-row align-items-center">
+                          <p className="small mb-0 ms-2">
+                            {chat.senderUsername}
+                          </p>
+                          <p className="small mb-0 ms-2">{chat.phoneNumber}</p>
+                          <p className="small mb-0 ms-2">{chat.email}</p>
                         </div>
                       )}
                       {chat.senderUsername === userData.username && (
-                        <div>
-                          <div className="avatar self">
+                        <div className="d-flex flex-row align-items-center">
+                          <p className="small mb-0 ms-2">
                             {chat.senderUsername}
-                          </div>
-                          <div>{userData.phoneNumber}</div>
-                          <div>{userData.email}</div>
+                          </p>
+                          <p className="small mb-0 ms-2">
+                            {userData.phoneNumber}
+                          </p>
+                          <p className="small mb-0 ms-2">{userData.email}</p>
                         </div>
                       )}
-                      <div className="message-data">{chat.messageText}</div>
-                    </li>
-                  ))}
-                </ul>
-
+                    </div>
+                    <p>{chat.messageText}</p>
+                  </div>
+                </div>
+              ))}
+              <div className="chat-content">
                 {loginStatus && (
                   <div className="send-message">
                     <input
