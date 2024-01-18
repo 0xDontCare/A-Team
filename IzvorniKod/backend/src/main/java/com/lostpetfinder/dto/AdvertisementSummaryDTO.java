@@ -13,9 +13,10 @@ public class AdvertisementSummaryDTO {
     private final String color;
     private final Integer age;
     private final String shelterName;
+    private final String imageLink;
 
 
-    public AdvertisementSummaryDTO(Long adId, String petName, String species,String breed, String color, Integer age, String shelterName, String username) {
+    public AdvertisementSummaryDTO(Long adId, String petName, String species,String breed, String color, Integer age, String shelterName, String username, String imageLink) {
         this.adId = adId;
         this.petName = petName;
         this.username = username;
@@ -24,6 +25,7 @@ public class AdvertisementSummaryDTO {
         this.color = color;
         this.age = age;
         this.shelterName = shelterName;
+        this.imageLink = imageLink;
     }
 
     public Long getAdId() {
@@ -56,5 +58,8 @@ public class AdvertisementSummaryDTO {
 
     public String getBreed() {
         return breed;
+    }
+    public String getImageLink() {
+        return imageLink;
     }
 }

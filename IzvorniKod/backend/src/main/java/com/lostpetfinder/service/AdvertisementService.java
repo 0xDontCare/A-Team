@@ -61,7 +61,8 @@ public class AdvertisementService {
                         ad.getPet().getColor(),
                         ad.getPet().getAge(),
                         ad.getUser() instanceof Registered ? null : ((Shelter) ad.getUser()).getName(),
-                        ad.getUser().getUsername()))
+                        ad.getUser().getUsername(),
+                        imageRepository.findAllByPetPetId(ad.getPet().getPetId()).get(0).getLinkToImage()))
                 .toList();
     }
 
