@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class MessageDTO {
 
+    private Long id;
     private String senderUsername;
     private String senderEmail;
     private String senderPhoneNumber;
@@ -16,7 +17,8 @@ public class MessageDTO {
 
     public MessageDTO() {}
 
-    public MessageDTO(String senderUsername,
+    public MessageDTO(Long id,
+                      String senderUsername,
                       String senderEmail,
                       String senderPhoneNumber,
                       Long advertisementId,
@@ -26,6 +28,7 @@ public class MessageDTO {
                       MultipartFile image,
                       String linkToImage)
     {
+        this.id = id;
         this.senderUsername = senderUsername;
         this.senderEmail = senderEmail;
         this.senderPhoneNumber = senderPhoneNumber;
@@ -38,6 +41,9 @@ public class MessageDTO {
     }
 
 
+    public Long getId() {
+        return id;
+    }
     public void setSenderUsername(String senderUsername) {
         this.senderUsername = senderUsername;
     }

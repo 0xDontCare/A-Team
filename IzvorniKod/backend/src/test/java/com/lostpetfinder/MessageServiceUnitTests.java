@@ -159,11 +159,11 @@ public class MessageServiceUnitTests {
         MessagePK pk2 = new MessagePK(user2, LocalDateTime.now());
 
         Message message1 = new Message();
-        message1.setId(pk1);
+        message1.setAltId(pk1);
         message1.setAdvertisement(advertisement1);
         message1.setText("Hello, World from testUser1!");
         Message message2 = new Message();
-        message2.setId(pk2);
+        message2.setAltId(pk2);
         message2.setAdvertisement(advertisement2);
         message2.setText("Hello, World from testUser2!");
 

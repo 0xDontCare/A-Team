@@ -11,8 +11,12 @@ import java.time.ZoneOffset;
 @Table(name = "messages")
 public class Message {
 
-    @EmbeddedId
-    private MessagePK id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true)
+    private MessagePK altId;
 
     @Column
     @Size(max = 1000)
@@ -37,7 +41,7 @@ public class Message {
                    Advertisement advertisement,
                    Image image)
     {
-        this.id = new MessagePK(messageSender, LocalDateTime.now(ZoneOffset.UTC));
+        this.altId = new MessagePK(messageSender, LocalDateTime.now(ZoneOffset.UTC));
         this.text = text;
         this.location = location;
         this.image = image;
@@ -45,12 +49,18 @@ public class Message {
     }
 
 
-    public MessagePK getId() {
+    public Long getId() {
         return id;
     }
-
-    public void setId(MessagePK id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+    public MessagePK getAltId() {
+        return altId;
+    }
+
+    public void setAltId(MessagePK altId) {
+        this.altId = altId;
     }
 
     public String getText() {

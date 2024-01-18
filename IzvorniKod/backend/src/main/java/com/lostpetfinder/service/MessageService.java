@@ -93,7 +93,7 @@ public class MessageService {
                 .findAllByAdvertisementAdvertisementId(advertisementId)
                 .stream()
                 .sorted(Comparator
-                        .comparing(message -> ((Message) message).getId().getSendingDateTime())
+                        .comparing(message -> ((Message) message).getAltId().getSendingDateTime())
                         .reversed())
                 .map(MessageService::convertToMessageDTO)
                 .collect(Collectors.toList());
@@ -103,9 +103,10 @@ public class MessageService {
     private static MessageDTO convertToMessageDTO(Message message) {
 
         return new MessageDTO(
-                message.getId().getUser().getUsername(),
-                message.getId().getUser().getEmail(),
-                message.getId().getUser().getPhoneNumber(),
+                message.getId(),
+                message.getAltId().getUser().getUsername(),
+                message.getAltId().getUser().getEmail(),
+                message.getAltId().getUser().getPhoneNumber(),
                 message.getAdvertisement().getAdvertisementId(),
                 message.getText(),
                 message.getLocation() == null ? null : message.getLocation().getCoordinates().getLatitude(),
