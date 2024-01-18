@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import { over } from "stompjs";
 import * as Stomp from "stompjs";
 import SockJS from "sockjs-client";
+import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import { Button, Collapse, Card } from "react-bootstrap";
+import "./AddAdChangeAd.css";
+import "leaflet/dist/leaflet.css";
 
 interface ChatRoomProps {
   advertisementId: string;
@@ -20,12 +24,13 @@ interface ChatMessage {
   senderUsername: string;
   advertisementId: string;
   messageText: string;
-  disappearanceLocationLat: string;
-  disappearanceLocationLng: string;
+  disappearanceLocationLat: number | null;
+  disappearanceLocationLng: number | null;
   image: string | null;
   linkToImage: string;
   phoneNumber: string;
   email: string;
+  messageId: number | null;
 }
 
 interface Payload {
@@ -35,20 +40,57 @@ interface Payload {
 var stompClient: Stomp.Client | null = null;
 
 function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
+  const [mapCenter, setMapCenter] = useState<[number, number]>([44.5, 16.0]);
+  const [markerPosition, setMarkerPosition] = useState<[number, number] | null>(
+    null
+  );
+
   const [messages, setMessages] = useState<ChatMessage[]>(() => []);
   const [newMessage, setNewMessage] = useState<ChatMessage>({
     senderUsername: "",
     advertisementId: "",
     messageText: "",
-    disappearanceLocationLat: "",
-    disappearanceLocationLng: "",
+    disappearanceLocationLat: null,
+    disappearanceLocationLng: null,
     image: null,
     linkToImage: "",
     phoneNumber: "",
     email: "",
+    messageId: null,
   });
 
   const [publicChats, setPublicChats] = useState([]);
+
+  const [isOpenAddLocation, setIsOpenAddLocation] = useState(false);
+
+  const handleToggleAddLocation = () =>
+    setIsOpenAddLocation(!isOpenAddLocation);
+
+  const [openMessageId, setOpenMessageId] = useState(null);
+
+  const handleToggle = (messageId) => {
+    setOpenMessageId((prevId) => (prevId === messageId ? null : messageId));
+  };
+
+  function MapClickHandler() {
+    const map = useMapEvents({
+      click: (e) => {
+        const lat = e.latlng.lat;
+        const lng = e.latlng.lng;
+
+        setMarkerPosition([lat, lng]);
+        setNewMessage({
+          ...newMessage,
+          disappearanceLocationLat: lat,
+          disappearanceLocationLng: lng,
+        });
+
+        setMapCenter([lat, lng]);
+      },
+    });
+
+    return markerPosition ? <Marker position={markerPosition}></Marker> : null;
+  }
 
   const sendValue = () => {
     if (stompClient) {
@@ -66,6 +108,7 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
 
       stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
       setNewMessage({ ...newMessage, messageText: "" });
+      if (isOpenAddLocation) handleToggleAddLocation();
     }
   };
 
@@ -140,7 +183,7 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
           >
             <div className="card-body p-4">
               {messages.map((message) => (
-                <div className="card mb-4">
+                <div key={message.messageId} className="card mb-4">
                   <div className="card-body">
                     <div className="d-flex justify-content-between">
                       <div className="d-flex flex-row align-items-center">
@@ -154,12 +197,56 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
                       </div>
                     </div>
                     <p>{message.messageText}</p>
+                    {message.disappearanceLocationLat !== null && (
+                      <div>
+                        <p>
+                          <Button
+                            className="ms-2"
+                            variant="primary"
+                            onClick={() => handleToggle(message.messageId)}
+                            aria-controls={`collapseExample-${message.messageId}`}
+                            aria-expanded={openMessageId === message.messageId}
+                          >
+                            Lokacija
+                          </Button>
+                        </p>
+                        <Collapse
+                          in={openMessageId === message.messageId}
+                          id={`collapseExample-${message.messageId}`}
+                        >
+                          <div id="collapseExample">
+                            <Card>
+                              <Card.Body>
+                                <MapContainer
+                                  center={[
+                                    message.disappearanceLocationLat,
+                                    message.disappearanceLocationLng,
+                                  ]}
+                                  zoom={7}
+                                >
+                                  <TileLayer
+                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                                    url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                  />
+                                  <Marker
+                                    position={[
+                                      message.disappearanceLocationLat,
+                                      message.disappearanceLocationLng,
+                                    ]}
+                                  ></Marker>
+                                </MapContainer>
+                              </Card.Body>
+                            </Card>
+                          </div>
+                        </Collapse>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
 
               {publicChats.map((chat) => (
-                <div className="card mb-4">
+                <div key={chat.messageId} className="card mb-4">
                   <div className="card-body">
                     <div className="d-flex justify-content-between">
                       {chat.senderUsername !== userData.username && (
@@ -184,6 +271,50 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
                       )}
                     </div>
                     <p>{chat.messageText}</p>
+                    {chat.disappearanceLocationLat !== null && (
+                      <div>
+                        <p>
+                          <Button
+                            className="ms-2"
+                            variant="primary"
+                            onClick={() => handleToggle(chat.messageId)}
+                            aria-controls={`collapseExample-${chat.messageId}`}
+                            aria-expanded={openMessageId === chat.messageId}
+                          >
+                            Lokacija
+                          </Button>
+                        </p>
+                        <Collapse
+                          in={openMessageId === chat.messageId}
+                          id={`collapseExample-${chat.messageId}`}
+                        >
+                          <div id="collapseExample">
+                            <Card>
+                              <Card.Body>
+                                <MapContainer
+                                  center={[
+                                    chat.disappearanceLocationLat,
+                                    chat.disappearanceLocationLng,
+                                  ]}
+                                  zoom={7}
+                                >
+                                  <TileLayer
+                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                                    url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                  />
+                                  <Marker
+                                    position={[
+                                      chat.disappearanceLocationLat,
+                                      chat.disappearanceLocationLng,
+                                    ]}
+                                  ></Marker>
+                                </MapContainer>
+                              </Card.Body>
+                            </Card>
+                          </div>
+                        </Collapse>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
@@ -202,7 +333,7 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
                         })
                       }
                     />
-                    <input
+                    {/* <input
                       type="text"
                       className="input-message"
                       placeholder="Disappearance Location Lat"
@@ -225,7 +356,7 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
                           disappearanceLocationLng: e.target.value,
                         })
                       }
-                    />
+                    /> */}
                     {/* <input
                       type="file"
                       className="input-message"
@@ -243,6 +374,40 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
                         })
                       }
                     />
+
+                    <div>
+                      <p>
+                        <Button
+                          className="ms-2"
+                          variant="primary"
+                          onClick={handleToggleAddLocation}
+                          aria-controls="collapseExample"
+                          aria-expanded={isOpenAddLocation}
+                        >
+                          Add location
+                        </Button>
+                      </p>
+                      <Collapse in={isOpenAddLocation}>
+                        <div id="collapseExample">
+                          <Card>
+                            <Card.Body>
+                              <MapContainer
+                                center={mapCenter}
+                                zoom={7}
+                                minZoom={7}
+                              >
+                                <MapClickHandler />
+                                <TileLayer
+                                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                                  url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                />
+                              </MapContainer>
+                            </Card.Body>
+                          </Card>
+                        </div>
+                      </Collapse>
+                    </div>
+
                     <button
                       type="button"
                       className="send-button"
