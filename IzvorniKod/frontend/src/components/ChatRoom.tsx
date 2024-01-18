@@ -320,10 +320,11 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
               ))}
               <div className="chat-content">
                 {loginStatus && (
-                  <div className="send-message">
+                  <div className="send-message d-flex flex-column border border-2 rounded p-3">
+                    <p className="font-weight-bold">New message</p>
                     <input
                       type="text"
-                      className="input-message"
+                      className="input-message mb-3"
                       placeholder="Message Text"
                       value={newMessage?.messageText || ""}
                       onChange={(e) =>
@@ -333,38 +334,9 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
                         })
                       }
                     />
-                    {/* <input
-                      type="text"
-                      className="input-message"
-                      placeholder="Disappearance Location Lat"
-                      value={newMessage?.disappearanceLocationLat || ""}
-                      onChange={(e) =>
-                        setNewMessage({
-                          ...newMessage,
-                          disappearanceLocationLat: e.target.value,
-                        })
-                      }
-                    />
                     <input
                       type="text"
-                      className="input-message"
-                      placeholder="Disappearance Location Lng"
-                      value={newMessage?.disappearanceLocationLng || ""}
-                      onChange={(e) =>
-                        setNewMessage({
-                          ...newMessage,
-                          disappearanceLocationLng: e.target.value,
-                        })
-                      }
-                    /> */}
-                    {/* <input
-                      type="file"
-                      className="input-message"
-                      onChange={handleImageChange}
-                    /> */}
-                    <input
-                      type="text"
-                      className="input-message"
+                      className="input-message mb-3"
                       placeholder="Link To Image"
                       value={newMessage?.linkToImage || ""}
                       onChange={(e) =>
@@ -374,11 +346,15 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
                         })
                       }
                     />
+                    {/* <input
+                        type="file"
+                        className="input-message"
+                        onChange={handleImageChange}
+                      /> */}
 
                     <div>
-                      <p>
+                      <div className="d-flex flex-row justify-content-between">
                         <Button
-                          className="ms-2"
                           variant="primary"
                           onClick={handleToggleAddLocation}
                           aria-controls="collapseExample"
@@ -386,8 +362,15 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
                         >
                           Add location
                         </Button>
-                      </p>
-                      <Collapse in={isOpenAddLocation}>
+                        <Button
+                          type="button"
+                          className="send-button btn-success"
+                          onClick={sendValue}
+                        >
+                          Send
+                        </Button>
+                      </div>
+                      <Collapse in={isOpenAddLocation} className="mt-3">
                         <div id="collapseExample">
                           <Card>
                             <Card.Body>
@@ -407,14 +390,6 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
                         </div>
                       </Collapse>
                     </div>
-
-                    <button
-                      type="button"
-                      className="send-button"
-                      onClick={sendValue}
-                    >
-                      send
-                    </button>
                   </div>
                 )}
               </div>
