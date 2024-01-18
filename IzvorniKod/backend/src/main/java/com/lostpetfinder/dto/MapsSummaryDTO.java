@@ -70,6 +70,22 @@ public class MapsSummaryDTO {
         }
     }
 
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
+    }
+
     public String getPlace() {
         return place;
     }

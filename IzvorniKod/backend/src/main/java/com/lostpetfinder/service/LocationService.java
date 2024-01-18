@@ -29,7 +29,7 @@ public class LocationService {
         this.locationRepository = locationRepository;
     }
 
-    private static MapsSummaryDTO getLocInfoFromAPI(double latitude, double longitude) {
+    protected MapsSummaryDTO getLocInfoFromAPI(double latitude, double longitude) {
 
         RestTemplate restTemplate = new RestTemplate();
         String apiKey = "AIzaSyDXFHTxz_VlUm8TRSq9D_6xsiIuLiUf3vs";

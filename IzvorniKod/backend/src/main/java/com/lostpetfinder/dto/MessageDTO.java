@@ -14,6 +14,8 @@ public class MessageDTO {
     private MultipartFile image;
     private String linkToImage;
 
+    public MessageDTO() {}
+
     public MessageDTO(String senderUsername,
                       String senderEmail,
                       String senderPhoneNumber,
@@ -35,6 +37,34 @@ public class MessageDTO {
         this.linkToImage = linkToImage;
     }
 
+
+    public void setSenderUsername(String senderUsername) {
+        this.senderUsername = senderUsername;
+    }
+
+    public void setAdvertisementId(Long advertisementId) {
+        this.advertisementId = advertisementId;
+    }
+
+    public void setMessageText(String messageText) {
+        this.messageText = messageText;
+    }
+
+    public void setDisappearanceLocationLat(Double disappearanceLocationLat) {
+        this.disappearanceLocationLat = disappearanceLocationLat;
+    }
+
+    public void setDisappearanceLocationLng(Double disappearanceLocationLng) {
+        this.disappearanceLocationLng = disappearanceLocationLng;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
+    }
+
+    public void setLinkToImage(String linkToImage) {
+        this.linkToImage = linkToImage;
+    }
 
     public String getSenderUsername() {
         return senderUsername;
