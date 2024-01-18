@@ -64,9 +64,6 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
         linkToImage: newMessage?.linkToImage,
       };
 
-      // console.log("---------------------start");
-      // console.log(chatMessage);
-      // console.log("---------------------end");
       stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
       setNewMessage({ ...newMessage, messageText: "" });
     }
@@ -80,13 +77,17 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
 
   const onConnected = () => {
     if (stompClient) {
-      stompClient.subscribe("/chatroom/public", onPublicMessageReceived);
+      stompClient.subscribe(
+        `/chatroom/${advertisementId}`,
+        onPublicMessageReceived
+      );
     } else {
       console.error("stompClient is null");
     }
   };
 
   const onPublicMessageReceived = (payload: Payload) => {
+    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++");
     try {
       let payloadData = JSON.parse(payload.body) as any;
       publicChats.push(payloadData);
@@ -140,7 +141,7 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
           >
             <div className="card-body p-4">
               {messages.map((message) => (
-                <div key={message.advertisementId} className="card mb-4">
+                <div className="card mb-4">
                   <div className="card-body">
                     <div className="d-flex justify-content-between">
                       <div className="d-flex flex-row align-items-center">
@@ -158,18 +159,18 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
               <div className="chat-content">
                 <ul className="chat-messages">
                   {publicChats.map((chat, index) => (
-                    <li key={index}>
-                      {chat.senderUserName !== userData.username && (
+                    <li>
+                      {chat.senderUsername !== userData.username && (
                         <div>
-                          <div>{chat.senderUserName}</div>
+                          <div>{chat.senderUsername}</div>
                           <div>{chat.phoneNumber}</div>
                           <div>{chat.email}</div>
                         </div>
                       )}
-                      {chat.senderUserName === userData.username && (
+                      {chat.senderUsername === userData.username && (
                         <div>
                           <div className="avatar self">
-                            {chat.senderUserName}
+                            {chat.senderUsername}
                           </div>
                           <div>{userData.phoneNumber}</div>
                           <div>{userData.email}</div>
