@@ -128,7 +128,7 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
   };
 
   const registerUser = () => {
-    let Sock = new SockJS("http://localhost:8080/ws");
+    let Sock = new SockJS("/api/ws");
     stompClient = over(Sock);
     stompClient.connect({}, onConnected, onError);
   };
