@@ -7,6 +7,8 @@ import { Button, Collapse, Card } from "react-bootstrap";
 import "./AddAdChangeAd.css";
 import "leaflet/dist/leaflet.css";
 
+const API_BASE_URL = process.env.API_BASE_URL;
+
 interface ChatRoomProps {
   advertisementId: string;
   loginStatus: boolean;
@@ -128,7 +130,8 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
   };
 
   const registerUser = () => {
-    let Sock = new SockJS("/api/ws");
+
+    let Sock = new SockJS(API_BASE_URL+"/ws");
     stompClient = over(Sock);
     stompClient.connect({}, onConnected, onError);
   };
