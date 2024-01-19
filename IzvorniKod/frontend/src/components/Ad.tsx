@@ -117,28 +117,32 @@ const Ad: React.FC<CardProps> = ({
 
                 </div>
             </Link>
-            {showDeleteButton && loggedInUsername === username && (
-                <div className="d-grid w-50 mx-auto mt-2">
-                    <button
-                        className="btn btn-danger"
-                        onClick={handleDeleteClick}
-                        disabled={isDeleting}
-                    >
-                        {isDeleting ? "Završite brisanje" : "Izbrišite oglas"}
-                    </button>
-                </div>
-            )}
-            {showChangeButton && loggedInUsername === username && (
-                <div className="d-grid w-50 mx-auto mt-2">
-                    <button
-                        className="btn btn-primary"
-                        onClick={handleChangeClick}
-                        disabled={isChanging}
-                    >
-                        {isChanging ? "Završite izmjenu" : "Izmijenite oglas"}
-                    </button>
-                </div>
-            )}
+            <div className="d-grid mx-auto mt-2">
+                {(showDeleteButton || showChangeButton) && loggedInUsername === username && (
+                    <div className={`${
+                        showDeleteButton && showChangeButton ? "d-flex justify-content-around w-70" : "text-center"
+                    }`}>
+                        {showDeleteButton && (
+                            <button
+                                className="btn btn-danger"
+                                onClick={handleDeleteClick}
+                                disabled={isDeleting}
+                            >
+                                {isDeleting ? "Završite brisanje" : "Izbrišite oglas"}
+                            </button>
+                        )}
+                        {showChangeButton && (
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleChangeClick}
+                                disabled={isChanging}
+                            >
+                                {isChanging ? "Završite izmjenu" : "Izmijenite oglas"}
+                            </button>
+                        )}
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

@@ -6,10 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e8bea504-cbb3-43ca-a949-d67d77c7a9b7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Ad.css" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Ad.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Ad.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Ad.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/AdDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/AdDetail.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/AddAd.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/AddAd.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Home.css" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Home.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Home.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +141,7 @@
       <workItem from="1705594051634" duration="5323000" />
       <workItem from="1705602712449" duration="636000" />
       <workItem from="1705609582811" duration="5000" />
-      <workItem from="1705679697927" duration="1778000" />
+      <workItem from="1705679697927" duration="4342000" />
     </task>
     <servers />
   </component>
