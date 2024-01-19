@@ -24,7 +24,7 @@ interface ChatMessage {
   messageText: string;
   disappearanceLocationLat: number | null;
   disappearanceLocationLng: number | null;
-  image: string | null;
+  images: string | null;
   linkToImage: string;
   phoneNumber: string;
   email: string;
@@ -39,7 +39,7 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
     messageText: "",
     disappearanceLocationLat: null,
     disappearanceLocationLng: null,
-    image: null,
+    images: null,
     linkToImage: "",
     phoneNumber: "",
     email: "",
@@ -96,7 +96,7 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
       messageText: newMessage.messageText,
       disappearanceLocationLat: newMessage.disappearanceLocationLat,
       disappearanceLocationLng: newMessage.disappearanceLocationLng,
-      image: newMessage.image,
+      images: [newMessage.images],
       linkToImage: newMessage.linkToImage,
     };
 
@@ -111,11 +111,6 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
     try {
       const res = await fetch("/api/messages/", options);
 
-      if (res.ok) {
-        alert("Komentar uspješno dodan!");
-      } else {
-        alert("Komentar nije uspješno dodan!");
-      }
     } catch (error) {
       console.error("Error while sending message:", error);
       alert("Error while sending message");
@@ -145,17 +140,23 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
     return () => clearInterval(messagesIntervalId);
   }, [advertisementId]);
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const previewUrl = reader.result;
-
-      setNewMessage({ ...newMessage, image: previewUrl });
-    };
-    reader.readAsDataURL(file);
-  };
+  // const handleImageChange = (e) => {
+  //   const file = e.target.files[0];
+  //
+  //   if (file) {
+  //     const reader = new FileReader();
+  //
+  //     reader.onloadend = () => {
+  //       const base64Image = reader.result.split(",")[1]; // Dobavi samo Base64 dio
+  //       setNewMessage({
+  //         ...newMessage,
+  //         // images: [base64Image],
+  //       });
+  //     };
+  //
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
   return (
       <div className="chatContainer mt-3 w-705">
@@ -196,6 +197,15 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
                             {message.messageText}
                           </div>
                         </div>
+                        {/*{message.images && (*/}
+                        {/*    <div>*/}
+                        {/*      <img*/}
+                        {/*          src={message.images} // Assuming message.image is the image URL*/}
+                        {/*          alt="Message Image"*/}
+                        {/*          style={{ maxWidth: "100%", maxHeight: "200px" }} // Adjust the styling as needed*/}
+                        {/*      />*/}
+                        {/*    </div>*/}
+                        {/*)}*/}
 
                         {message.disappearanceLocationLat !== null && (
                             <div>
@@ -246,7 +256,7 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
                       </div>
                     </div>
                 ))}
-                <hr></hr>
+                {messages.length > 0 && <hr />}
 
                 <div className="chat-content">
                   {loginStatus && (
@@ -289,11 +299,11 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
                         />
 
 
-                        {/* <input
-                        type="file"
-                        className="input-message"
-                        onChange={handleImageChange}
-                      /> */}
+                      {/*   <input*/}
+                      {/*  type="file"*/}
+                      {/*  className="input-message"*/}
+                      {/*  onChange={handleImageChange}*/}
+                      {/*/>*/}
 
                         <div>
                           <div className="d-flex flex-row justify-content-between">
