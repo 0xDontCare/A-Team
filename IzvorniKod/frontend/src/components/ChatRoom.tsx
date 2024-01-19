@@ -21,6 +21,7 @@ interface ChatRoomProps {
 }
 
 interface ChatMessage {
+  id: number | null;
   senderUsername: string;
   advertisementId: string;
   messageText: string;
@@ -30,7 +31,6 @@ interface ChatMessage {
   linkToImage: string;
   phoneNumber: string;
   email: string;
-  messageId: number | null;
 }
 
 interface Payload {
@@ -56,7 +56,7 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
     linkToImage: "",
     phoneNumber: "",
     email: "",
-    messageId: null,
+    id: null,
   });
 
   const [publicChats, setPublicChats] = useState([]);
@@ -68,8 +68,8 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
 
   const [openMessageId, setOpenMessageId] = useState(null);
 
-  const handleToggle = (messageId) => {
-    setOpenMessageId((prevId) => (prevId === messageId ? null : messageId));
+  const handleToggle = (id) => {
+    setOpenMessageId((prevId) => (prevId === id ? null : id));
   };
 
   function MapClickHandler() {
@@ -153,6 +153,7 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
         const response = await fetch(`/api/messages/${advertisementId}`);
         const data = await response.json();
         setMessages(data);
+        console.log(messages);
       } catch (error) {
         console.error("Greška pri dohvatu poruka:", error);
       }
@@ -181,7 +182,7 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
           <div className="card bg-transparent">
             <div className="card-body p-4 ">
               {messages.map((message) => (
-                <div key={message.messageId} className="card mb-4">
+                <div key={message.id} className="card mb-4">
                   <div className="card-body d-flex flex-column justify-content-between">
                     <div className="d-flex flex-row align-items-center">
                       <p className="small mb-0 me-3">
@@ -199,16 +200,16 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
                         <p className="mb-0">
                           <Button
                             variant="primary"
-                            onClick={() => handleToggle(message.messageId)}
-                            aria-controls={`collapseExample-${message.messageId}`}
-                            aria-expanded={openMessageId === message.messageId}
+                            onClick={() => handleToggle(message.id)}
+                            aria-controls={`collapseExample-${message.id}`}
+                            aria-expanded={openMessageId === message.id}
                           >
                             Lokacija
                           </Button>
                         </p>
                         <Collapse
-                          in={openMessageId === message.messageId}
-                          id={`collapseExample-${message.messageId}`}
+                          in={openMessageId === message.id}
+                          id={`collapseExample-${message.id}`}
                         >
                           <div id="collapseExample">
                             <Card>
@@ -242,7 +243,7 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
               ))}
 
               {publicChats.map((chat) => (
-                <div key={chat.messageId} className="card mb-4">
+                <div key={chat.id} className="card mb-4">
                   <div className="card-body">
                     <div className="d-flex justify-content-between">
                       {chat.senderUsername !== userData.username && (
