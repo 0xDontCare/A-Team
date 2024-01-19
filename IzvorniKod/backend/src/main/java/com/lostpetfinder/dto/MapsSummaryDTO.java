@@ -8,6 +8,17 @@ public class MapsSummaryDTO {
     private String locationName;
     private String place;
     private String postalCode;
+
+    @Override
+    public String toString() {
+        return "MapsSummaryDTO{" +
+                "locationName='" + locationName + '\'' +
+                ", place='" + place + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", county='" + county + '\'' +
+                '}';
+    }
+
     private String county;
 
     public MapsSummaryDTO() {}
