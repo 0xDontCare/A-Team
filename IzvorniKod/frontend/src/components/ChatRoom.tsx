@@ -57,9 +57,6 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
     bottomRef.current.scrollIntoView({behavior: 'smooth'});
   };
 
-  const handleToggleAddLocation = () =>
-    setIsOpenAddLocation(!isOpenAddLocation);
-
   const handleToggle = (id: number) => {
     setOpenMessageId((prevId) => (prevId === id ? null : id));
   };
