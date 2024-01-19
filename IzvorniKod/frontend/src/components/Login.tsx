@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import "./Login.css";
 
 function Login({setLoginStatus, setUserData}) {
     document.title = "Prijava";
@@ -8,6 +9,8 @@ function Login({setLoginStatus, setUserData}) {
     const [lozinka, setLozinka] = useState("");
     const navigate = useNavigate();
     const [error, setError] = useState("");
+
+    const [showPassword, setShowPassword] = useState(false);
 
     const validateLoginForm = () => {
         if (!username || !lozinka) {
@@ -49,9 +52,13 @@ function Login({setLoginStatus, setUserData}) {
             }
         } catch (err) {
             console.error(err);
-            setError("Pogreška pri prijavi!");
+            setError("Pogreška prilikom prijave!");
         }
     }
+
+    const handleCancel = () => {
+        navigate('/');
+    };
 
     return (
         <div>
@@ -61,12 +68,13 @@ function Login({setLoginStatus, setUserData}) {
 
                     <form>
                         <div className="form-group mb-2">
-                            <label>Korisničko ime</label>
+                            <label htmlFor="email" className="label-emailAndPassword">Korisničko ime</label>
                             <input
                                 type="text"
                                 className="form-control"
                                 id="email"
                                 placeholder="Upišite korisničko ime"
+                                autoComplete="off"
                                 value={username}
                                 onChange={(event) => {
                                     setUsername(event.target.value);
@@ -75,9 +83,9 @@ function Login({setLoginStatus, setUserData}) {
                         </div>
 
                         <div className="form-group mb-2">
-                            <label>Lozinka</label>
+                            <label htmlFor="lozinka" className="label-emailAndPassword">Lozinka</label>
                             <input
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 className="form-control"
                                 id="lozinka"
                                 placeholder="Upišite lozinku"
@@ -88,12 +96,28 @@ function Login({setLoginStatus, setUserData}) {
                             />
                         </div>
 
+                        <div className="form-check mt-2">
+                            <input className="form-check-input" type="checkbox" value="" id="flexCheck"
+                                   onChange={() => setShowPassword(!showPassword)}/>
+                            <label className="form-check-label" htmlFor="flexCheck">
+                                Prikažite lozinku
+                            </label>
+                        </div>
+
                         <button
                             type="submit"
                             className="btn btn-success mt-4"
                             onClick={login}
                         >
                             Prijavite se
+                        </button>
+                        <button
+                            type="button"
+                            className="btn btn-secondary mt-4"
+                            style={{marginLeft: '10px'}}
+                            onClick={handleCancel}
+                        >
+                            Odustanite
                         </button>
                     </form>
                 </div>

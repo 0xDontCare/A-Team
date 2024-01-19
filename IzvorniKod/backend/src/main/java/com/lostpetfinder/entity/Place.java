@@ -2,12 +2,13 @@ package com.lostpetfinder.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-/*
+
 @Entity
 @Table(name = "places")
 public class Place {
 
     @Id
+    @Column(name = "zipCode",nullable = false)
     private Long zipCode;
 
     // potentially update the min attribute from @Size
@@ -16,7 +17,7 @@ public class Place {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "id",nullable = false)
+    @JoinColumn(name = "countyId",nullable = false)
     private County county;
 
     public Place() {}
@@ -51,4 +52,3 @@ public class Place {
         this.county = county;
     }
 }
-*/

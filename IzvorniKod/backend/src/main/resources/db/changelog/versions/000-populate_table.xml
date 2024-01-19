@@ -4,6 +4,16 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
+    <changeSet id="20231212-000-1" author="akrklec">
+        <createTable tableName="roles">
+            <column name="id" type="int">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 
     <changeSet id="20231016-000-1" author="akrklec">
         <insert tableName="roles">
@@ -16,6 +26,65 @@
         <insert tableName="roles">
             <column name="id" value="2"/>
             <column name="name" value="ROLE_REGISTERED"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20231017-000-5" author="akrklec">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="users"/>
+            </not>
+        </preConditions>
+        <createTable tableName="users">
+            <column name="username" type="varchar(100)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="email" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone_number" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="users"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20231017-000-6" author="akrklec">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="shelters"/>
+            </not>
+        </preConditions>
+        <createTable tableName="shelters">
+            <column name="username" type="varchar(100)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="shelters"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="20240116-000-3" author="akrklec">
+        <insert tableName="users">
+            <column name="username" value="testadmin"/>
+            <column name="email" value="test@test.com"/>
+            <column name="password" value="$2a$12$XHYaHiYuOb58qMIRsJztDuSBcPssLYGKRrcIWMaiYT.8KiXIX0KJ2"/>
+            <column name="phone_number" value="0000000000"/>
+        </insert>
+    </changeSet>
+    <changeSet id="20240116-000-4" author="akrklec">
+        <insert tableName="shelters">
+            <column name="username" value="testadmin"/>
+            <column name="name" value="shelter"/>
         </insert>
     </changeSet>
 

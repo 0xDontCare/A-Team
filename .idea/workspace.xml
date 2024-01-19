@@ -6,18 +6,31 @@
   <component name="ChangeListManager">
     <list default="true" id="e8bea504-cbb3-43ca-a949-d67d77c7a9b7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/OglasDetalj.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/OglasDetalj.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/AdDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/AdDetail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/ChangeAd.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/ChangeAd.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/Login.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript JSX File" />
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -36,9 +49,12 @@
     &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.LostPetFinderApplication.executor&quot;: &quot;Run&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/rober/Desktop/FRONT&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;devlocal&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/rober/Desktop/A-Team&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -46,6 +62,11 @@
     &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
     &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\rober\\Desktop\\A-Team\\IzvorniKod\\frontend\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
+    ]
   }
 }</component>
   <component name="RunManager">
@@ -58,6 +79,13 @@
       </method>
     </configuration>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.2-openjdk-21.0.2-f644763e9732-c0c073db" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -68,10 +96,67 @@
       <updated>1700229386429</updated>
       <workItem from="1700229387759" duration="434000" />
       <workItem from="1700242163426" duration="5737000" />
+      <workItem from="1702398320305" duration="6149000" />
+      <workItem from="1702481705823" duration="3420000" />
+      <workItem from="1702551261125" duration="31000" />
+      <workItem from="1702551315668" duration="97000" />
+      <workItem from="1702556520758" duration="186000" />
+      <workItem from="1702663428015" duration="8667000" />
+      <workItem from="1702751009316" duration="9666000" />
+      <workItem from="1702766082731" duration="3675000" />
+      <workItem from="1702807851650" duration="3966000" />
+      <workItem from="1702843962148" duration="8456000" />
+      <workItem from="1702895502217" duration="11906000" />
+      <workItem from="1702915951121" duration="14367000" />
+      <workItem from="1702937284143" duration="26000" />
+      <workItem from="1702937935270" duration="1047000" />
+      <workItem from="1702940120969" duration="1017000" />
+      <workItem from="1702980561047" duration="6944000" />
+      <workItem from="1702992153123" duration="3975000" />
+      <workItem from="1702996646216" duration="4396000" />
+      <workItem from="1703001059849" duration="31000" />
+      <workItem from="1703010074388" duration="10373000" />
+      <workItem from="1703023486059" duration="154000" />
+      <workItem from="1703067484119" duration="15000" />
+      <workItem from="1703067503931" duration="7677000" />
+      <workItem from="1703093624567" duration="3755000" />
+      <workItem from="1703105331147" duration="268000" />
+      <workItem from="1705148793894" duration="26000" />
+      <workItem from="1705148873486" duration="26000" />
+      <workItem from="1705148928873" duration="6538000" />
+      <workItem from="1705248362549" duration="8868000" />
+      <workItem from="1705259143287" duration="10000" />
+      <workItem from="1705260233222" duration="8631000" />
+      <workItem from="1705321437625" duration="1965000" />
+      <workItem from="1705343901189" duration="1390000" />
+      <workItem from="1705346163716" duration="160000" />
+      <workItem from="1705346335245" duration="61000" />
+      <workItem from="1705346402560" duration="44000" />
+      <workItem from="1705346452298" duration="2353000" />
+      <workItem from="1705502354187" duration="7000" />
+      <workItem from="1705502378335" duration="12000" />
+      <workItem from="1705502396824" duration="3405000" />
+      <workItem from="1705574822485" duration="3147000" />
+      <workItem from="1705582078659" duration="111000" />
+      <workItem from="1705594051634" duration="5204000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-core" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.security:spring-security-core" />
+    <option featureType="dependencySupport" implementationName="javascript:npm:react" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-websocket" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.validation:jakarta.validation-api" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.persistence:jakarta.persistence-api" />
+    <option featureType="dependencySupport" implementationName="javascript:npm:vite" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.data:spring-data-commons" />
+    <option featureType="dependencySupport" implementationName="java:org.hibernate.validator:hibernate-validator" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-messaging" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-webmvc" />
   </component>
 </project>

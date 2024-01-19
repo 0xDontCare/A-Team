@@ -1,15 +1,11 @@
 package com.lostpetfinder.service;
 
-import com.lostpetfinder.dao.AdvertisementRepository;
-import com.lostpetfinder.dao.ImageRepository;
-import com.lostpetfinder.dao.PetRepository;
-import com.lostpetfinder.dto.AddAdvertisementDTO;
-import com.lostpetfinder.dto.AdvertisementDetailsDTO;
+import com.lostpetfinder.dao.*;
+import com.lostpetfinder.dto.*;
 import com.lostpetfinder.entity.*;
-import com.lostpetfinder.dto.AdvertisementSummaryDTO;
 import com.lostpetfinder.exception.ImageNotSelectedException;
 import com.lostpetfinder.exception.FileUploadFailedException;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -19,19 +15,22 @@ import java.util.List;
 @Service
 public class AdvertisementService {
 
-    private final ResourceService resourceService;
+    private final LocationService locationService;
+    private final ImageService imageService;
     private final UserService userService;
     private final AdvertisementRepository advertisementRepository;
     private final PetRepository petRepository;
     private final ImageRepository imageRepository;
 
-    public AdvertisementService(ResourceService resourceService,
+    public AdvertisementService(LocationService locationService,
+                                ImageService imageService,
                                 UserService userService,
                                 AdvertisementRepository advertisementRepository,
                                 PetRepository petRepository,
                                 ImageRepository imageRepository)
     {
-        this.resourceService = resourceService;
+        this.locationService = locationService;
+        this.imageService = imageService;
         this.userService = userService;
         this.advertisementRepository = advertisementRepository;
         this.petRepository = petRepository;
@@ -39,43 +38,65 @@ public class AdvertisementService {
     }
 
     // adjust later so it only returns active ads
-    public List<AdvertisementSummaryDTO> getAllAdvertisements() {
+    public List<AdvertisementSummaryDTO> getAllAdvertisements(CategoryEnum category) {
         return advertisementRepository
+                // return all advertisements if ad.getCategory() == null
                 .findAll()
                 .stream()
-                .map(ad -> new AdvertisementSummaryDTO(ad.getAdvertisementId(), ad.getPet().getName()))
+                .filter(ad -> ad.getAdState() == AdStateEnum.ACTIVE && ad.getCategory() == category)
+                .map(ad -> new AdvertisementSummaryDTO(
+                        ad.getAdvertisementId(),
+                        ad.getPet().getName(),
+                        ad.getPet().getSpecies(),
+                        ad.getPet().getBreed(),
+                        ad.getPet().getColor(),
+                        ad.getPet().getAge(),
+                        ad.getUser() instanceof Registered ? null : ((Shelter) ad.getUser()).getName(),
+                        ad.getUser().getUsername(),
+                        imageRepository.findAllByPetPetId(ad.getPet().getPetId()).get(0).getLinkToImage()))
                 .toList();
     }
 
     public ResponseEntity<Object> addNewAdvertisement(AddAdvertisementDTO dto) {
-        List<String> linktoImageList;
 
         // one Advertisement = one Pet
-        List<Image> listOfImages = new LinkedList<>();
+        // List<Image> listOfImages = new LinkedList<>();
         Pet pet = petRepository.save(new Pet(dto));
 
         try {
-            resourceService.addImages(dto.getImages(), pet);
+            imageService.addImages(dto.getImages(), pet);
         } catch (ImageNotSelectedException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (FileUploadFailedException e) {
             return ResponseEntity.status(500).body(e.getMessage());
         }
 
+        Location newLocation = locationService.getLocation(
+                dto.getDisappearanceLocationLat(),
+                dto.getDisappearanceLocationLng()
+        );
+
         User user = userService.LoggedUser().orElseThrow();
-        CategoryEnum category = CategoryEnum.LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA;
+
+        CategoryEnum category = null;
+        if (dto.getCategory() == CategoryEnum.U_SKLONISTU) {
+            if (!(user instanceof Shelter)) {
+                return ResponseEntity.badRequest().body("You must be a shelter to add an advertisement in this category!");
+            }
+            category = CategoryEnum.U_SKLONISTU;
+        } else {
+            category = CategoryEnum.LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA;
+        }
         Advertisement newAdvertisement = new Advertisement(
                 pet,
                 user,
                 category,
                 dto.getDisappearanceDateTime(),
-                dto.getDisappearanceLocation()
+                newLocation
         );
+        newAdvertisement = advertisementRepository.save(newAdvertisement);
 
-        return new ResponseEntity<>(
-                new AdvertisementDetailsDTO(advertisementRepository.save(newAdvertisement), listOfImages)
-                , HttpStatus.OK
-        );
+        return ResponseEntity.ok().header(HttpHeaders.LOCATION, "/api/advertisements/" + newAdvertisement.getAdvertisementId()).body("Advertisement added successfully!");
     }
 
     // add the exception handling / completely remove it
@@ -85,27 +106,58 @@ public class AdvertisementService {
                 .orElseThrow();
         Long petId = advertisement.getPet().getPetId();
         List<Image> images = imageRepository.findAllByPetPetId(petId);
-        return new AdvertisementDetailsDTO(advertisement,images);
+        return new AdvertisementDetailsDTO(advertisement, images);
     }
 
     // change the data type of the return value
-    public AdvertisementDetailsDTO changeAdvertisement(long adId, AddAdvertisementDTO dto) {
-        if (!advertisementRepository.existsByPetPetIdNot(adId)) {
+    public ResponseEntity<Object> changeAdvertisement(long adId, AddAdvertisementDTO dto) {
+        if (!advertisementRepository.existsByAdvertisementId(adId)) {
             throw new NoSuchElementException();
         }
-        Advertisement changedAdvertisement = advertisementRepository.findByAdvertisementId(adId).orElseThrow();
-        changedAdvertisement.updateAdvertisement(dto);
+        Location newLocation = null;
+        if (dto.getDisappearanceLocationLng() != null && dto.getDisappearanceLocationLat() != null) {
+            newLocation = locationService.getLocation(
+                    dto.getDisappearanceLocationLat(),
+                    dto.getDisappearanceLocationLng()
+            );
+        }
 
-        Long petId = changedAdvertisement.getPet().getPetId();
-        List<Image> images = imageRepository.findAllByPetPetId(petId);
-        return new AdvertisementDetailsDTO(advertisementRepository.save(changedAdvertisement),images);
+        Advertisement changedAdvertisement = advertisementRepository.findByAdvertisementId(adId).orElseThrow();
+
+        if (dto.getCategory() == CategoryEnum.U_SKLONISTU) {
+            if (!(changedAdvertisement.getUser() instanceof Shelter)) {
+                throw new SecurityException();
+            }
+        }
+        changedAdvertisement.updateAdvertisement(dto, newLocation);
+        advertisementRepository.save(changedAdvertisement);
+
+        Pet changedPet = changedAdvertisement.getPet();
+        petRepository.save(changedPet);
+
+        if (dto.getImagesToDelete() != null)
+            imageRepository.deleteAll(dto.getImagesToDelete().stream().filter(Objects::nonNull).toList());
+
+        try {
+            if (dto.getImages() != null) imageService.addImages(dto.getImages(), changedPet);
+        } catch (ImageNotSelectedException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (FileUploadFailedException e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
+
+        return ResponseEntity.ok().body("Advertisement changed successfully!");
     }
 
     // adjust later so it only changes the 'deleted' flag in the Advertisement entity
-    public void deleteAdvertisement(Long petId) {
-        Advertisement advertisement = advertisementRepository.findByPetPetId(petId).orElseThrow();
-        advertisementRepository.delete(advertisement);
-        petRepository.delete(advertisement.getPet());
+    public void deleteAdvertisement(Long adId) {
+        Advertisement advertisement = advertisementRepository.findByAdvertisementId(adId).orElseThrow();
+        // advertisementRepository.delete(advertisement);
+        // imageRepository.deleteAll(imageRepository.findAllByPetPetId(advertisement.getPet().getPetId()));
+        // petRepository.delete(advertisement.getPet());
+
+        advertisement.setAdState(AdStateEnum.DELETED);
+        advertisementRepository.save(advertisement);
     }
 
 }

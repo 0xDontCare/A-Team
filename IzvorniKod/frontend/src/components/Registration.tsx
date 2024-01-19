@@ -1,94 +1,100 @@
 import {useState} from "react";
-import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
+import "./Registration.css";
 
-function Register() {
+function Registration() {
     document.title = "Registracija";
-    const [userType, setUserType] = useState("regular");
+
     const navigate = useNavigate();
 
-    const [ime, setIme] = useState("");
-    const [prezime, setPrezime] = useState("");
-    const [email, setEmail] = useState("");
-    const [brojTelefona, setBrojTelefona] = useState("");
-    const [username, setUsername] = useState("");
-    const [lozinka, setLozinka] = useState("");
-    const [error, setError] = useState("");
+    const [userType, setUserType] = useState("regular");
 
-    const [imeSklonista, setImeSklonista] = useState("");
-    const [emailSklonista, setEmailSklonista] = useState("");
-    const [brojTelefonaSklonista, setBrojTelefonaSklonista] = useState("");
-    const [usernameSklonista, setUsernameSklonista] = useState("");
-    const [lozinkaSklonista, setLozinkaSklonista] = useState("");
-    const [errorSklonista, setErrorSklonista] = useState("");
+    const [userName, setUserName] = useState("");
+    const [userSurname, setUserSurname] = useState("");
+    const [userEmail, setUserEmail] = useState("");
+    const [userPhoneNumber, setUserPhoneNumber] = useState("");
+    const [userUsername, setUserUsername] = useState("");
+    const [userPassword, setUserPassword] = useState("");
+    const [userError, setUserError] = useState("");
 
-    const validateEmail = (email) => {
+    const [shelterName, setShelterName] = useState("");
+    const [shelterEmail, setShelterEmail] = useState("");
+    const [shelterPhoneNumber, setShelterPhoneNumber] = useState("");
+    const [shelterUsername, setShelterUsername] = useState("");
+    const [shelterPassword, setShelterPassword] = useState("");
+    const [shelterError, setShelterError] = useState("");
+
+    const [showPasswordUser, setShowPasswordUser] = useState(false);
+    const [showPasswordShelter, setShowPasswordShelter] = useState(false);
+
+    const validateEmail = (email: string) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     };
 
-    const validatePhoneNumber = (phoneNumber) => {
+    const validatePhoneNumber = (phoneNumber: string) => {
         const phoneRegex =
             /^(?:\+?1[-. ]?)?\(?(\d{3})\)?[-. ]?(\d{3})[-. ]?(\d{4})$/;
         return phoneRegex.test(phoneNumber);
     };
 
-    const saveRegularUser = async (event) => {
+    const saveRegularUser = async (event: { preventDefault: () => void; }) => {
         event.preventDefault();
 
-        if (!ime || !prezime || !email || !brojTelefona || !lozinka) {
-            setError("Niste upisali podatke u sva zadana polja!");
+        if (!userName || !userSurname || !userEmail || !userPhoneNumber || !userPassword) {
+            setUserError("Niste upisali podatke u sva zadana polja!");
             return;
         }
 
-        if (!validateEmail(email)) {
-            setError("E-pošta nije u dobrom formatu!");
+        if (!validateEmail(userEmail)) {
+            setUserError("E-pošta nije u dobrom formatu!");
             return;
         }
 
-        if (!validatePhoneNumber(brojTelefona)) {
-            setError("Broj telefona mora sadržavati samo 10 brojeva bez slova!");
+        if (!validatePhoneNumber(userPhoneNumber)) {
+            setUserError("Broj telefona mora sadržavati samo 10 brojeva bez slova!");
             return;
         }
 
         try {
             await axios.post("/api/register", {
-                firstName: ime,
-                lastName: prezime,
-                email: email,
-                phoneNumber: brojTelefona,
-                username: username,
-                password: lozinka,
+                firstName: userName,
+                lastName: userSurname,
+                email: userEmail,
+                phoneNumber: userPhoneNumber,
+                username: userUsername,
+                password: userPassword,
             });
 
             alert("Uspješno ste se registrirali!");
             resetFormFields();
             navigate("/");
         } catch (err) {
-            alert(err);
+            alert(err.response.data);
         }
     };
 
-    const saveShelterUser = async (event) => {
+    const saveShelterUser = async (event: { preventDefault: () => void; }) => {
         event.preventDefault();
 
         if (
-            !imeSklonista ||
-            !emailSklonista ||
-            !brojTelefonaSklonista ||
-            !lozinkaSklonista
+            !shelterName ||
+            !shelterEmail ||
+            !shelterPhoneNumber ||
+            !shelterPassword
         ) {
-            setErrorSklonista("Niste upisali podatke u sva zadana polja!");
+            setShelterError("Niste upisali podatke u sva zadana polja!");
             return;
         }
 
-        if (!validateEmail(emailSklonista)) {
-            setErrorSklonista("E-pošta nije u dobrom formatu!");
+        if (!validateEmail(shelterEmail)) {
+            setShelterError("E-pošta nije u dobrom formatu!");
             return;
         }
 
-        if (!validatePhoneNumber(brojTelefonaSklonista)) {
-            setErrorSklonista(
+        if (!validatePhoneNumber(shelterPhoneNumber)) {
+            setShelterError(
                 "Broj telefona mora sadržavati samo 10 brojeva bez slova!"
             );
             return;
@@ -96,36 +102,40 @@ function Register() {
 
         try {
             await axios.post("/api/register", {
-                shelterName: imeSklonista,
-                email: emailSklonista,
-                phoneNumber: brojTelefonaSklonista,
-                username: usernameSklonista,
-                password: lozinkaSklonista,
+                shelterName: shelterName,
+                email: shelterEmail,
+                phoneNumber: shelterPhoneNumber,
+                username: shelterUsername,
+                password: shelterPassword,
             });
 
             alert("Uspješno ste se registrirali kao sklonište!");
             resetFormFields();
             navigate("/");
         } catch (err) {
-            alert(err);
+            alert(err.response.data);
         }
     };
 
     const resetFormFields = () => {
-        setIme("");
-        setPrezime("");
-        setEmail("");
-        setBrojTelefona("");
-        setUsername("");
-        setLozinka("");
-        setError("");
+        setUserName("");
+        setUserSurname("");
+        setUserEmail("");
+        setUserPhoneNumber("");
+        setUserUsername("");
+        setUserPassword("");
+        setUserError("");
 
-        setImeSklonista("");
-        setEmailSklonista("");
-        setBrojTelefonaSklonista("");
-        setUsernameSklonista("");
-        setLozinkaSklonista("");
-        setErrorSklonista("");
+        setShelterName("");
+        setShelterEmail("");
+        setShelterPhoneNumber("");
+        setShelterUsername("");
+        setShelterPassword("");
+        setShelterError("");
+    };
+
+    const handleCancel = () => {
+        navigate('/');
     };
 
     return (
@@ -134,12 +144,12 @@ function Register() {
                 <div className="card p-5">
                     {userType === "regular" ? (
                         <div>
-                            {error && <div className="alert alert-danger">{error}</div>}
+                            {userError && <div className="alert alert-danger">{userError}</div>}
                         </div>
                     ) : (
                         <div>
-                            {errorSklonista && (
-                                <div className="alert alert-danger">{errorSklonista}</div>
+                            {shelterError && (
+                                <div className="alert alert-danger">{shelterError}</div>
                             )}
                         </div>
                     )}
@@ -151,17 +161,17 @@ function Register() {
                     </div>
                     <br/>
                     <div className="d-flex align-items-center">
-                        <div className="form-check form-check-inline">
+                        <div className="form-check form-check-inline" style={{marginLeft: 5}}>
                             <input
                                 type="radio"
                                 id="regularniKorisnik"
                                 name="userType"
                                 value="regular"
-                                className="form-check-input"
+                                className="form-check-input label-registrationBigger"
                                 defaultChecked={userType === "regular"}
                                 onChange={() => setUserType("regular")}
                             />
-                            <label htmlFor="regularniKorisnik" className="form-check-label">
+                            <label htmlFor="regularniKorisnik" className="form-check-label label-registrationBigger">
                                 Korisnik
                             </label>
                         </div>
@@ -174,11 +184,11 @@ function Register() {
                                 id="sklonisteKorisnik"
                                 name="userType"
                                 value="premium"
-                                className="form-check-input"
+                                className="form-check-input label-registrationBigger"
                                 defaultChecked={userType !== "regular"}
                                 onChange={() => setUserType("premium")}
                             />
-                            <label htmlFor="sklonisteKorisnik" className="form-check-label">
+                            <label htmlFor="sklonisteKorisnik" className="form-check-label label-registrationBigger">
                                 Sklonište
                             </label>
                         </div>
@@ -189,87 +199,97 @@ function Register() {
                     {userType === "regular" && (
                         <form>
                             <div className="form-group mb-2">
-                                <label>Ime</label>
+                                <label htmlFor="ime" className="label-registrationBigger">Ime</label>
                                 <input
                                     type="text"
                                     className="form-control"
                                     id="ime"
                                     placeholder="Upišite ime"
-                                    value={ime}
+                                    value={userName}
                                     onChange={(event) => {
-                                        setIme(event.target.value);
+                                        setUserName(event.target.value);
                                     }}
                                 />
                             </div>
 
                             <div className="form-group mb-2">
-                                <label>Prezime</label>
+                                <label htmlFor="prezime" className="label-registrationBigger">Prezime</label>
                                 <input
                                     type="text"
                                     className="form-control"
                                     id="prezime"
                                     placeholder="Upišite prezime"
-                                    value={prezime}
+                                    value={userSurname}
                                     onChange={(event) => {
-                                        setPrezime(event.target.value);
+                                        setUserSurname(event.target.value);
                                     }}
                                 />
                             </div>
 
                             <div className="form-group mb-2">
-                                <label>E-pošta</label>
+                                <label htmlFor="email" className="label-registrationBigger">E-pošta</label>
                                 <input
+                                    autoComplete="off"
                                     type="email"
                                     className="form-control"
                                     id="email"
                                     placeholder="Upišite e-poštu"
-                                    value={email}
+                                    value={userEmail}
                                     onChange={(event) => {
-                                        setEmail(event.target.value);
+                                        setUserEmail(event.target.value);
                                     }}
                                 />
                             </div>
 
                             <div className="form-group mb-2">
-                                <label>Broj telefona</label>
+                                <label htmlFor="brojTelefona" className="label-registrationBigger">Broj telefona</label>
                                 <input
                                     type="text"
                                     className="form-control"
                                     id="brojTelefona"
                                     placeholder="Upišite broj telefona"
-                                    value={brojTelefona}
+                                    value={userPhoneNumber}
                                     onChange={(event) => {
-                                        setBrojTelefona(event.target.value);
+                                        setUserPhoneNumber(event.target.value);
                                     }}
                                 />
                             </div>
 
                             <div className="form-group mb-2">
-                                <label>Korisničko ime</label>
+                                <label htmlFor="username" className="label-registrationBigger">Korisničko ime</label>
                                 <input
+                                    autoComplete="off"
                                     type="text"
                                     className="form-control"
                                     id="username"
-                                    placeholder="Kreirajte korisničko ime"
-                                    value={username}
+                                    placeholder="Stvorite korisničko ime"
+                                    value={userUsername}
                                     onChange={(event) => {
-                                        setUsername(event.target.value);
+                                        setUserUsername(event.target.value);
                                     }}
                                 />
                             </div>
 
                             <div className="form-group mb-2">
-                                <label>Lozinka</label>
+                                <label htmlFor="lozinkaKorisnika" className="label-registrationBigger">Lozinka</label>
                                 <input
-                                    type="password"
+                                    type={showPasswordUser ? "text" : "password"}
                                     className="form-control"
-                                    id="lozinka"
-                                    placeholder="Kreirajte lozinku"
-                                    value={lozinka}
+                                    id="lozinkaKorisnika"
+                                    placeholder="Stvorite lozinku"
+                                    value={userPassword}
                                     onChange={(event) => {
-                                        setLozinka(event.target.value);
+                                        setUserPassword(event.target.value);
                                     }}
                                 />
+                            </div>
+
+                            <div className="form-check mt-2">
+                                <input className="form-check-input" type="checkbox" value="" id="flexCheckUser"
+                                       onChange={() => setShowPasswordUser(!showPasswordUser)}/>
+                                <label className="form-check-label" htmlFor="flexCheckUser">
+                                    Prikažite lozinku
+                                </label>
                             </div>
 
                             <button
@@ -279,79 +299,97 @@ function Register() {
                             >
                                 Registrirajte se
                             </button>
+                            <button
+                                type="button"
+                                className="btn btn-secondary mt-4"
+                                style={{marginLeft: '10px'}}
+                                onClick={handleCancel}
+                            >
+                                Odustanite
+                            </button>
                         </form>
                     )}
 
                     {userType === "premium" && (
                         <form>
                             <div className="form-group mb-2">
-                                <label>Ime skloništa</label>
+                                <label htmlFor="imeSklonista" className="label-registrationBigger">Ime skloništa</label>
                                 <input
                                     type="text"
                                     className="form-control"
                                     id="imeSklonista"
                                     placeholder="Upišite ime skloništa"
-                                    value={imeSklonista}
+                                    value={shelterName}
                                     onChange={(event) => {
-                                        setImeSklonista(event.target.value);
+                                        setShelterName(event.target.value);
                                     }}
                                 />
                             </div>
 
                             <div className="form-group mb-2">
-                                <label>E-pošta</label>
+                                <label htmlFor="emailSklonista" className="label-registrationBigger">E-pošta</label>
                                 <input
                                     type="text"
                                     className="form-control"
                                     id="emailSklonista"
                                     placeholder="Upišite e-poštu"
-                                    value={emailSklonista}
+                                    value={shelterEmail}
                                     onChange={(event) => {
-                                        setEmailSklonista(event.target.value);
+                                        setShelterEmail(event.target.value);
                                     }}
                                 />
                             </div>
 
                             <div className="form-group mb-2">
-                                <label>Broj telefona</label>
+                                <label htmlFor="brojTelefonaSklonista" className="label-registrationBigger">Broj
+                                    telefona</label>
                                 <input
                                     type="text"
                                     className="form-control"
                                     id="brojTelefonaSklonista"
                                     placeholder="Upišite broj telefona"
-                                    value={brojTelefonaSklonista}
+                                    value={shelterPhoneNumber}
                                     onChange={(event) => {
-                                        setBrojTelefonaSklonista(event.target.value);
+                                        setShelterPhoneNumber(event.target.value);
                                     }}
                                 />
                             </div>
 
                             <div className="form-group mb-2">
-                                <label>Korisničko ime</label>
+                                <label htmlFor="usernameSklonista" className="label-registrationBigger">Korisničko
+                                    ime</label>
                                 <input
                                     type="text"
                                     className="form-control"
                                     id="usernameSklonista"
-                                    placeholder="Kreirajte korisničko ime"
-                                    value={usernameSklonista}
+                                    placeholder="Stvorite korisničko ime"
+                                    value={shelterUsername}
                                     onChange={(event) => {
-                                        setUsernameSklonista(event.target.value);
+                                        setShelterUsername(event.target.value);
                                     }}
                                 />
                             </div>
 
                             <div className="form-group mb-2">
-                                <label>Lozinka</label>
+                                <label htmlFor="lozinkaSklonista" className="label-registrationBigger">Lozinka</label>
                                 <input
-                                    type="password"
+                                    type={showPasswordShelter ? "text" : "password"}
                                     className="form-control"
                                     id="lozinkaSklonista"
-                                    placeholder="Kreirajte lozinku"
-                                    value={lozinkaSklonista}
+                                    placeholder="Stvorite lozinku"
+                                    value={shelterPassword}
                                     onChange={(event) => {
-                                        setLozinkaSklonista(event.target.value);
+                                        setShelterPassword(event.target.value);
                                     }}
                                 />
+                            </div>
+
+                            <div className="form-check mt-2">
+                                <input className="form-check-input" type="checkbox" value="" id="flexCheckShelter"
+                                       onChange={() => setShowPasswordShelter(!showPasswordShelter)}/>
+                                <label className="form-check-label" htmlFor="flexCheckShelter">
+                                    Prikažite lozinku
+                                </label>
                             </div>
 
                             <button
@@ -361,6 +399,14 @@ function Register() {
                             >
                                 Registrirajte se
                             </button>
+                            <button
+                                type="button"
+                                className="btn btn-secondary mt-4"
+                                style={{marginLeft: '10px'}}
+                                onClick={handleCancel}
+                            >
+                                Odustanite
+                            </button>
                         </form>
                     )}
                 </div>
@@ -369,4 +415,4 @@ function Register() {
     );
 }
 
-export default Register;
+export default Registration;

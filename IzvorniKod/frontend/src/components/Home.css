@@ -1,4 +1,4 @@
-.oglasBtn {
+.adButton {
     color: black;
     font-weight: bold !important;
     background-color: transparent !important;
@@ -11,13 +11,13 @@
     box-sizing: border-box;
 }
 
-.oglasBtn:hover {
+.adButton:hover {
     transform: scale(1.1);
     border: 2px solid white;
 }
 
 @media (min-width: 769px) {
-    .oglasBtn {
+    .adButton {
         margin: 10px 30px 10px 30px;
     }
 }
@@ -27,4 +27,9 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+}
+
+.no-right-margin {
+    margin-right: 0 !important;
+    padding-right: 0 !important;
 }

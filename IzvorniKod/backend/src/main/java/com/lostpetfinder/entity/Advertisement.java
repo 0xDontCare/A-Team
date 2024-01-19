@@ -24,19 +24,20 @@ public class Advertisement {
     @Column(nullable = false)
     private LocalDateTime disappearanceDateTime;
 
-    /*
+
     @ManyToOne
-    @JoinColumn(name = "coordinates")
-     */
-    @Column(nullable = false)
-    private String location;
+    @JoinColumn(name = "locationId", nullable = false)
+    private Location location;
 
     @Enumerated(EnumType.ORDINAL)
     private CategoryEnum category;
 
+    @Enumerated(EnumType.STRING)
+    private AdStateEnum adState = AdStateEnum.ACTIVE;
+
     public Advertisement() {}
 
-    public Advertisement(Pet pet, User user, CategoryEnum category, LocalDateTime disappearanceDateTime, String disappearanceLocation) {
+    public Advertisement(Pet pet, User user, CategoryEnum category, LocalDateTime disappearanceDateTime, Location disappearanceLocation) {
         this.pet = pet;
         this.user = user;
         this.disappearanceDateTime = disappearanceDateTime;
@@ -44,12 +45,11 @@ public class Advertisement {
         this.location = disappearanceLocation;
     }
 
-    public void updateAdvertisement(AddAdvertisementDTO dto) {
+    public void updateAdvertisement(AddAdvertisementDTO dto, Location newLocation) {
         pet.updatePet(dto);
         this.disappearanceDateTime = dto.getDisappearanceDateTime();
-        // need to implement this in frontend
-        // this.location = dto.getDisappearanceLocation();
-        // this.category = dto.getCategory;
+        this.category = dto.getCategory() == null ? CategoryEnum.LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA : dto.getCategory();
+        this.location = newLocation == null ? this.location : newLocation;
     }
 
     public Long getAdvertisementId() {
@@ -84,11 +84,11 @@ public class Advertisement {
         this.disappearanceDateTime = disappearanceDateTime;
     }
 
-    public String getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 
@@ -98,5 +98,13 @@ public class Advertisement {
 
     public void setCategory(CategoryEnum category) {
         this.category = category;
+    }
+
+    public AdStateEnum getAdState() {
+        return adState;
+    }
+
+    public void setAdState(AdStateEnum adState) {
+        this.adState = adState;
     }
 }

@@ -1,64 +1,70 @@
 package com.lostpetfinder.entity;
-/*
+
 import com.lostpetfinder.entity.pkeys.MessagePK;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.LinkedList;
 
 @Entity
 @Table(name = "messages")
 public class Message {
 
-    @EmbeddedId
-    private MessagePK pk;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
+    private MessagePK altId;
+
+    @Column
     @Size(max = 1000)
-    private String messageText;
+    private String text;
 
     @ManyToOne
     @JoinColumn(name = "coordinates")
     private Location location;
 
     @ManyToOne
-    @JoinColumn(name = "linkToImage")
-    private Image image;
-
-    @ManyToOne
     @JoinColumn(name = "advertisementId", nullable = false)
-    private Advertisement advertisementId;
+    private Advertisement advertisement;
 
     public Message() {}
 
-    public Message(MessagePK pk, String messageText, Location location, Image image, Advertisement advertisementId) {
-        this.pk = pk;
-        this.messageText = messageText;
+    public Message(User messageSender,
+                   String text,
+                   Location location,
+                   Advertisement advertisement)
+    {
+        this.altId = new MessagePK(messageSender, LocalDateTime.now(ZoneOffset.UTC));
+        this.text = text;
         this.location = location;
-        this.image = image;
-        this.advertisementId = advertisementId;
+        this.advertisement = advertisement;
     }
 
-    public Advertisement getAdvertisementId() {
-        return advertisementId;
+
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public MessagePK getAltId() {
+        return altId;
     }
 
-    public void setAdvertisementId(Advertisement advertisementId) {
-        this.advertisementId = advertisementId;
+    public void setAltId(MessagePK altId) {
+        this.altId = altId;
     }
 
-    public MessagePK getPk() {
-        return pk;
+    public String getText() {
+        return text;
     }
 
-    public void setPk(MessagePK pk) {
-        this.pk = pk;
-    }
-
-    public String getMessageText() {
-        return messageText;
-    }
-
-    public void setMessageText(String messageText) {
-        this.messageText = messageText;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public Location getLocation() {
@@ -69,12 +75,11 @@ public class Message {
         this.location = location;
     }
 
-    public Image getImage() {
-        return image;
+    public Advertisement getAdvertisement() {
+        return advertisement;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setAdvertisement(Advertisement advertisement) {
+        this.advertisement = advertisement;
     }
 }
-*/

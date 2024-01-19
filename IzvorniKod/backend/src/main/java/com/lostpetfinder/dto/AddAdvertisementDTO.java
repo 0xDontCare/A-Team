@@ -1,9 +1,8 @@
 package com.lostpetfinder.dto;
 
-import com.lostpetfinder.entity.Advertisement;
+import com.lostpetfinder.entity.CategoryEnum;
+import com.lostpetfinder.entity.Image;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,12 +10,19 @@ public class AddAdvertisementDTO {
 
     private String petName;
     private String species;
+    private String breed;
     private String color;
     private Integer age;
     private String petDescription;
+    private CategoryEnum category;
     private LocalDateTime disappearanceDateTime;
-    private String disappearanceLocation; // change the data type
+    private Double disappearanceLocationLat;
+    private Double disappearanceLocationLng;
     private List<MultipartFile> images;
+
+    // used in put method
+    private List<Image> imagesToDelete;
+
 
     public String getPetName() {
         return petName;
@@ -66,12 +72,20 @@ public class AddAdvertisementDTO {
         this.disappearanceDateTime = disappearanceDateTime;
     }
 
-    public String getDisappearanceLocation() {
-        return disappearanceLocation;
+    public Double getDisappearanceLocationLat() {
+        return disappearanceLocationLat;
     }
 
-    public void setDisappearanceLocation(String disappearanceLocation) {
-        this.disappearanceLocation = disappearanceLocation;
+    public void setDisappearanceLocationLat(Double disappearanceLocationLat) {
+        this.disappearanceLocationLat = disappearanceLocationLat;
+    }
+
+    public Double getDisappearanceLocationLng() {
+        return disappearanceLocationLng;
+    }
+
+    public void setDisappearanceLocationLng(Double disappearanceLocationLng) {
+        this.disappearanceLocationLng = disappearanceLocationLng;
     }
 
     public List<MultipartFile> getImages() {
@@ -80,5 +94,29 @@ public class AddAdvertisementDTO {
 
     public void setImages(List<MultipartFile> images) {
         this.images = images;
+    }
+
+    public CategoryEnum getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryEnum category) {
+        this.category = category;
+    }
+
+    public List<Image> getImagesToDelete() {
+        return imagesToDelete;
+    }
+
+    public void setImagesToDelete(List<Image> imagesToDelete) {
+        this.imagesToDelete = imagesToDelete;
+    }
+
+    public String getBreed() {
+        return breed;
+    }
+
+    public void setBreed(String breed) {
+        this.breed = breed;
     }
 }

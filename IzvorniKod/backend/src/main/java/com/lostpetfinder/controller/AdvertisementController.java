@@ -3,7 +3,10 @@ package com.lostpetfinder.controller;
 import com.lostpetfinder.dto.AddAdvertisementDTO;
 import com.lostpetfinder.dto.AdvertisementDetailsDTO;
 import com.lostpetfinder.dto.AdvertisementSummaryDTO;
+import com.lostpetfinder.dto.HomeUserDTO;
+import com.lostpetfinder.entity.CategoryEnum;
 import com.lostpetfinder.service.AdvertisementService;
+import com.lostpetfinder.service.UserService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,18 +20,23 @@ import java.util.List;
 public class AdvertisementController {
 
     private final AdvertisementService advertisementService;
+    private final UserService userService;
 
-    public AdvertisementController(AdvertisementService advertisementService) {
+    public AdvertisementController(AdvertisementService advertisementService, UserService userService) {
         this.advertisementService = advertisementService;
+        this.userService = userService;
     }
 
     @GetMapping
-    public List<AdvertisementSummaryDTO> getAllAdvertisements() {
-        return advertisementService.getAllAdvertisements();
+    public List<AdvertisementSummaryDTO> getAllAdvertisements(@RequestParam("category") CategoryEnum category) {
+        return advertisementService.getAllAdvertisements(category);
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> addNewAdvertisement(@ModelAttribute AddAdvertisementDTO dto) {
+        if (userService.getLoggedUser().getStatusCode() != ResponseEntity.ok().build().getStatusCode())
+            return ResponseEntity.badRequest().body("You must be logged in to add an advertisement!");
+
         return advertisementService.addNewAdvertisement(dto);
     }
 
@@ -37,16 +45,28 @@ public class AdvertisementController {
         return advertisementService.seeAdvertisementInfo(adId);
     }
 
-    // change the data type of the return value
-    @PutMapping("/{adId}")
-    public AdvertisementDetailsDTO changeAdvertisement(@PathVariable("adId") long adId,
-                                                   @RequestBody AddAdvertisementDTO dto) {
+    // change the data type of the return value to ResponseEntity
+    @PutMapping(value ="/{adId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Object> changeAdvertisement(@PathVariable("adId") long adId,
+                                                      @ModelAttribute AddAdvertisementDTO dto) {
+
+        if (userService.getLoggedUser().getStatusCode() != ResponseEntity.ok().build().getStatusCode())
+            return ResponseEntity.badRequest().body("You must be logged in to change an advertisement!");
+        if (advertisementService.seeAdvertisementInfo(adId).getUsername() != ((HomeUserDTO) userService.getLoggedUser().getBody()).getUsername())
+            return ResponseEntity.badRequest().body("You must be the owner of the advertisement to change it!");
+
         return advertisementService.changeAdvertisement(adId, dto);
     }
 
+    // change the data type of the return value to ResponseEntity
     @DeleteMapping("/{adId}")
-    public void deleteAdvertisement(@PathVariable("adId") Long adId) {
+    public ResponseEntity<Object> deleteAdvertisement(@PathVariable("adId") Long adId) {
+        if (userService.getLoggedUser().getStatusCode() != ResponseEntity.ok().build().getStatusCode())
+            return ResponseEntity.badRequest().body("You must be logged in to delete an advertisement!");
+        if (advertisementService.seeAdvertisementInfo(adId).getUsername() != ((HomeUserDTO) userService.getLoggedUser().getBody()).getUsername())
+            return ResponseEntity.badRequest().body("You must be the owner of the advertisement to delete it!");
         advertisementService.deleteAdvertisement(adId);
+        return ResponseEntity.ok().body("Advertisement deleted successfully!");
     }
 
 }

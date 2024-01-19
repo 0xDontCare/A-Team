@@ -10,6 +10,7 @@ public class HomeUserDTO {
     private String firstName;
     private String lastName;
     private String shelterName;
+    private String phoneNumber;
 
     public HomeUserDTO(User user) {
         this.username = user.getUsername();
@@ -20,6 +21,7 @@ public class HomeUserDTO {
         } else {
             this.shelterName = ((Shelter)user).getName();
         }
+        this.phoneNumber = user.getPhoneNumber();
     }
 
     public String getUsername() {
@@ -60,5 +62,13 @@ public class HomeUserDTO {
 
     public void setShelterName(String shelterName) {
         this.shelterName = shelterName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

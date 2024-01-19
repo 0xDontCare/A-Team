@@ -49,24 +49,24 @@ public class UserService implements UserDetailsService {
     public ResponseEntity<Object> getLoggedUser() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication instanceof AnonymousAuthenticationToken) {
-            return new ResponseEntity<>("No logged-in user!", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("No logged-in user!", HttpStatus.NO_CONTENT);
         }
         String username = authentication.getName();
 
-        User user = userRepository.findByUsernameOrEmail(username,username).orElseThrow();
+        User user = userRepository.findByUsername(username).orElseThrow();
         return new ResponseEntity<>(new HomeUserDTO(user), HttpStatus.OK);
     }
 
     public Optional<User> LoggedUser() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        return userRepository.findByUsernameOrEmail(username,username);
+        return userRepository.findByUsername(username);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository
-                .findByUsernameOrEmail(username, username)
+                .findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found"));
         Set<GrantedAuthority> authorities = user.getRoles().stream()
                 .map((role) -> new SimpleGrantedAuthority(role.getName()))

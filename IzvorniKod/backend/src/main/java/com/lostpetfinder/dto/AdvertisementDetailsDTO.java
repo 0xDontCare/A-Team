@@ -19,11 +19,14 @@ public class AdvertisementDetailsDTO {
     private CategoryEnum categoryDescription;
     private String petName;
     private String species;
+    private String breed;
     private String color;
     private Integer age;
     private String petDescription;
     private LocalDateTime disappearanceDateTime; // potentially change the data type
     private String disappearanceLocation; // change the data type
+    private Double disappearanceLocationLat;
+    private Double disappearanceLocationLng;
     private List<String> images; // potentially change the data type
 
     public AdvertisementDetailsDTO() {}
@@ -44,11 +47,18 @@ public class AdvertisementDetailsDTO {
         this.advertisementId = advertisement.getAdvertisementId();
         this.petName = advertisement.getPet().getName();
         this.species = advertisement.getPet().getSpecies();
+        this.breed = advertisement.getPet().getBreed();
         this.color = advertisement.getPet().getColor();
         this.age = advertisement.getPet().getAge();
         this.petDescription = advertisement.getPet().getDescription();
         this.disappearanceDateTime = advertisement.getDisappearanceDateTime();
-        this.disappearanceLocation = advertisement.getLocation();
+        this.disappearanceLocation = (advertisement.getLocation().getLocationName() != null ? advertisement.getLocation().getLocationName() + ", ":"") +
+                                     advertisement.getLocation().getPlace().getName() + ", " +
+                                     advertisement.getLocation().getPlace().getZipCode() + ", " +
+                                     advertisement.getLocation().getPlace().getCounty().getName() + ", " +
+                                     "Hrvatska"; // NEED TO ADD toString METHOD
+        this.disappearanceLocationLat = advertisement.getLocation().getCoordinates().getLatitude();
+        this.disappearanceLocationLng = advertisement.getLocation().getCoordinates().getLongitude();
         this.images = listOfImage.stream().map(Image::getLinkToImage).collect(Collectors.toList());
     }
 
@@ -117,4 +127,15 @@ public class AdvertisementDetailsDTO {
         return categoryDescription;
     }
 
+    public String getBreed() {
+        return breed;
+    }
+
+    public Double getDisappearanceLocationLat() {
+        return disappearanceLocationLat;
+    }
+
+    public Double getDisappearanceLocationLng() {
+        return disappearanceLocationLng;
+    }
 }
