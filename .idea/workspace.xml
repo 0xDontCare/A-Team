@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e8bea504-cbb3-43ca-a949-d67d77c7a9b7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/ChatRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/IzvorniKod/frontend/src/components/ChatRoom.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +139,7 @@
       <workItem from="1705602712449" duration="636000" />
       <workItem from="1705609582811" duration="5000" />
       <workItem from="1705679697927" duration="4342000" />
-      <workItem from="1705687139159" duration="5790000" />
+      <workItem from="1705687139159" duration="6628000" />
     </task>
     <servers />
   </component>
