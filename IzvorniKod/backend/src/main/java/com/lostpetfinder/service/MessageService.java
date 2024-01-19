@@ -2,10 +2,13 @@ package com.lostpetfinder.service;
 
 import com.lostpetfinder.dao.*;
 import com.lostpetfinder.dto.MessageDTO;
+import com.lostpetfinder.dto.MessageInputDTO;
 import com.lostpetfinder.entity.*;
 import com.lostpetfinder.entity.pkeys.CoordinatesPK;
+import com.lostpetfinder.utils.BASE64DecodedMultipartFile;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,8 +21,8 @@ public class MessageService {
     private final AdvertisementRepository advertisementRepository;
     private final LocationRepository locationRepository;
     private final LocationService locationService;
-    private final ImageRepository imageRepository;
     private final ImageService imageService;
+    private final MessageImageRepository messageImageRepository;
 
     public MessageService(MessageRepository messageRepository,
                           UserRepository<User> userRepository,
@@ -27,18 +30,19 @@ public class MessageService {
                           LocationRepository locationRepository,
                           LocationService locationService,
                           ImageRepository imageRepository,
-                          ImageService imageService)
+                          ImageService imageService,
+                          MessageImageRepository messageImageRepository)
     {
         this.messageRepository = messageRepository;
         this.userRepository = userRepository;
         this.advertisementRepository = advertisementRepository;
         this.locationRepository = locationRepository;
         this.locationService = locationService;
-        this.imageRepository = imageRepository;
         this.imageService = imageService;
+        this.messageImageRepository = messageImageRepository;
     }
 
-    public void saveMessage(MessageDTO dto) {
+    public void saveMessage(MessageInputDTO dto) {
         User user = userRepository.findByUsername(dto.getSenderUsername()).orElseThrow();
 
         Advertisement advertisement = advertisementRepository
@@ -61,31 +65,34 @@ public class MessageService {
             }
         }
 
-        Image image = null;
-        if (dto.getImage() != null) {
-            String linkToImage = imageService.generateLinkToImage(dto.getImage());
-            try {
-                image = new Image(
-                        linkToImage,
-                        dto.getImage().getBytes(),
-                        dto.getImage().getContentType(),
-                        null
-                );
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            imageRepository.save(image);
-        }
-
         Message message = new Message(
                 user,
                 dto.getMessageText(),
                 location,
-                advertisement,
-                image
+                advertisement
         );
 
         messageRepository.save(message);
+
+        MessageImage image = null;
+        if (dto.getImages() != null) {
+            BASE64DecodedMultipartFile decodedImage;
+            for (String i : dto.getImages()) {
+                decodedImage = new BASE64DecodedMultipartFile(Base64.getDecoder().decode(i));
+                String linkToImage = imageService.generateLinkToImage(decodedImage);
+                try {
+                    image = new MessageImage(
+                            linkToImage,
+                            decodedImage.getBytes(),
+                            decodedImage.getContentType(),
+                            message
+                    );
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                messageImageRepository.save(image);
+            }
+        }
     }
 
     public List<MessageDTO> getChatMessages(Long advertisementId) {
@@ -95,12 +102,12 @@ public class MessageService {
                 .sorted(Comparator
                         .comparing(message -> ((Message) message).getAltId().getSendingDateTime())
                         .reversed())
-                .map(MessageService::convertToMessageDTO)
+                .map(this::convertToMessageDTO)
                 .collect(Collectors.toList());
     }
 
     // repair when you figure out the location and image handling
-    private static MessageDTO convertToMessageDTO(Message message) {
+    private MessageDTO convertToMessageDTO(Message message) {
 
         return new MessageDTO(
                 message.getId(),
@@ -112,7 +119,10 @@ public class MessageService {
                 message.getLocation() == null ? null : message.getLocation().getCoordinates().getLatitude(),
                 message.getLocation() == null ? null : message.getLocation().getCoordinates().getLongitude(),
                 null,
-                message.getImage() == null ? null : message.getImage().getLinkToImage()
+                messageImageRepository.findByMessageId(message.getId())
+                        .stream()
+                        .map(MessageImage::getLinkToImage)
+                        .collect(Collectors.toList())
         );
 
     }

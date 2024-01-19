@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.LinkedList;
 
 @Entity
 @Table(name = "messages")
@@ -26,9 +27,6 @@ public class Message {
     @JoinColumn(name = "coordinates")
     private Location location;
 
-    @OneToOne
-    private Image image;
-
     @ManyToOne
     @JoinColumn(name = "advertisementId", nullable = false)
     private Advertisement advertisement;
@@ -38,13 +36,11 @@ public class Message {
     public Message(User messageSender,
                    String text,
                    Location location,
-                   Advertisement advertisement,
-                   Image image)
+                   Advertisement advertisement)
     {
         this.altId = new MessagePK(messageSender, LocalDateTime.now(ZoneOffset.UTC));
         this.text = text;
         this.location = location;
-        this.image = image;
         this.advertisement = advertisement;
     }
 
@@ -77,14 +73,6 @@ public class Message {
 
     public void setLocation(Location location) {
         this.location = location;
-    }
-
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
     }
 
     public Advertisement getAdvertisement() {

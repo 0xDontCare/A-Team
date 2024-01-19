@@ -1,6 +1,7 @@
 package com.lostpetfinder.controller;
 
 import com.lostpetfinder.dto.MessageDTO;
+import com.lostpetfinder.dto.MessageInputDTO;
 import com.lostpetfinder.entity.Message;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -21,7 +22,7 @@ public class ChatController {
     }
 
     @MessageMapping("/message") // /app/message
-    public MessageDTO forwardNewMessage(@Payload MessageDTO messageDTO) {
+    public MessageInputDTO forwardNewMessage(@Payload MessageInputDTO messageDTO) {
         messageService.saveMessage(messageDTO);
         String destination = "/chatroom/" + messageDTO.getAdvertisementId(); // /chatroom/{advertisementId}
         simpMessagingTemplate.convertAndSend(destination, messageDTO);

@@ -7,9 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Base64;
 import java.util.List;
 
-public class MessageDTO {
-
-    private Long id;
+public class MessageInputDTO {
     private String senderUsername;
     private String senderEmail;
     private String senderPhoneNumber;
@@ -17,12 +15,12 @@ public class MessageDTO {
     private String messageText;
     private Double disappearanceLocationLat;
     private Double disappearanceLocationLng;
-    private String image;
-    private List<String> linkToImage;
+    private String[] images;
 
-    public MessageDTO() {}
 
-    public MessageDTO(Long id,
+    public MessageInputDTO() {}
+
+    public MessageInputDTO(
                       String senderUsername,
                       String senderEmail,
                       String senderPhoneNumber,
@@ -30,10 +28,8 @@ public class MessageDTO {
                       String messageText,
                       Double disappearanceLocationLat,
                       Double disappearanceLocationLng,
-                      String image,
-                      List<String> linkToImage)
+                      String[] images)
     {
-        this.id = id;
         this.senderUsername = senderUsername;
         this.senderEmail = senderEmail;
         this.senderPhoneNumber = senderPhoneNumber;
@@ -41,14 +37,10 @@ public class MessageDTO {
         this.messageText = messageText;
         this.disappearanceLocationLat = disappearanceLocationLat;
         this.disappearanceLocationLng = disappearanceLocationLng;
-        this.image = image;
-        this.linkToImage = linkToImage;
+        this.images = images;
     }
 
 
-    public Long getId() {
-        return id;
-    }
     public void setSenderUsername(String senderUsername) {
         this.senderUsername = senderUsername;
     }
@@ -69,12 +61,8 @@ public class MessageDTO {
         this.disappearanceLocationLng = disappearanceLocationLng;
     }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public void setLinkToImage(List<String> linkToImage) {
-        this.linkToImage = linkToImage;
+    public void setImages(String[] images) {
+        this.images = images;
     }
 
     public String getSenderUsername() {
@@ -113,12 +101,8 @@ public class MessageDTO {
         return disappearanceLocationLng;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public List<String> getLinkToImage() {
-        return linkToImage;
+    public String[] getImages() {
+        return images;
     }
 
 }
