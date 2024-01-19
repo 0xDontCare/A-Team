@@ -21,7 +21,7 @@ public class ChatController {
         this.messageService = messageService;
     }
 
-    @MessageMapping("/message") // /app/message
+    @MessageMapping("/message") // /api/app/message
     public MessageInputDTO forwardNewMessage(@Payload MessageInputDTO messageDTO) {
         messageService.saveMessage(messageDTO);
         String destination = "/chatroom/" + messageDTO.getAdvertisementId(); // /chatroom/{advertisementId}
