@@ -8,6 +8,7 @@ import com.lostpetfinder.dto.MapsSummaryDTO;
 import com.lostpetfinder.entity.County;
 import com.lostpetfinder.entity.Location;
 import com.lostpetfinder.entity.Place;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,7 @@ public class LocationService {
 
         int radius = 10000;
 
+        HttpEntity<String> entity = new HttpEntity<>(null, null);
         ResponseEntity<MapsApiResponseDTO> mapsApiResponse = restTemplate.exchange(
                 "https://maps.googleapis.com/maps/api/geocode/json?key=" +
                         apiKey +
@@ -45,7 +47,7 @@ public class LocationService {
                         longitude +
                         "&radius=" + radius +
                         "&language=hr",
-                HttpMethod.GET, null, MapsApiResponseDTO.class);
+                HttpMethod.GET, entity, MapsApiResponseDTO.class);
 
         return new MapsSummaryDTO(latitude, longitude, mapsApiResponse.getBody());
 
