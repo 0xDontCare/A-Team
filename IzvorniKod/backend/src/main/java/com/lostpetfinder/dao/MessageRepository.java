@@ -12,4 +12,6 @@ public interface MessageRepository extends JpaRepository<Message, MessagePK> {
     // do we need the optional part?
     List<Message> findAllByAdvertisementAdvertisementId(Long advertisementId);
 
+    Message findById(Long id);
+
 }
