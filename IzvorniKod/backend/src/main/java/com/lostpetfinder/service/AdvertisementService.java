@@ -16,9 +16,6 @@ import java.util.List;
 public class AdvertisementService {
 
     private final LocationService locationService;
-    private final LocationRepository locationRepository;
-    private final PlaceRepository placeRepository;
-    private final CountyRepository countyRepository;
     private final ImageService imageService;
     private final UserService userService;
     private final AdvertisementRepository advertisementRepository;
@@ -30,10 +27,7 @@ public class AdvertisementService {
                                 UserService userService,
                                 AdvertisementRepository advertisementRepository,
                                 PetRepository petRepository,
-                                ImageRepository imageRepository,
-                                LocationRepository locationRepository,
-                                PlaceRepository placeRepository,
-                                CountyRepository countyRepository)
+                                ImageRepository imageRepository)
     {
         this.locationService = locationService;
         this.imageService = imageService;
@@ -41,9 +35,6 @@ public class AdvertisementService {
         this.advertisementRepository = advertisementRepository;
         this.petRepository = petRepository;
         this.imageRepository = imageRepository;
-        this.locationRepository = locationRepository;
-        this.placeRepository = placeRepository;
-        this.countyRepository = countyRepository;
     }
 
     // adjust later so it only returns active ads
@@ -135,7 +126,7 @@ public class AdvertisementService {
 
         if (dto.getCategory() == CategoryEnum.U_SKLONISTU) {
             if (!(changedAdvertisement.getUser() instanceof Shelter)) {
-                return ResponseEntity.badRequest().body("You must be a shelter to change an advertisement to this category!");
+                throw new SecurityException();
             }
         }
         changedAdvertisement.updateAdvertisement(dto, newLocation);

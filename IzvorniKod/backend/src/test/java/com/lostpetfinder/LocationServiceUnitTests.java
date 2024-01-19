@@ -6,6 +6,7 @@ import com.lostpetfinder.dao.PlaceRepository;
 import com.lostpetfinder.dto.MapsApiResponseDTO;
 import com.lostpetfinder.dto.MapsSummaryDTO;
 import com.lostpetfinder.entity.County;
+import com.lostpetfinder.entity.Image;
 import com.lostpetfinder.entity.Location;
 import com.lostpetfinder.entity.Place;
 import com.lostpetfinder.service.LocationService;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
@@ -20,6 +22,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 
@@ -60,15 +63,10 @@ public class LocationServiceUnitTests {
         when(placeRepository.findByZipCode(anyLong())).thenReturn(Optional.of(
                 new Place(10000L, "Zagreb", new County("Grad Zagreb"))
         ));
-        when(locationRepository.save(any(Location.class))).thenReturn(new Location(
-                45.815399, 15.966568, "Zagreb", new Place(10000L, "Zagreb", new County("Grad Zagreb"))
-                )
-        );
-        Location result = locationService.getLocation(45.815399, 15.966568);
 
-        assertNotNull(result);
-        assertEquals(45.815399, result.getCoordinates().getLatitude());
-        assertEquals(15.966568, result.getCoordinates().getLongitude());
+        locationService.getLocation(45.815399, 15.966568);
+
+        Mockito.verify(locationRepository, times(1)).save(any(Location.class));
 
     }
 }
