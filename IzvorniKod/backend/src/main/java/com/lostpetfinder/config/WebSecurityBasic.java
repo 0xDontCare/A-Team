@@ -65,7 +65,7 @@ public class WebSecurityBasic {
         MvcRequestMatcher.Builder mvcRequestMatcher = new MvcRequestMatcher.Builder(introspector);
 
         http.csrf(AbstractHttpConfigurer::disable)
-
+                .cors(withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(mvcRequestMatcher.pattern("/api/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/login")).permitAll()
