@@ -2,6 +2,7 @@ package com.lostpetfinder;
 
 import com.lostpetfinder.dao.*;
 import com.lostpetfinder.dto.MessageDTO;
+import com.lostpetfinder.dto.MessageInputDTO;
 import com.lostpetfinder.entity.*;
 import com.lostpetfinder.entity.pkeys.CoordinatesPK;
 import com.lostpetfinder.entity.pkeys.MessagePK;
@@ -46,13 +47,16 @@ public class MessageServiceUnitTests {
     @Mock
     private LocationService locationService;
 
+    @Mock
+    private MessageImageRepository messageImageRepository;
+
     @InjectMocks
     private MessageService messageService;
 
     @Test
     public void testSaveMessageWithTextOnly() {
 
-        MessageDTO dto = mock(MessageDTO.class);
+        MessageInputDTO dto = mock(MessageInputDTO.class);
         when(dto.getSenderUsername()).thenReturn("testUser");
         when(dto.getMessageText()).thenReturn("testMessageText");
         when(dto.getAdvertisementId()).thenReturn(1L);
@@ -70,7 +74,7 @@ public class MessageServiceUnitTests {
     @Test
     public void testSaveMessageWithLocationProvided() {
 
-        MessageDTO dto = mock(MessageDTO.class);
+        MessageInputDTO dto = mock(MessageInputDTO.class);
         when(dto.getSenderUsername()).thenReturn("testUser");
         when(dto.getMessageText()).thenReturn("testMessageText");
         when(dto.getAdvertisementId()).thenReturn(1L);
@@ -105,6 +109,9 @@ public class MessageServiceUnitTests {
 
         when(messageRepository.findAllByAdvertisementAdvertisementId(anyLong())).thenReturn(
                 Arrays.asList(message1, message2)
+        );
+        when(messageImageRepository.findByMessageId(anyLong())).thenReturn(
+                Arrays.asList(mock(MessageImage.class), mock(MessageImage.class))
         );
 
         List<MessageDTO> result = messageService.getChatMessages(1L);
