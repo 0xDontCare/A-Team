@@ -32,7 +32,7 @@ public class LocationService {
     protected MapsSummaryDTO getLocInfoFromAPI(double latitude, double longitude) {
 
         RestTemplate restTemplate = new RestTemplate();
-        String apiKey = "AIzaSyDXFHTxz_VlUm8TRSq9D_6xsiIuLiUf3vs";
+        String apiKey = "AIzaSyADeDhchhmc_T9sPGCLzfFplOeg9nqrrzQ";
 
         int radius = 10000;
 
