@@ -7,7 +7,6 @@ import { Button, Collapse, Card } from "react-bootstrap";
 import "./AddAdChangeAd.css";
 import "leaflet/dist/leaflet.css";
 
-const API_BASE_URL = "https://lostpetfinder-be.onrender.com";
 
 interface ChatRoomProps {
   advertisementId: string;
@@ -131,7 +130,7 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
 
   const registerUser = () => {
 
-    let Sock = new SockJS(API_BASE_URL+"/ws");
+    let Sock = new SockJS("/api/ws");
     stompClient = over(Sock);
     stompClient.connect({}, onConnected, onError);
   };
