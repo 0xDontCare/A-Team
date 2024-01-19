@@ -2,7 +2,7 @@ package com.lostpetfinder.dto;
 
 import java.util.ArrayList;
 
-public class MapsApiResponseDTO{
+public class MapsApiResponseDTO {
     private PlusCode plus_code;
     private ArrayList<Result> results;
     private String status;
@@ -28,7 +28,7 @@ public class MapsApiResponseDTO{
                 '}';
     }
 
-    public static class AddressComponent{
+    public static class AddressComponent {
         private String long_name;
         private String short_name;
         private ArrayList<String> types;
@@ -44,9 +44,18 @@ public class MapsApiResponseDTO{
         public ArrayList<String> getTypes() {
             return types;
         }
+
+        @Override
+        public String toString() {
+            return "AddressComponent{" +
+                    "long_name='" + long_name + '\'' +
+                    ", short_name='" + short_name + '\'' +
+                    ", types=" + types +
+                    '}';
+        }
     }
 
-    public static class Bounds{
+    public static class Bounds {
         private Northeast northeast;
         private Southwest southwest;
 
@@ -57,9 +66,17 @@ public class MapsApiResponseDTO{
         public Southwest getSouthwest() {
             return southwest;
         }
+
+        @Override
+        public String toString() {
+            return "Bounds{" +
+                    "northeast=" + northeast +
+                    ", southwest=" + southwest +
+                    '}';
+        }
     }
 
-    public static class Geometry{
+    public static class Geometry {
         private Location location;
         private String location_type;
         private Viewport viewport;
@@ -80,9 +97,19 @@ public class MapsApiResponseDTO{
         public Bounds getBounds() {
             return bounds;
         }
+
+        @Override
+        public String toString() {
+            return "Geometry{" +
+                    "location=" + location +
+                    ", location_type='" + location_type + '\'' +
+                    ", viewport=" + viewport +
+                    ", bounds=" + bounds +
+                    '}';
+        }
     }
 
-    public static class Location{
+    public static class Location {
         private double lat;
         private double lng;
 
@@ -93,9 +120,17 @@ public class MapsApiResponseDTO{
         public double getLng() {
             return lng;
         }
+
+        @Override
+        public String toString() {
+            return "Location{" +
+                    "lat=" + lat +
+                    ", lng=" + lng +
+                    '}';
+        }
     }
 
-    public static class Northeast{
+    public static class Northeast {
         private double lat;
         private double lng;
 
@@ -106,9 +141,17 @@ public class MapsApiResponseDTO{
         public double getLng() {
             return lng;
         }
+
+        @Override
+        public String toString() {
+            return "Northeast{" +
+                    "lat=" + lat +
+                    ", lng=" + lng +
+                    '}';
+        }
     }
 
-    public static class PlusCode{
+    public static class PlusCode {
         private String compound_code;
         private String global_code;
 
@@ -119,9 +162,17 @@ public class MapsApiResponseDTO{
         public String getGlobal_code() {
             return global_code;
         }
+
+        @Override
+        public String toString() {
+            return "PlusCode{" +
+                    "compound_code='" + compound_code + '\'' +
+                    ", global_code='" + global_code + '\'' +
+                    '}';
+        }
     }
 
-    public static class Result{
+    public static class Result {
         private ArrayList<AddressComponent> address_components;
         private String formatted_address;
         private Geometry geometry;
@@ -152,9 +203,21 @@ public class MapsApiResponseDTO{
         public ArrayList<String> getTypes() {
             return types;
         }
+
+        @Override
+        public String toString() {
+            return "Result{" +
+                    "address_components=" + address_components +
+                    ", formatted_address='" + formatted_address + '\'' +
+                    ", geometry=" + geometry +
+                    ", place_id='" + place_id + '\'' +
+                    ", plus_code=" + plus_code +
+                    ", types=" + types +
+                    '}';
+        }
     }
 
-    public static class Southwest{
+    public static class Southwest {
         private double lat;
         private double lng;
 
@@ -165,9 +228,17 @@ public class MapsApiResponseDTO{
         public double getLng() {
             return lng;
         }
+
+        @Override
+        public String toString() {
+            return "Southwest{" +
+                    "lat=" + lat +
+                    ", lng=" + lng +
+                    '}';
+        }
     }
 
-    public static class Viewport{
+    public static class Viewport {
         private Northeast northeast;
         private Southwest southwest;
 
@@ -178,6 +249,13 @@ public class MapsApiResponseDTO{
         public Southwest getSouthwest() {
             return southwest;
         }
-    }
 
+        @Override
+        public String toString() {
+            return "Viewport{" +
+                    "northeast=" + northeast +
+                    ", southwest=" + southwest +
+                    '}';
+        }
+    }
 }
