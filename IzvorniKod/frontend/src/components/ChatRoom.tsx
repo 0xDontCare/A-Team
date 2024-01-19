@@ -354,23 +354,33 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
                                 {loginStatus && (
                                     <div
                                         className="send-message d-flex flex-column border border-2 rounded p-3 bg-white">
-                                        <h4>New message</h4>
+                                        <h3 style={{marginLeft: '15px'}}>Dodajte novu poruku</h3>
+                                        <div className="container">
+                                            <div className="row">
+                                                <div className="col-lg-12">
+            <textarea
+                rows="4"
+                className="form-control input-message my-3"
+                placeholder="Napišite nešto..."
+                value={newMessage?.messageText || ""}
+                onChange={(e) =>
+                    setNewMessage({
+                        ...newMessage,
+                        messageText: e.target.value,
+                    })
+                }
+            />
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <input
-                                            type="text"
-                                            className="input-message my-3"
-                                            placeholder="Message Text"
-                                            value={newMessage?.messageText || ""}
-                                            onChange={(e) =>
-                                                setNewMessage({
-                                                    ...newMessage,
-                                                    messageText: e.target.value,
-                                                })
-                                            }
-                                        />
-                                        <input
-                                            type="text"
-                                            className="input-message mb-3"
-                                            placeholder="Link To Image"
+                                            type="file"
+                                            className="form-control my-3"
+                                            style={{
+                                                width: "98%",
+                                                marginLeft: "10px"
+                                            }} // Adjust the marginLeft value as needed
                                             value={newMessage?.linkToImage || ""}
                                             onChange={(e) =>
                                                 setNewMessage({
@@ -379,6 +389,8 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
                                                 })
                                             }
                                         />
+
+
                                         {/* <input
                         type="file"
                         className="input-message"
@@ -390,13 +402,16 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
                                                 <Button
                                                     variant="primary"
                                                     onClick={handleToggleAddLocation}
+                                                    style={{marginLeft: "10px"}}
                                                     aria-expanded={isOpenAddLocation}
+                                                    className="mt-2"
                                                 >
                                                     Add location
                                                 </Button>
                                                 <Button
                                                     type="button"
-                                                    className="send-button btn-success"
+                                                    className="send-button btn-success mt-2"
+                                                    style={{marginRight: "10px"}}
                                                     onClick={sendValue}
                                                 >
                                                     Send
