@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef} from "react";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
-import { Button, Collapse, Card } from "react-bootstrap";
-import "./AddAdChangeAd.css";
+import { Button, Card } from "react-bootstrap";
+import "./ChatRoom.css";
 import "leaflet/dist/leaflet.css";
 
 interface ChatRoomProps {
@@ -48,6 +48,14 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
 
   const [isOpenAddLocation, setIsOpenAddLocation] = useState(false);
   const [openMessageId, setOpenMessageId] = useState<number | null>(null);
+
+  const bottomRef = useRef(null);
+
+  const handleToggleAddLocation = () => {
+    setIsOpenAddLocation(!isOpenAddLocation);
+    // Get the height of the entire document
+    bottomRef.current.scrollIntoView({behavior: 'smooth'});
+  };
 
   const handleToggleAddLocation = () =>
     setIsOpenAddLocation(!isOpenAddLocation);
@@ -162,66 +170,87 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
           <div className="card bg-transparent">
             <div className="card-body p-4 ">
               {messages.map((message) => (
-                <div key={message.id} className="card mb-4">
-                  <div className="card-body d-flex flex-column justify-content-between">
-                    <div className="d-flex flex-row align-items-center">
-                      <p className="small mb-0 me-3">
-                        {message.senderUsername}
-                      </p>
-                      <p className="small mb-0 me-3">{message.senderEmail}</p>
-                      <p className="small mb-0 me-3">
-                        {message.senderPhoneNumber}
-                      </p>
-                    </div>
-
-                    <p className="mt-2">{message.messageText}</p>
-                    {message.disappearanceLocationLat !== null && (
-                      <div>
-                        <p className="mb-0">
-                          <Button
-                            variant="primary"
-                            onClick={() => handleToggle(message.id)}
-                            aria-controls={`collapseExample-${message.id}`}
-                            aria-expanded={openMessageId === message.id}
-                          >
-                            Lokacija
-                          </Button>
+                  <div key={message.id} className="card mb-4">
+                    <div className="card-body d-flex flex-column justify-content-between">
+                      <div className="d-flex flex-row align-items-center">
+                        <p className="mb-0 me-3"
+                           style={{marginLeft: "5px", fontWeight: "bold", fontSize: "15px"}}>
+                          Korisničko ime : <span style={{
+                          fontWeight: "normal",
+                          fontSize: "15px"
+                        }}>{message.senderUsername}</span>
                         </p>
-                        <Collapse
-                          in={openMessageId === message.id}
-                          id={`collapseExample-${message.id}`}
-                        >
-                          <div id="collapseExample">
-                            <Card>
-                              <Card.Body>
-                                <MapContainer
-                                  center={[
-                                    message.disappearanceLocationLat,
-                                    message.disappearanceLocationLng,
-                                  ]}
-                                  zoom={7}
-                                >
-                                  <TileLayer
-                                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                                    url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                  />
-                                  <Marker
-                                    position={[
-                                      message.disappearanceLocationLat,
-                                      message.disappearanceLocationLng,
-                                    ]}
-                                  ></Marker>
-                                </MapContainer>
-                              </Card.Body>
-                            </Card>
-                          </div>
-                        </Collapse>
+                        <p className="small mb-0 me-3"
+                           style={{marginLeft: "5px", fontWeight: "bold", fontSize: "15px"}}>E-pošta
+                          : <span style={{
+                            fontWeight: "normal",
+                            fontSize: "15px"
+                          }}>{message.senderEmail}</span>
+                        </p>
+                        <p className="small mb-0 me-3"
+                           style={{marginLeft: "5px", fontWeight: "bold", fontSize: "15px"}}>
+                          Broj telefona : <span style={{
+                          fontWeight: "normal",
+                          fontSize: "15px"
+                        }}>{message.senderPhoneNumber}</span>
+                        </p>
                       </div>
-                    )}
-                  </div>
-                </div>
-              ))}
 
+                      <div className="mt-2">
+                        <div className="form-control">
+                          {message.messageText}
+                        </div>
+                      </div>
+
+                      {message.disappearanceLocationLat !== null && (
+                          <div>
+                            <p className="mb-0">
+                              <Button
+                                  className="mt-3"
+                                  variant="primary"
+                                  onClick={() => handleToggle(message.id)}
+                                  aria-expanded={openMessageId === message.id}
+                              >
+                                Prikažite lokaciju
+                              </Button>
+                            </p>
+                            {openMessageId === message.id && (
+                                <div className="mt-3">
+                                  <Card>
+                                    <Card.Body>
+                                      <MapContainer
+                                          center={[
+                                            message.disappearanceLocationLat,
+                                            message.disappearanceLocationLng,
+                                          ]}
+                                          zoom={9}
+                                          minZoom={6}
+                                          style={{height: "400px"}}
+                                          dragging={false}
+                                          doubleClickZoom={false}
+                                          scrollWheelZoom={false}
+                                          touchZoom={false}
+                                      >
+                                        <TileLayer
+                                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                                            url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                        />
+                                        <Marker
+                                            position={[
+                                              message.disappearanceLocationLat,
+                                              message.disappearanceLocationLng,
+                                            ]}
+                                        ></Marker>
+                                      </MapContainer>
+                                    </Card.Body>
+                                  </Card>
+                                </div>
+                            )}
+                          </div>
+                      )}
+                    </div>
+                  </div>
+              ))}
               <div className="chat-content ">
                 {loginStatus && (
                   <div className="send-message d-flex flex-column border border-2 rounded p-3 bg-white">
