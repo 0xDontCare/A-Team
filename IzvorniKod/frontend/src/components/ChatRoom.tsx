@@ -146,6 +146,14 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
   //   reader.readAsDataURL(file);
   // };
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      window.location.reload();
+    }, 4000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <div className="chatContainer mt-3 w-705">
       <h1 className="text-center">Chat</h1>
