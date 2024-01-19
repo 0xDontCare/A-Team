@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef} from "react";
 import {over} from "stompjs";
 import * as Stomp from "stompjs";
 import SockJS from "sockjs-client";
@@ -63,8 +63,13 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
 
     const [isOpenAddLocation, setIsOpenAddLocation] = useState(false);
 
-    const handleToggleAddLocation = () =>
+    const bottomRef = useRef(null);
+
+    const handleToggleAddLocation = () => {
         setIsOpenAddLocation(!isOpenAddLocation);
+        // Get the height of the entire document
+        bottomRef.current.scrollIntoView({behavior: 'smooth'});
+    };
 
     const [openMessageId, setOpenMessageId] = useState(null);
 
@@ -216,25 +221,45 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
                                 <div key={message.id} className="card mb-4">
                                     <div className="card-body d-flex flex-column justify-content-between">
                                         <div className="d-flex flex-row align-items-center">
-                                            <p className="small mb-0 me-3">
-                                                {message.senderUsername}
+                                            <p className="mb-0 me-3"
+                                               style={{marginLeft: "5px", fontWeight: "bold", fontSize: "15px"}}>
+                                                Korisničko ime : <span style={{
+                                                fontWeight: "normal",
+                                                fontSize: "15px"
+                                            }}>{message.senderUsername}</span>
                                             </p>
-                                            <p className="small mb-0 me-3">{message.senderEmail}</p>
-                                            <p className="small mb-0 me-3">
-                                                {message.senderPhoneNumber}
+                                            <p className="small mb-0 me-3"
+                                               style={{marginLeft: "5px", fontWeight: "bold", fontSize: "15px"}}>E-pošta
+                                                : <span style={{
+                                                    fontWeight: "normal",
+                                                    fontSize: "15px"
+                                                }}>{message.senderEmail}</span>
+                                            </p>
+                                            <p className="small mb-0 me-3"
+                                               style={{marginLeft: "5px", fontWeight: "bold", fontSize: "15px"}}>
+                                                Broj telefona : <span style={{
+                                                fontWeight: "normal",
+                                                fontSize: "15px"
+                                            }}>{message.senderPhoneNumber}</span>
                                             </p>
                                         </div>
 
-                                        <p className="mt-2">{message.messageText}</p>
+                                        <div className="mt-2">
+                                            <div className="form-control">
+                                                {message.messageText}
+                                            </div>
+                                        </div>
+
                                         {message.disappearanceLocationLat !== null && (
                                             <div>
                                                 <p className="mb-0">
                                                     <Button
+                                                        className="mt-3"
                                                         variant="primary"
                                                         onClick={() => handleToggle(message.id)}
                                                         aria-expanded={openMessageId === message.id}
                                                     >
-                                                        Lokacija
+                                                        Prikažite lokaciju
                                                     </Button>
                                                 </p>
                                                 {openMessageId === message.id && (
@@ -274,7 +299,6 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
                                     </div>
                                 </div>
                             ))}
-
                             {publicChats.map((chat) => (
                                 <div key={chat.id} className="card mb-4">
                                     <div className="card-body">
@@ -310,7 +334,7 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
                                                         onClick={() => handleToggle(chat.messageId)}
                                                         aria-expanded={openMessageId === chat.messageId}
                                                     >
-                                                        Lokacija
+                                                        Prikažite lokaciju
                                                     </Button>
                                                 </p>
                                                 {openMessageId === chat.messageId && (
@@ -350,7 +374,10 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
                                     </div>
                                 </div>
                             ))}
-                            <div className="chat-content ">
+
+                            <hr></hr>
+
+                            <div className="chat-content">
                                 {loginStatus && (
                                     <div
                                         className="send-message d-flex flex-column border border-2 rounded p-3 bg-white">
@@ -406,15 +433,16 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
                                                     aria-expanded={isOpenAddLocation}
                                                     className="mt-2"
                                                 >
-                                                    Add location
+                                                    Dodajte lokaciju
                                                 </Button>
+                                                <div ref={bottomRef}></div>
                                                 <Button
                                                     type="button"
                                                     className="send-button btn-success mt-2"
                                                     style={{marginRight: "10px"}}
                                                     onClick={sendValue}
                                                 >
-                                                    Send
+                                                    Pošaljite poruku
                                                 </Button>
                                             </div>
                                             {isOpenAddLocation && (
