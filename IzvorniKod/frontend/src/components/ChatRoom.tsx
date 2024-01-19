@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef} from "react";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import { Button, Card } from "react-bootstrap";
-
 import "./ChatRoom.css";
 import "leaflet/dist/leaflet.css";
 
@@ -97,6 +96,7 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
       messageText: newMessage.messageText,
       disappearanceLocationLat: newMessage.disappearanceLocationLat,
       disappearanceLocationLng: newMessage.disappearanceLocationLng,
+      images: [newMessage.images],
       linkToImage: newMessage.linkToImage,
     };
 
