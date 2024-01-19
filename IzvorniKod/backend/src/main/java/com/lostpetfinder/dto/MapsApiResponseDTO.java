@@ -19,6 +19,15 @@ public class MapsApiResponseDTO{
         return status;
     }
 
+    @Override
+    public String toString() {
+        return "MapsApiResponseDTO{" +
+                "plus_code=" + plus_code +
+                ", results=" + results +
+                ", status='" + status + '\'' +
+                '}';
+    }
+
     public static class AddressComponent{
         private String long_name;
         private String short_name;

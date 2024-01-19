@@ -87,6 +87,7 @@ public class LocationService {
                 String responseBody = EntityUtils.toString(entity);
                 ObjectMapper objectMapper = new ObjectMapper();
                 mapsApiResponseDTO = objectMapper.readValue(responseBody, MapsApiResponseDTO.class);
+                System.out.println("Response Body: " + mapsApiResponseDTO);
             }
 
         } catch (Exception e) {
