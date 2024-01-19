@@ -1,10 +1,10 @@
-import {useState, useEffect, useRef} from "react";
-import {over} from "stompjs";
+import { useState, useEffect } from "react";
+import { over } from "stompjs";
 import * as Stomp from "stompjs";
 import SockJS from "sockjs-client";
-import {MapContainer, TileLayer, Marker, useMapEvents} from "react-leaflet";
-import {Button, Collapse, Card} from "react-bootstrap";
-import "./ChatRoom.css";
+import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import { Button, Collapse, Card } from "react-bootstrap";
+import "./AddAdChangeAd.css";
 import "leaflet/dist/leaflet.css";
 
 interface ChatRoomProps {
@@ -39,7 +39,7 @@ interface Payload {
 
 var stompClient: Stomp.Client | null = null;
 
-function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
+function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
     const [mapCenter, setMapCenter] = useState<[number, number]>([44.5, 16.0]);
     const [markerPosition, setMarkerPosition] = useState<[number, number] | null>(
         null
@@ -63,13 +63,8 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
 
     const [isOpenAddLocation, setIsOpenAddLocation] = useState(false);
 
-    const bottomRef = useRef(null);
-
-    const handleToggleAddLocation = () => {
+    const handleToggleAddLocation = () =>
         setIsOpenAddLocation(!isOpenAddLocation);
-        // Get the height of the entire document
-        bottomRef.current.scrollIntoView({behavior: 'smooth'});
-    };
 
     const [openMessageId, setOpenMessageId] = useState(null);
 
@@ -97,20 +92,8 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
         return markerPosition ? <Marker position={markerPosition}></Marker> : null;
     }
 
-    const [index, setIndex] = useState(1000);
-    const [assignedIds, setAssignedIds] = useState<number[]>([]);
-
     const sendValue = () => {
         if (stompClient) {
-            // Pronađi prvi slobodni id koji nije dodijeljen
-            let uniqueId = index;
-            while (
-                assignedIds.includes(uniqueId) ||
-                messages.some((message) => message.id === uniqueId)
-                ) {
-                uniqueId++;
-            }
-
             var chatMessage = {
                 senderUsername: userData.username,
                 email: userData.email,
@@ -121,13 +104,10 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
                 disappearanceLocationLng: newMessage?.disappearanceLocationLng,
                 image: newMessage?.image,
                 linkToImage: newMessage?.linkToImage,
-                id: uniqueId,
             };
 
-            setAssignedIds((prevIds) => [...prevIds, uniqueId]);
-            setIndex(uniqueId + 1); // Povećava index
             stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
-            setNewMessage({...newMessage, messageText: ""});
+            setNewMessage({ ...newMessage, messageText: "" });
             if (isOpenAddLocation) handleToggleAddLocation();
         }
     };
@@ -152,22 +132,8 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
     const onPublicMessageReceived = (payload: Payload) => {
         try {
             let payloadData = JSON.parse(payload.body) as any;
-            let indexNovi = payloadData.id;
-
-            const alreadyAdded = publicChats.some((chat) => chat.id === indexNovi);
-
-            if (alreadyAdded) {
-                console.log("it was already added");
-                console.log(payloadData);
-            }
-            if (!alreadyAdded) {
-                publicChats.push(payloadData);
-                setPublicChats([...publicChats]);
-                console.log("ovo su poruke pocetak------------------");
-                console.log(payloadData);
-                console.log(publicChats);
-                console.log("ovo su poruke kraj------------------");
-            }
+            publicChats.push(payloadData);
+            setPublicChats([...publicChats]);
         } catch (error) {
             console.error("Error parsing payload:", error);
         }
@@ -188,8 +154,6 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
                 const data = await response.json();
                 setMessages(data);
                 console.log(messages);
-                const maxId = Math.max(...data.map((message) => message.id || 0));
-                setIndex(maxId + 1); // Postavi početni index
             } catch (error) {
                 console.error("Greška pri dohvatu poruka:", error);
             }
@@ -221,49 +185,33 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
                                 <div key={message.id} className="card mb-4">
                                     <div className="card-body d-flex flex-column justify-content-between">
                                         <div className="d-flex flex-row align-items-center">
-                                            <p className="mb-0 me-3"
-                                               style={{marginLeft: "5px", fontWeight: "bold", fontSize: "15px"}}>
-                                                Korisničko ime : <span style={{
-                                                fontWeight: "normal",
-                                                fontSize: "15px"
-                                            }}>{message.senderUsername}</span>
+                                            <p className="small mb-0 me-3">
+                                                {message.senderUsername}
                                             </p>
-                                            <p className="small mb-0 me-3"
-                                               style={{marginLeft: "5px", fontWeight: "bold", fontSize: "15px"}}>E-pošta
-                                                : <span style={{
-                                                    fontWeight: "normal",
-                                                    fontSize: "15px"
-                                                }}>{message.senderEmail}</span>
-                                            </p>
-                                            <p className="small mb-0 me-3"
-                                               style={{marginLeft: "5px", fontWeight: "bold", fontSize: "15px"}}>
-                                                Broj telefona : <span style={{
-                                                fontWeight: "normal",
-                                                fontSize: "15px"
-                                            }}>{message.senderPhoneNumber}</span>
+                                            <p className="small mb-0 me-3">{message.senderEmail}</p>
+                                            <p className="small mb-0 me-3">
+                                                {message.senderPhoneNumber}
                                             </p>
                                         </div>
 
-                                        <div className="mt-2">
-                                            <div className="form-control">
-                                                {message.messageText}
-                                            </div>
-                                        </div>
-
+                                        <p className="mt-2">{message.messageText}</p>
                                         {message.disappearanceLocationLat !== null && (
                                             <div>
                                                 <p className="mb-0">
                                                     <Button
-                                                        className="mt-3"
                                                         variant="primary"
                                                         onClick={() => handleToggle(message.id)}
+                                                        aria-controls={`collapseExample-${message.id}`}
                                                         aria-expanded={openMessageId === message.id}
                                                     >
-                                                        Prikažite lokaciju
+                                                        Lokacija
                                                     </Button>
                                                 </p>
-                                                {openMessageId === message.id && (
-                                                    <div className="mt-3">
+                                                <Collapse
+                                                    in={openMessageId === message.id}
+                                                    id={`collapseExample-${message.id}`}
+                                                >
+                                                    <div id="collapseExample">
                                                         <Card>
                                                             <Card.Body>
                                                                 <MapContainer
@@ -271,13 +219,7 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
                                                                         message.disappearanceLocationLat,
                                                                         message.disappearanceLocationLng,
                                                                     ]}
-                                                                    zoom={9}
-                                                                    minZoom={6}
-                                                                    style={{height: "400px"}}
-                                                                    dragging={false}
-                                                                    doubleClickZoom={false}
-                                                                    scrollWheelZoom={false}
-                                                                    touchZoom={false}
+                                                                    zoom={7}
                                                                 >
                                                                     <TileLayer
                                                                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -293,12 +235,13 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
                                                             </Card.Body>
                                                         </Card>
                                                     </div>
-                                                )}
+                                                </Collapse>
                                             </div>
                                         )}
                                     </div>
                                 </div>
                             ))}
+
                             {publicChats.map((chat) => (
                                 <div key={chat.id} className="card mb-4">
                                     <div className="card-body">
@@ -332,13 +275,17 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
                                                         className="ms-2"
                                                         variant="primary"
                                                         onClick={() => handleToggle(chat.messageId)}
+                                                        aria-controls={`collapseExample-${chat.messageId}`}
                                                         aria-expanded={openMessageId === chat.messageId}
                                                     >
-                                                        Prikažite lokaciju
+                                                        Lokacija
                                                     </Button>
                                                 </p>
-                                                {openMessageId === chat.messageId && (
-                                                    <div className="mt-3">
+                                                <Collapse
+                                                    in={openMessageId === chat.messageId}
+                                                    id={`collapseExample-${chat.messageId}`}
+                                                >
+                                                    <div id="collapseExample">
                                                         <Card>
                                                             <Card.Body>
                                                                 <MapContainer
@@ -346,13 +293,7 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
                                                                         chat.disappearanceLocationLat,
                                                                         chat.disappearanceLocationLng,
                                                                     ]}
-                                                                    zoom={9}
-                                                                    minZoom={6}
-                                                                    style={{height: "400px"}}
-                                                                    dragging={false}
-                                                                    doubleClickZoom={false}
-                                                                    scrollWheelZoom={false}
-                                                                    touchZoom={false}
+                                                                    zoom={7}
                                                                 >
                                                                     <TileLayer
                                                                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -368,46 +309,32 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
                                                             </Card.Body>
                                                         </Card>
                                                     </div>
-                                                )}
+                                                </Collapse>
                                             </div>
                                         )}
                                     </div>
                                 </div>
                             ))}
-
-                            <hr></hr>
-
-                            <div className="chat-content">
+                            <div className="chat-content ">
                                 {loginStatus && (
-                                    <div
-                                        className="send-message d-flex flex-column border border-2 rounded p-3 bg-white">
-                                        <h3 style={{marginLeft: '15px'}}>Dodajte novu poruku</h3>
-                                        <div className="container">
-                                            <div className="row">
-                                                <div className="col-lg-12">
-            <textarea
-                rows="4"
-                className="form-control input-message my-3"
-                placeholder="Napišite nešto..."
-                value={newMessage?.messageText || ""}
-                onChange={(e) =>
-                    setNewMessage({
-                        ...newMessage,
-                        messageText: e.target.value,
-                    })
-                }
-            />
-                                                </div>
-                                            </div>
-                                        </div>
-
+                                    <div className="send-message d-flex flex-column border border-2 rounded p-3 bg-white">
+                                        <h4>New message</h4>
                                         <input
-                                            type="file"
-                                            className="form-control my-3"
-                                            style={{
-                                                width: "98%",
-                                                marginLeft: "10px"
-                                            }} // Adjust the marginLeft value as needed
+                                            type="text"
+                                            className="input-message my-3"
+                                            placeholder="Message Text"
+                                            value={newMessage?.messageText || ""}
+                                            onChange={(e) =>
+                                                setNewMessage({
+                                                    ...newMessage,
+                                                    messageText: e.target.value,
+                                                })
+                                            }
+                                        />
+                                        <input
+                                            type="text"
+                                            className="input-message mb-3"
+                                            placeholder="Link To Image"
                                             value={newMessage?.linkToImage || ""}
                                             onChange={(e) =>
                                                 setNewMessage({
@@ -416,8 +343,6 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
                                                 })
                                             }
                                         />
-
-
                                         {/* <input
                         type="file"
                         className="input-message"
@@ -429,24 +354,21 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
                                                 <Button
                                                     variant="primary"
                                                     onClick={handleToggleAddLocation}
-                                                    style={{marginLeft: "10px"}}
+                                                    aria-controls="collapseExample"
                                                     aria-expanded={isOpenAddLocation}
-                                                    className="mt-2"
                                                 >
-                                                    Dodajte lokaciju
+                                                    Add location
                                                 </Button>
-                                                <div ref={bottomRef}></div>
                                                 <Button
                                                     type="button"
-                                                    className="send-button btn-success mt-2"
-                                                    style={{marginRight: "10px"}}
+                                                    className="send-button btn-success"
                                                     onClick={sendValue}
                                                 >
-                                                    Pošaljite poruku
+                                                    Send
                                                 </Button>
                                             </div>
-                                            {isOpenAddLocation && (
-                                                <div className="mt-3">
+                                            <Collapse in={isOpenAddLocation} className="mt-3">
+                                                <div id="collapseExample">
                                                     <Card>
                                                         <Card.Body>
                                                             <MapContainer
@@ -454,7 +376,7 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
                                                                 zoom={7}
                                                                 minZoom={7}
                                                             >
-                                                                <MapClickHandler/>
+                                                                <MapClickHandler />
                                                                 <TileLayer
                                                                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                                                                     url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -463,7 +385,7 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
                                                         </Card.Body>
                                                     </Card>
                                                 </div>
-                                            )}
+                                            </Collapse>
                                         </div>
                                     </div>
                                 )}
