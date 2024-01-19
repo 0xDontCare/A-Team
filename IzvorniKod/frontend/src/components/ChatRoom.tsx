@@ -132,6 +132,12 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
     };
 
     fetchMessages();
+
+    const messagesIntervalId = setInterval(() => {
+      fetchMessages();
+    }, 4000);
+
+    return () => clearInterval(messagesIntervalId);
   }, [advertisementId]);
 
   // const handleImageChange = (e) => {
@@ -149,7 +155,7 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
   useEffect(() => {
     const intervalId = setInterval(() => {
       window.location.reload();
-    }, 4000);
+    }, 60000);
 
     return () => clearInterval(intervalId);
   }, []);
