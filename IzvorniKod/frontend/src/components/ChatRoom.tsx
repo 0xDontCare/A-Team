@@ -140,25 +140,17 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
     return () => clearInterval(messagesIntervalId);
   }, [advertisementId]);
 
-  // const handleImageChange = (e) => {
-  //   const file = e.target.files[0];
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
 
-  //   const reader = new FileReader();
-  //   reader.onloadend = () => {
-  //     const previewUrl = reader.result;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const previewUrl = reader.result;
 
-  //     setNewMessage({ ...newMessage, image: previewUrl });
-  //   };
-  //   reader.readAsDataURL(file);
-  // };
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      window.location.reload();
-    }, 60000);
-
-    return () => clearInterval(intervalId);
-  }, []);
+      setNewMessage({ ...newMessage, image: previewUrl });
+    };
+    reader.readAsDataURL(file);
+  };
 
   return (
     <div className="chatContainer mt-3 w-705">
@@ -256,11 +248,11 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
                         })
                       }
                     />
-                    {/* <input
+                    <input
                       type="file"
                       className="input-message"
                       onChange={handleImageChange}
-                    /> */}
+                    />
 
                     <div>
                       <div className="d-flex flex-row justify-content-between">
