@@ -9,6 +9,7 @@ import com.lostpetfinder.entity.pkeys.MessagePK;
 import com.lostpetfinder.service.ImageService;
 import com.lostpetfinder.service.LocationService;
 import com.lostpetfinder.service.MessageService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -54,6 +55,7 @@ public class MessageServiceUnitTests {
     private MessageService messageService;
 
     @Test
+    @DisplayName("Messages with text only are successfully saved")
     public void testSaveMessageWithTextOnly() {
 
         MessageInputDTO dto = mock(MessageInputDTO.class);
@@ -72,6 +74,7 @@ public class MessageServiceUnitTests {
     }
 
     @Test
+    @DisplayName("Messages with location included are successfully saved")
     public void testSaveMessageWithLocationProvided() {
 
         MessageInputDTO dto = mock(MessageInputDTO.class);
@@ -95,6 +98,7 @@ public class MessageServiceUnitTests {
     }
 
     @Test
+    @DisplayName("Messages are retrieved in correct order")
     public void testIfRetrievedChatMessagesAreOrdered() {
 
         Message message1 = mock(Message.class);
@@ -109,9 +113,6 @@ public class MessageServiceUnitTests {
 
         when(messageRepository.findAllByAdvertisementAdvertisementId(anyLong())).thenReturn(
                 Arrays.asList(message1, message2)
-        );
-        when(messageImageRepository.findByMessageId(anyLong())).thenReturn(
-                Arrays.asList(mock(MessageImage.class), mock(MessageImage.class))
         );
 
         List<MessageDTO> result = messageService.getChatMessages(1L);

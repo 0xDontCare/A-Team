@@ -11,6 +11,7 @@ import com.lostpetfinder.entity.Location;
 import com.lostpetfinder.entity.Place;
 import com.lostpetfinder.service.LocationService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -56,6 +57,7 @@ public class LocationServiceUnitTests {
     }
 
     @Test
+    @DisplayName("Location objects are retrieved successfully")
     public void testGetLocation() {
         when(countyRepository.existsByName(anyString())).thenReturn(true);
         when(countyRepository.findByName(anyString())).thenReturn(Optional.of(new County("Grad Zagreb")));
