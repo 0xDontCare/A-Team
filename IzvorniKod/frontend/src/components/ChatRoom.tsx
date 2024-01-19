@@ -161,174 +161,192 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
   };
 
   return (
-    <div className="chatContainer mt-3 w-705">
-      <h1 className="text-center">Chat</h1>
-      <div className="row d-flex justify-content-center">
-        <div>
-          <div className="card bg-transparent">
-            <div className="card-body p-4 ">
-              {messages.map((message) => (
-                  <div key={message.id} className="card mb-4">
-                    <div className="card-body d-flex flex-column justify-content-between">
-                      <div className="d-flex flex-row align-items-center">
-                        <p className="mb-0 me-3"
-                           style={{marginLeft: "5px", fontWeight: "bold", fontSize: "15px"}}>
-                          Korisničko ime : <span style={{
-                          fontWeight: "normal",
-                          fontSize: "15px"
-                        }}>{message.senderUsername}</span>
-                        </p>
-                        <p className="small mb-0 me-3"
-                           style={{marginLeft: "5px", fontWeight: "bold", fontSize: "15px"}}>E-pošta
-                          : <span style={{
+      <div className="chatContainer mt-3 w-705">
+        <h1 className="text-center">Chat</h1>
+        <div className="row d-flex justify-content-center">
+          <div>
+            <div className="card bg-transparent">
+              <div className="card-body p-4 ">
+                {messages.map((message) => (
+                    <div key={message.id} className="card mb-4">
+                      <div className="card-body d-flex flex-column justify-content-between">
+                        <div className="d-flex flex-row align-items-center">
+                          <p className="mb-0 me-3"
+                             style={{marginLeft: "5px", fontWeight: "bold", fontSize: "15px"}}>
+                            Korisničko ime : <span style={{
                             fontWeight: "normal",
                             fontSize: "15px"
-                          }}>{message.senderEmail}</span>
-                        </p>
-                        <p className="small mb-0 me-3"
-                           style={{marginLeft: "5px", fontWeight: "bold", fontSize: "15px"}}>
-                          Broj telefona : <span style={{
-                          fontWeight: "normal",
-                          fontSize: "15px"
-                        }}>{message.senderPhoneNumber}</span>
-                        </p>
-                      </div>
-
-                      <div className="mt-2">
-                        <div className="form-control">
-                          {message.messageText}
+                          }}>{message.senderUsername}</span>
+                          </p>
+                          <p className="small mb-0 me-3"
+                             style={{marginLeft: "5px", fontWeight: "bold", fontSize: "15px"}}>E-pošta
+                            : <span style={{
+                              fontWeight: "normal",
+                              fontSize: "15px"
+                            }}>{message.senderEmail}</span>
+                          </p>
+                          <p className="small mb-0 me-3"
+                             style={{marginLeft: "5px", fontWeight: "bold", fontSize: "15px"}}>
+                            Broj telefona : <span style={{
+                            fontWeight: "normal",
+                            fontSize: "15px"
+                          }}>{message.senderPhoneNumber}</span>
+                          </p>
                         </div>
-                      </div>
 
-                      {message.disappearanceLocationLat !== null && (
-                          <div>
-                            <p className="mb-0">
-                              <Button
-                                  className="mt-3"
-                                  variant="primary"
-                                  onClick={() => handleToggle(message.id)}
-                                  aria-expanded={openMessageId === message.id}
-                              >
-                                Prikažite lokaciju
-                              </Button>
-                            </p>
-                            {openMessageId === message.id && (
-                                <div className="mt-3">
-                                  <Card>
-                                    <Card.Body>
-                                      <MapContainer
-                                          center={[
-                                            message.disappearanceLocationLat,
-                                            message.disappearanceLocationLng,
-                                          ]}
-                                          zoom={9}
-                                          minZoom={6}
-                                          style={{height: "400px"}}
-                                          dragging={false}
-                                          doubleClickZoom={false}
-                                          scrollWheelZoom={false}
-                                          touchZoom={false}
-                                      >
-                                        <TileLayer
-                                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                                            url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                        />
-                                        <Marker
-                                            position={[
+                        <div className="mt-2">
+                          <div className="form-control">
+                            {message.messageText}
+                          </div>
+                        </div>
+
+                        {message.disappearanceLocationLat !== null && (
+                            <div>
+                              <p className="mb-0">
+                                <Button
+                                    className="mt-3"
+                                    variant="primary"
+                                    onClick={() => handleToggle(message.id)}
+                                    aria-expanded={openMessageId === message.id}
+                                >
+                                  Prikažite lokaciju
+                                </Button>
+                              </p>
+                              {openMessageId === message.id && (
+                                  <div className="mt-3">
+                                    <Card>
+                                      <Card.Body>
+                                        <MapContainer
+                                            center={[
                                               message.disappearanceLocationLat,
                                               message.disappearanceLocationLng,
                                             ]}
-                                        ></Marker>
-                                      </MapContainer>
-                                    </Card.Body>
-                                  </Card>
-                                </div>
-                            )}
-                          </div>
-                      )}
-                    </div>
-                  </div>
-              ))}
-              <div className="chat-content ">
-                {loginStatus && (
-                  <div className="send-message d-flex flex-column border border-2 rounded p-3 bg-white">
-                    <h4>New message</h4>
-                    <input
-                      type="text"
-                      className="input-message my-3"
-                      placeholder="Message Text"
-                      value={newMessage?.messageText || ""}
-                      onChange={(e) =>
-                        setNewMessage({
-                          ...newMessage,
-                          messageText: e.target.value,
-                        })
-                      }
-                    />
-                    <input
-                      type="text"
-                      className="input-message mb-3"
-                      placeholder="Link To Image"
-                      value={newMessage?.linkToImage || ""}
-                      onChange={(e) =>
-                        setNewMessage({
-                          ...newMessage,
-                          linkToImage: e.target.value,
-                        })
-                      }
-                    />
-                    <input
-                      type="file"
-                      className="input-message"
-                      onChange={handleImageChange}
-                    />
-
-                    <div>
-                      <div className="d-flex flex-row justify-content-between">
-                        <Button
-                          variant="primary"
-                          onClick={handleToggleAddLocation}
-                          aria-controls="collapseExample"
-                          aria-expanded={isOpenAddLocation}
-                        >
-                          Add location
-                        </Button>
-                        <Button
-                          type="button"
-                          className="send-button btn-success"
-                          onClick={sendValue}
-                        >
-                          Send
-                        </Button>
+                                            zoom={9}
+                                            minZoom={6}
+                                            style={{height: "400px"}}
+                                            dragging={false}
+                                            doubleClickZoom={false}
+                                            scrollWheelZoom={false}
+                                            touchZoom={false}
+                                        >
+                                          <TileLayer
+                                              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                                              url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                          />
+                                          <Marker
+                                              position={[
+                                                message.disappearanceLocationLat,
+                                                message.disappearanceLocationLng,
+                                              ]}
+                                          ></Marker>
+                                        </MapContainer>
+                                      </Card.Body>
+                                    </Card>
+                                  </div>
+                              )}
+                            </div>
+                        )}
                       </div>
-                      <Collapse in={isOpenAddLocation} className="mt-3">
-                        <div id="collapseExample">
-                          <Card>
-                            <Card.Body>
-                              <MapContainer
-                                center={mapCenter}
-                                zoom={7}
-                                minZoom={7}
-                              >
-                                <MapClickHandler />
-                                <TileLayer
-                                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                                  url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                />
-                              </MapContainer>
-                            </Card.Body>
-                          </Card>
-                        </div>
-                      </Collapse>
                     </div>
-                  </div>
-                )}
+                ))}
+                <hr></hr>
+
+                <div className="chat-content">
+                  {loginStatus && (
+                      <div
+                          className="send-message d-flex flex-column border border-2 rounded p-3 bg-white">
+                        <h3 style={{marginLeft: '15px'}}>Dodajte novu poruku</h3>
+                        <div className="container">
+                          <div className="row">
+                            <div className="col-lg-12">
+            <textarea
+                rows="4"
+                className="form-control input-message my-3"
+                placeholder="Napišite nešto..."
+                value={newMessage?.messageText || ""}
+                onChange={(e) =>
+                    setNewMessage({
+                      ...newMessage,
+                      messageText: e.target.value,
+                    })
+                }
+            />
+                            </div>
+                          </div>
+                        </div>
+
+                        <input
+                            type="file"
+                            className="form-control my-3"
+                            style={{
+                              width: "98%",
+                              marginLeft: "10px"
+                            }} // Adjust the marginLeft value as needed
+                            value={newMessage?.linkToImage || ""}
+                            onChange={(e) =>
+                                setNewMessage({
+                                  ...newMessage,
+                                  linkToImage: e.target.value,
+                                })
+                            }
+                        />
+
+
+                        {/* <input
+                        type="file"
+                        className="input-message"
+                        onChange={handleImageChange}
+                      /> */}
+
+                        <div>
+                          <div className="d-flex flex-row justify-content-between">
+                            <Button
+                                variant="primary"
+                                onClick={handleToggleAddLocation}
+                                style={{marginLeft: "10px"}}
+                                aria-expanded={isOpenAddLocation}
+                                className="mt-2"
+                            >
+                              Dodajte lokaciju
+                            </Button>
+                            <div ref={bottomRef}></div>
+                            <Button
+                                type="button"
+                                className="send-button btn-success mt-2"
+                                style={{marginRight: "10px"}}
+                                onClick={sendValue}
+                            >
+                              Pošaljite poruku
+                            </Button>
+                          </div>
+                          {isOpenAddLocation && (
+                              <div className="mt-3">
+                                <Card>
+                                  <Card.Body>
+                                    <MapContainer
+                                        center={mapCenter}
+                                        zoom={7}
+                                        minZoom={7}
+                                    >
+                                      <MapClickHandler/>
+                                      <TileLayer
+                                          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                                          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                      />
+                                    </MapContainer>
+                                  </Card.Body>
+                                </Card>
+                              </div>
+                          )}
+                        </div>
+                      </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
   );
 }
 
