@@ -1,9 +1,7 @@
-import {useState, useEffect, useRef} from "react";
-import {over} from "stompjs";
-import * as Stomp from "stompjs";
-import SockJS from "sockjs-client";
-import {MapContainer, TileLayer, Marker, useMapEvents} from "react-leaflet";
-import {Button, Collapse, Card} from "react-bootstrap";
+import { useState, useEffect, useRef} from "react";
+import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
+import { Button, Card } from "react-bootstrap";
+
 import "./ChatRoom.css";
 import "leaflet/dist/leaflet.css";
 
@@ -27,41 +25,30 @@ interface ChatMessage {
   messageText: string;
   disappearanceLocationLat: number | null;
   disappearanceLocationLng: number | null;
-  image: string | null;
+  images: string | null;
   linkToImage: string;
   phoneNumber: string;
   email: string;
 }
 
-interface Payload {
-  body: string;
-}
-
-let stompClient: Stomp.Client | null = null;
-
-function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
+function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
   const [mapCenter, setMapCenter] = useState<[number, number]>([44.5, 16.0]);
-  const [markerPosition, setMarkerPosition] = useState<[number, number] | null>(
-      null
-  );
-
-  const [messages, setMessages] = useState<ChatMessage[]>(() => []);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [newMessage, setNewMessage] = useState<ChatMessage>({
     senderUsername: "",
     advertisementId: "",
     messageText: "",
     disappearanceLocationLat: null,
     disappearanceLocationLng: null,
-    image: null,
+    images: null,
     linkToImage: "",
     phoneNumber: "",
     email: "",
     id: null,
   });
 
-  const [publicChats, setPublicChats] = useState([]);
-
   const [isOpenAddLocation, setIsOpenAddLocation] = useState(false);
+  const [openMessageId, setOpenMessageId] = useState<number | null>(null);
 
   const bottomRef = useRef(null);
 
@@ -71,9 +58,7 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
     bottomRef.current.scrollIntoView({behavior: 'smooth'});
   };
 
-  const [openMessageId, setOpenMessageId] = useState(null);
-
-  const handleToggle = (id) => {
+  const handleToggle = (id: number) => {
     setOpenMessageId((prevId) => (prevId === id ? null : id));
   };
 
@@ -83,7 +68,6 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
         const lat = e.latlng.lat;
         const lng = e.latlng.lng;
 
-        setMarkerPosition([lat, lng]);
         setNewMessage({
           ...newMessage,
           disappearanceLocationLat: lat,
@@ -94,63 +78,47 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
       },
     });
 
-    return markerPosition ? <Marker position={markerPosition}></Marker> : null;
+    return newMessage.disappearanceLocationLat ? (
+      <Marker
+        position={[
+          newMessage.disappearanceLocationLat,
+          newMessage.disappearanceLocationLng,
+        ]}
+      />
+    ) : null;
   }
 
-  const sendValue = () => {
-    if (stompClient) {
-      const chatMessage = {
-        senderUsername: userData.username,
-        email: userData.email,
-        phoneNumber: userData.phoneNumber,
-        advertisementId: advertisementId,
-        messageText: newMessage?.messageText,
-        disappearanceLocationLat: newMessage?.disappearanceLocationLat,
-        disappearanceLocationLng: newMessage?.disappearanceLocationLng,
-        image: newMessage?.image,
-        linkToImage: newMessage?.linkToImage,
-      };
+  const sendValue = async () => {
+    const chatMessage = {
+      senderUsername: userData.username,
+      email: userData.email,
+      phoneNumber: userData.phoneNumber,
+      advertisementId: advertisementId,
+      messageText: newMessage.messageText,
+      disappearanceLocationLat: newMessage.disappearanceLocationLat,
+      disappearanceLocationLng: newMessage.disappearanceLocationLng,
+      linkToImage: newMessage.linkToImage,
+    };
 
-      stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
-      setNewMessage({...newMessage, messageText: ""});
-      if (isOpenAddLocation) handleToggleAddLocation();
-    }
-  };
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(chatMessage),
+    };
 
-  const registerUser = () => {
-    let Sock = new SockJS("/api/ws");
-    stompClient = over(Sock);
-    stompClient.connect({}, onConnected, onError);
-  };
-
-  const onConnected = () => {
-    if (stompClient) {
-      stompClient.subscribe(
-          `/chatroom/${advertisementId}`,
-          onPublicMessageReceived
-      );
-    } else {
-      console.error("stompClient is null");
-    }
-  };
-
-  const onPublicMessageReceived = (payload: Payload) => {
     try {
-      let payloadData = JSON.parse(payload.body) as any;
-      publicChats.push(payloadData);
-      setPublicChats([...publicChats]);
+      const res = await fetch("/api/messages/", options);
+
     } catch (error) {
-      console.error("Error parsing payload:", error);
+      console.error("Error while sending message:", error);
+      alert("Error while sending message");
     }
-  };
 
-  const onError = (err: any) => {
-    console.error(err);
+    setNewMessage({ ...newMessage, messageText: "" });
+    if (isOpenAddLocation) handleToggleAddLocation();
   };
-
-  useEffect(() => {
-    registerUser();
-  }, []);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -158,25 +126,36 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
         const response = await fetch(`/api/messages/${advertisementId}`);
         const data = await response.json();
         setMessages(data);
-        console.log(messages);
       } catch (error) {
         console.error("Greška pri dohvatu poruka:", error);
       }
     };
 
     fetchMessages();
+
+    const messagesIntervalId = setInterval(() => {
+      fetchMessages();
+    }, 4000);
+
+    return () => clearInterval(messagesIntervalId);
   }, [advertisementId]);
 
   // const handleImageChange = (e) => {
   //   const file = e.target.files[0];
-
-  //   const reader = new FileReader();
-  //   reader.onloadend = () => {
-  //     const previewUrl = reader.result;
-
-  //     setNewMessage({ ...newMessage, image: previewUrl });
-  //   };
-  //   reader.readAsDataURL(file);
+  //
+  //   if (file) {
+  //     const reader = new FileReader();
+  //
+  //     reader.onloadend = () => {
+  //       const base64Image = reader.result.split(",")[1]; // Dobavi samo Base64 dio
+  //       setNewMessage({
+  //         ...newMessage,
+  //         // images: [base64Image],
+  //       });
+  //     };
+  //
+  //     reader.readAsDataURL(file);
+  //   }
   // };
 
   return (
@@ -218,6 +197,15 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
                             {message.messageText}
                           </div>
                         </div>
+                        {/*{message.images && (*/}
+                        {/*    <div>*/}
+                        {/*      <img*/}
+                        {/*          src={message.images} // Assuming message.image is the image URL*/}
+                        {/*          alt="Message Image"*/}
+                        {/*          style={{ maxWidth: "100%", maxHeight: "200px" }} // Adjust the styling as needed*/}
+                        {/*      />*/}
+                        {/*    </div>*/}
+                        {/*)}*/}
 
                         {message.disappearanceLocationLat !== null && (
                             <div>
@@ -268,83 +256,7 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
                       </div>
                     </div>
                 ))}
-                {publicChats.map((chat) => (
-                    <div key={chat.id} className="card mb-4">
-                      <div className="card-body">
-                        <div className="d-flex justify-content-between">
-                          {chat.senderUsername !== userData.username && (
-                              <div className="d-flex flex-row align-items-center">
-                                <p className="small mb-0 me-3">
-                                  {chat.senderUsername}
-                                </p>
-                                <p className="small mb-0 me-3">{chat.phoneNumber}</p>
-                                <p className="small mb-0 me-3">{chat.email}</p>
-                              </div>
-                          )}
-                          {chat.senderUsername === userData.username && (
-                              <div className="d-flex flex-row align-items-center">
-                                <p className="small mb-0 me-3">
-                                  {chat.senderUsername}
-                                </p>
-                                <p className="small mb-0 me-3">
-                                  {userData.phoneNumber}
-                                </p>
-                                <p className="small mb-0 me-3">{userData.email}</p>
-                              </div>
-                          )}
-                        </div>
-                        <p className="mt-2">{chat.messageText}</p>
-                        {chat.disappearanceLocationLat !== null && (
-                            <div>
-                              <p className="mb-0">
-                                <Button
-                                    className="ms-2"
-                                    variant="primary"
-                                    onClick={() => handleToggle(chat.messageId)}
-                                    aria-expanded={openMessageId === chat.messageId}
-                                >
-                                  Prikažite lokaciju
-                                </Button>
-                              </p>
-                              {openMessageId === chat.messageId && (
-                                  <div className="mt-3">
-                                    <Card>
-                                      <Card.Body>
-                                        <MapContainer
-                                            center={[
-                                              chat.disappearanceLocationLat,
-                                              chat.disappearanceLocationLng,
-                                            ]}
-                                            zoom={9}
-                                            minZoom={6}
-                                            style={{height: "400px"}}
-                                            dragging={false}
-                                            doubleClickZoom={false}
-                                            scrollWheelZoom={false}
-                                            touchZoom={false}
-                                        >
-                                          <TileLayer
-                                              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                                              url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                          />
-                                          <Marker
-                                              position={[
-                                                chat.disappearanceLocationLat,
-                                                chat.disappearanceLocationLng,
-                                              ]}
-                                          ></Marker>
-                                        </MapContainer>
-                                      </Card.Body>
-                                    </Card>
-                                  </div>
-                              )}
-                            </div>
-                        )}
-                      </div>
-                    </div>
-                ))}
-
-                <hr></hr>
+                {messages.length > 0 && <hr />}
 
                 <div className="chat-content">
                   {loginStatus && (
@@ -387,11 +299,11 @@ function ChatRoom({advertisementId, loginStatus, userData}: ChatRoomProps) {
                         />
 
 
-                        {/* <input
-                        type="file"
-                        className="input-message"
-                        onChange={handleImageChange}
-                      /> */}
+                      {/*   <input*/}
+                      {/*  type="file"*/}
+                      {/*  className="input-message"*/}
+                      {/*  onChange={handleImageChange}*/}
+                      {/*/>*/}
 
                         <div>
                           <div className="d-flex flex-row justify-content-between">

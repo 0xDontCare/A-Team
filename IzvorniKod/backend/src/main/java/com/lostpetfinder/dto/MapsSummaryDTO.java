@@ -45,7 +45,7 @@ public class MapsSummaryDTO {
                     this.locationName = tmp.getAddress_components().stream()
                             .filter(addressComponent -> addressComponent.getTypes().contains("route"))
                             .toList()
-                            .getFirst()
+                            .get(0)
                             .getLong_name();
             } catch (Exception e) {}
 
@@ -54,14 +54,14 @@ public class MapsSummaryDTO {
                     this.postalCode = tmp.getAddress_components().stream()
                             .filter(addressComponent -> addressComponent.getTypes().contains("postal_code"))
                             .toList()
-                            .getFirst()
+                            .get(0)
                             .getLong_name();
 
                 if (this.place == null)
                     this.place = tmp.getAddress_components().stream()
                             .filter(addressComponent -> addressComponent.getTypes().contains("locality") && addressComponent.getTypes().contains("political"))
                             .toList()
-                            .getFirst()
+                            .get(0)
                             .getLong_name();
                 if (this.place.equals("Zagreb"))
                     this.county = "Grad Zagreb";
@@ -70,7 +70,7 @@ public class MapsSummaryDTO {
                         this.county = tmp.getAddress_components().stream()
                                 .filter(addressComponent -> addressComponent.getTypes().contains("administrative_area_level_1"))
                                 .toList()
-                                .getFirst()
+                                .get(0)
                                 .getLong_name();
                 }
             } catch (Exception e) {

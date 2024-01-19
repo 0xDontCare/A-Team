@@ -251,7 +251,7 @@ function Home({isLoggedIn, userData}: HomeProps) {
                 <Col xs={12} md={2}>
                     <div
                         className="btnContainer mt-3 p-4 rounded border border-dark border-2 d-flex flex-column align-items-start">
-                        <h2 className="mb-3 fs-5 fs-md-3">Odaberite tip oglasa:</h2>
+                        <h2 className="mb-3 fs-5 fs-md-3">Odaberite tip oglasa :</h2>
                         <div className="form-check mb-3 fs-md-3">
                             <input
                                 className="form-check-input"
@@ -262,7 +262,7 @@ function Home({isLoggedIn, userData}: HomeProps) {
                                 defaultChecked
                                 onChange={handleAdTypeChange}
                             />
-                            <label className="form-check-label" htmlFor="adType1">
+                            <label className="form-check-label radioCheckboxOutside" htmlFor="adType1">
                                 Aktivni oglasi
                             </label>
                         </div>
@@ -270,7 +270,7 @@ function Home({isLoggedIn, userData}: HomeProps) {
                             <div>
                                 <div className="form-check">
                                     <input
-                                        className="form-check-input"
+                                        className="form-check-input mb-5"
                                         type="checkbox"
                                         id="checkbox4"
                                         value="LJUBIMAC_JE_NESTAO_I_ZA_NJIM_SE_TRAGA"
@@ -303,7 +303,7 @@ function Home({isLoggedIn, userData}: HomeProps) {
                                 value="tipOglas2"
                                 onChange={handleAdTypeChange}
                             />
-                            <label className="form-check-label" htmlFor="adType2">
+                            <label className="form-check-label radioCheckboxOutside" htmlFor="adType2">
                                 Neaktivni oglasi
                             </label>
                         </div>
@@ -367,8 +367,9 @@ function Home({isLoggedIn, userData}: HomeProps) {
                                     <div className="col-12">
                                         <div
                                             className="btnContainer mt-3 p-3 rounded border border-dark border-2 d-flex flex-column flex-md-row justify-content-between">
+                                            <h2 className="mb-3 fs-5 fs-md-3 mt-2">Odaberite tip oglasa :</h2>
                                             {['option1', 'option2', 'option3', 'option4', 'option5'].map((option) => (
-                                                <div className="form-check form-check-inline mb-2" key={option}>
+                                                <div className="form-check form-check-inline mb-2 mt-1" key={option}>
                                                     <input
                                                         className="form-check-input"
                                                         type="radio"

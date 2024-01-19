@@ -89,12 +89,19 @@ const Ad: React.FC<CardProps> = ({
                         )}
                         {isCardFlipped && (
                             <div className="flip-card-back">
-                                <p className="card-text cardText">Vrsta: {species}</p>
-                                <p className="card-text cardText">Boja: {color}</p>
-                                <p className="card-text cardText">Starost: {age}</p>
-                                {shelterName !== null && (
+                                <p className="card-text cardText">Vrsta : <span className="textDetails">{species}</span>
+                                </p>
+                                <p className="card-text cardText">Boja : <span className="textDetails">{color}</span>
+                                </p>
+                                <p className="card-text cardText">Starost : <span className="textDetails">{age}</span>
+                                </p>
+                                {shelterName !== null ? (
                                     <p className="card-text cardText additional-info">
-                                        Naziv skloništa: {shelterName}
+                                        Ime skloništa : <span className="textDetails">{shelterName}</span>
+                                    </p>
+                                ) : (
+                                    <p className="card-text cardText additional-info">
+                                        Korisničko ime : <span className="textDetails">{loggedInUsername}</span>
                                     </p>
                                 )}
                             </div>
@@ -110,28 +117,32 @@ const Ad: React.FC<CardProps> = ({
 
                 </div>
             </Link>
-            {showDeleteButton && loggedInUsername === username && (
-                <div className="d-grid w-50 mx-auto mt-2">
-                    <button
-                        className="btn btn-danger"
-                        onClick={handleDeleteClick}
-                        disabled={isDeleting}
-                    >
-                        {isDeleting ? "Završite brisanje" : "Izbrišite oglas"}
-                    </button>
-                </div>
-            )}
-            {showChangeButton && loggedInUsername === username && (
-                <div className="d-grid w-50 mx-auto mt-2">
-                    <button
-                        className="btn btn-primary"
-                        onClick={handleChangeClick}
-                        disabled={isChanging}
-                    >
-                        {isChanging ? "Završite izmjenu" : "Izmijenite oglas"}
-                    </button>
-                </div>
-            )}
+            <div className="d-grid mx-auto mt-2">
+                {(showDeleteButton || showChangeButton) && loggedInUsername === username && (
+                    <div className={`${
+                        showDeleteButton && showChangeButton ? "d-flex justify-content-around w-70" : "text-center"
+                    }`}>
+                        {showDeleteButton && (
+                            <button
+                                className="btn btn-danger"
+                                onClick={handleDeleteClick}
+                                disabled={isDeleting}
+                            >
+                                {isDeleting ? "Završite brisanje" : "Izbrišite oglas"}
+                            </button>
+                        )}
+                        {showChangeButton && (
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleChangeClick}
+                                disabled={isChanging}
+                            >
+                                {isChanging ? "Završite izmjenu" : "Izmijenite oglas"}
+                            </button>
+                        )}
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

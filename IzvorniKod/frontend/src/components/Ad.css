@@ -19,11 +19,19 @@
 }
 
 .cardText {
-    font-size: 1rem;
+    font-size: 16px;
+    font-weight: bold;
     color: #222;
     margin-bottom: 5px;
 }
 
 a {
     text-decoration: none !important;
+}
+
+.textDetails {
+    font-size: 16px;
+    font-weight: normal;
+    color: #222;
+    margin-bottom: 5px;
 }
