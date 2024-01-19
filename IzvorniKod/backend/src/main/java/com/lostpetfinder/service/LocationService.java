@@ -101,6 +101,7 @@ public class LocationService {
     public Location getLocation(double latitude, double longitude) {
 
         MapsSummaryDTO mapsSummaryDTO = getLocInfoFromAPI(latitude, longitude);
+        System.out.println("mapsSummaryDTO:\n" + mapsSummaryDTO);
 
         County newCounty = new County(mapsSummaryDTO.getCounty());
         if (!countyRepository.existsByName(newCounty.getName())) {
