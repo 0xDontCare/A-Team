@@ -92,8 +92,20 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
     return markerPosition ? <Marker position={markerPosition}></Marker> : null;
   }
 
+  const [index, setIndex] = useState(1000);
+  const [assignedIds, setAssignedIds] = useState<number[]>([]);
+
   const sendValue = () => {
     if (stompClient) {
+      // Pronađi prvi slobodni id koji nije dodijeljen
+      let uniqueId = index;
+      while (
+        assignedIds.includes(uniqueId) ||
+        messages.some((message) => message.id === uniqueId)
+      ) {
+        uniqueId++;
+      }
+
       var chatMessage = {
         senderUsername: userData.username,
         email: userData.email,
@@ -104,8 +116,11 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
         disappearanceLocationLng: newMessage?.disappearanceLocationLng,
         image: newMessage?.image,
         linkToImage: newMessage?.linkToImage,
+        id: uniqueId,
       };
 
+      setAssignedIds((prevIds) => [...prevIds, uniqueId]);
+      setIndex(uniqueId + 1); // Povećava index
       stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
       setNewMessage({ ...newMessage, messageText: "" });
       if (isOpenAddLocation) handleToggleAddLocation();
@@ -132,8 +147,22 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
   const onPublicMessageReceived = (payload: Payload) => {
     try {
       let payloadData = JSON.parse(payload.body) as any;
-      publicChats.push(payloadData);
-      setPublicChats([...publicChats]);
+      let indexNovi = payloadData.id;
+
+      const alreadyAdded = publicChats.some((chat) => chat.id === indexNovi);
+
+      if (alreadyAdded) {
+        console.log("it was already added");
+        console.log(payloadData);
+      }
+      if (!alreadyAdded) {
+        publicChats.push(payloadData);
+        setPublicChats([...publicChats]);
+        console.log("ovo su poruke pocetak------------------");
+        console.log(payloadData);
+        console.log(publicChats);
+        console.log("ovo su poruke kraj------------------");
+      }
     } catch (error) {
       console.error("Error parsing payload:", error);
     }
@@ -154,6 +183,8 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
         const data = await response.json();
         setMessages(data);
         console.log(messages);
+        const maxId = Math.max(...data.map((message) => message.id || 0));
+        setIndex(maxId + 1); // Postavi početni index
       } catch (error) {
         console.error("Greška pri dohvatu poruka:", error);
       }
