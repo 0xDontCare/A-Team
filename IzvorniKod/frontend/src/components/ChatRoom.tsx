@@ -32,6 +32,9 @@ interface ChatMessage {
 
 function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
   const [mapCenter, setMapCenter] = useState<[number, number]>([44.5, 16.0]);
+  const [markerPosition, setMarkerPosition] = useState<[number, number] | null>(
+      null
+  );
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [newMessage, setNewMessage] = useState<ChatMessage>({
     senderUsername: "",
@@ -67,6 +70,7 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
         const lat = e.latlng.lat;
         const lng = e.latlng.lng;
 
+        setMarkerPosition([lat, lng]);
         setNewMessage({
           ...newMessage,
           disappearanceLocationLat: lat,
@@ -77,14 +81,7 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
       },
     });
 
-    return newMessage.disappearanceLocationLat ? (
-      <Marker
-        position={[
-          newMessage.disappearanceLocationLat,
-          newMessage.disappearanceLocationLng,
-        ]}
-      />
-    ) : null;
+    return markerPosition ? <Marker position={markerPosition}></Marker> : null;
   }
 
   const sendValue = async () => {
@@ -96,9 +93,7 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
       messageText: newMessage.messageText,
       disappearanceLocationLat: newMessage.disappearanceLocationLat,
       disappearanceLocationLng: newMessage.disappearanceLocationLng,
-      images: [newMessage.images],
-      linkToImage: newMessage.linkToImage,
-    };
+  };
 
     const options = {
       method: "POST",
@@ -118,6 +113,16 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
 
     setNewMessage({ ...newMessage, messageText: "" });
     if (isOpenAddLocation) handleToggleAddLocation();
+
+    // Inside your component function
+    setMarkerPosition(null);
+    setNewMessage({
+      ...newMessage,
+      messageText: "",
+      disappearanceLocationLat: null,
+      disappearanceLocationLng: null,
+    });
+
   };
 
   useEffect(() => {
@@ -298,63 +303,56 @@ function ChatRoom({ advertisementId, loginStatus, userData }: ChatRoomProps) {
                             }
                         />
 
-
-                      {/*   <input*/}
-                      {/*  type="file"*/}
-                      {/*  className="input-message"*/}
-                      {/*  onChange={handleImageChange}*/}
-                      {/*/>*/}
-
-                        <div>
-                          <div className="d-flex flex-row justify-content-between">
-                            <Button
-                                variant="primary"
-                                onClick={handleToggleAddLocation}
-                                style={{marginLeft: "10px"}}
-                                aria-expanded={isOpenAddLocation}
-                                className="mt-2"
-                            >
-                              Dodajte lokaciju
-                            </Button>
-                            <div ref={bottomRef}></div>
-                            <Button
-                                type="button"
-                                className="send-button btn-success mt-2"
-                                style={{marginRight: "10px"}}
-                                onClick={sendValue}
-                            >
-                              Pošaljite poruku
-                            </Button>
+                          <div>
+                            <div className="d-flex flex-row justify-content-between">
+                              <Button
+                                  variant="primary"
+                                  onClick={handleToggleAddLocation}
+                                  style={{marginLeft: "10px"}}
+                                  aria-expanded={isOpenAddLocation}
+                                  className="mt-2"
+                              >
+                                Dodajte lokaciju
+                              </Button>
+                              <div ref={bottomRef}></div>
+                              <Button
+                                  type="button"
+                                  className="send-button btn-success mt-2"
+                                  style={{marginRight: "10px"}}
+                                  onClick={sendValue}
+                              >
+                                Pošaljite poruku
+                              </Button>
+                            </div>
+                            {isOpenAddLocation && (
+                                <div className="mt-3">
+                                  <Card>
+                                    <Card.Body>
+                                      <MapContainer
+                                          center={mapCenter}
+                                          zoom={7}
+                                          minZoom={7}
+                                      >
+                                        <MapClickHandler/>
+                                        <TileLayer
+                                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                                            url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                        />
+                                      </MapContainer>
+                                    </Card.Body>
+                                  </Card>
+                                </div>
+                            )}
                           </div>
-                          {isOpenAddLocation && (
-                              <div className="mt-3">
-                                <Card>
-                                  <Card.Body>
-                                    <MapContainer
-                                        center={mapCenter}
-                                        zoom={7}
-                                        minZoom={7}
-                                    >
-                                      <MapClickHandler/>
-                                      <TileLayer
-                                          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                                          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                      />
-                                    </MapContainer>
-                                  </Card.Body>
-                                </Card>
-                              </div>
-                          )}
-                        </div>
                       </div>
-                  )}
+                    )}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-  );
+);
 }
 
 export default ChatRoom;
